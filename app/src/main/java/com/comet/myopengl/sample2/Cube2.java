@@ -55,42 +55,31 @@ public class Cube2 {
      */
     private float vertices[] = {
             // Vertices according to faces
-            -1.0f, -1.0f, 1.0f, //v0
-            1.0f, -1.0f, 1.0f,    //v1
-            -1.0f, 1.0f, 1.0f,    //v2
-            1.0f, 1.0f, 1.0f,    //v3
-
-            1.0f, -1.0f, 1.0f,    //...
-            1.0f, -1.0f, -1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, -1.0f,
-
-            1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f, -1.0f,
-            1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, -1.0f,
-
-            -1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f, 1.0f,
-            -1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, 1.0f,
-
-            -1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
             -1.0f, -1.0f, 1.0f,
             1.0f, -1.0f, 1.0f,
-
             -1.0f, 1.0f, 1.0f,
             1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f, -1.0f,
+
+            1.0f, -1.0f, 1.0f,
+            1.0f, -1.0f, -1.0f,
+            1.0f, 1.0f, 1.0f,
             1.0f, 1.0f, -1.0f,
+
+            1.0f, -1.0f, -1.0f,
+            -1.0f, -1.0f, -1.0f,
+            1.0f, 1.0f, -1.0f,
+            -1.0f, 1.0f, -1.0f,
+
+            -1.0f, -1.0f, -1.0f,
+            -1.0f, -1.0f, 1.0f,
+            -1.0f, 1.0f, -1.0f,
+            -1.0f, 1.0f, 1.0f,
     };
 
     /**
      * The initial normals for the lighting calculations
      */
     private float normals[] = {
-            //Normals
             0.0f, 0.0f, 1.0f,
             0.0f, 0.0f, -1.0f,
             0.0f, 1.0f, 0.0f,
@@ -111,15 +100,6 @@ public class Cube2 {
             0.0f, 1.0f, 0.0f,
             0.0f, -1.0f, 0.0f,
 
-            0.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, -1.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, -1.0f, 0.0f,
-
-            0.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, -1.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, -1.0f, 0.0f,
     };
 
     /**
@@ -146,15 +126,6 @@ public class Cube2 {
             1.0f, 0.0f,
             1.0f, 1.0f,
 
-            0.0f, 0.0f,
-            0.0f, 1.0f,
-            1.0f, 0.0f,
-            1.0f, 1.0f,
-
-            0.0f, 0.0f,
-            0.0f, 1.0f,
-            1.0f, 0.0f,
-            1.0f, 1.0f,
     };
 
     /**
@@ -218,8 +189,8 @@ public class Cube2 {
         gl.glFrontFace(GL10.GL_CCW);
 
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
-        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);
-        gl.glNormalPointer(GL10.GL_FLOAT, 0, normalBuffer);
+        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);//设置纹理
+        gl.glNormalPointer(GL10.GL_FLOAT, 0, normalBuffer);//法线
 
         gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer);
 
