@@ -38,7 +38,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         gl.glEnable(GL10.GL_LIGHT0); // Enable Light 0
 
-        // Blending
         gl.glColor4f(1.0f, 1.0f, 1.0f, 0.5f); // Full Brightness. 50% Alpha ( NEW )
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE); // Set The Blending Function For Translucency ( NEW )
 
@@ -49,7 +48,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glClearDepthf(1.0f); // Depth Buffer Setup
         gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
         gl.glDepthFunc(GL10.GL_LEQUAL); // The Type Of Depth Testing To Do
-
 
         // Really Nice Perspective Calculations
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
@@ -90,9 +88,9 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         // Scale the Cube to 80 percent, otherwise it would be too large for the screen
         gl.glScalef(0.8f, 0.8f, 0.8f);
 
-//        gl.glRotatef(60, 0.0f, 1.0f, 0.0f); // Y
+        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
 
-        gl.glRotatef(20, 1f, 0f, 0f);
+//        gl.glRotatef(20, 1f, 0f, 0f);
 
         cube.draw(gl, 0);
 

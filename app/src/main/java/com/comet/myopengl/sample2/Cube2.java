@@ -15,7 +15,6 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
-import javax.microedition.khronos.opengles.GL11;
 
 /**
  * This class is an object representation of
@@ -54,7 +53,6 @@ public class Cube2 {
      * The initial vertex definition
      */
     private float vertices[] = {
-            // Vertices according to faces
             -1.0f, -1.0f, 1.0f,
             1.0f, -1.0f, 1.0f,
             -1.0f, 1.0f, 1.0f,
@@ -217,7 +215,6 @@ public class Cube2 {
             //Always clear and close
             try {
                 is.close();
-                is = null;
             } catch (IOException e) {
             }
         }
@@ -232,24 +229,25 @@ public class Cube2 {
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
 
         //Create Linear Filtered Texture and bind it to texture 1
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
-        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
-
-        //Create mipmapped textures and bind it to texture 2
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[2]);
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
-        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR_MIPMAP_NEAREST);
-
-        if (gl instanceof GL11) {
-            gl.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_GENERATE_MIPMAP, GL11.GL_TRUE);
-            GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
-
-            //
-        } else {
-            buildMipmap(gl, bitmap);
-        }
+//        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
+//        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
+//        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
+//        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
+//
+//        //Create mipmapped textures and bind it to texture 2
+//        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[2]);
+//        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
+//        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR_MIPMAP_NEAREST);
+//
+//        if (gl instanceof GL11) {
+//            gl.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_GENERATE_MIPMAP, GL11.GL_TRUE);
+//            GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
+//
+//            //
+//        } else {
+//
+//            buildMipmap(gl, bitmap);
+//        }
 
         //Clean up
         bitmap.recycle();
