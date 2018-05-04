@@ -67,9 +67,9 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
         // Calculate The Aspect Ratio Of The Window
         GLU.gluPerspective(gl, 90.0f, (float) width / (float) height, 0.1f, 100.0f);
-
         gl.glMatrixMode(GL10.GL_MODELVIEW); // Select The Modelview Matrix
         gl.glLoadIdentity(); // Reset The Modelview Matrix
+
     }
 
     @Override
