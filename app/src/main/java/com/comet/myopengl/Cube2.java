@@ -175,28 +175,24 @@ public class Cube2 {
      * Initiate the buffers.
      */
     public Cube2() {
-        //
         ByteBuffer byteBuf = ByteBuffer.allocateDirect(vertices.length * 4);
         byteBuf.order(ByteOrder.nativeOrder());
         vertexBuffer = byteBuf.asFloatBuffer();
         vertexBuffer.put(vertices);
         vertexBuffer.position(0);
 
-        //
         byteBuf = ByteBuffer.allocateDirect(texture.length * 4);
         byteBuf.order(ByteOrder.nativeOrder());
         textureBuffer = byteBuf.asFloatBuffer();
         textureBuffer.put(texture);
         textureBuffer.position(0);
 
-        //
         byteBuf = ByteBuffer.allocateDirect(normals.length * 4);
         byteBuf.order(ByteOrder.nativeOrder());
         normalBuffer = byteBuf.asFloatBuffer();
         normalBuffer.put(normals);
         normalBuffer.position(0);
 
-        //
         indexBuffer = ByteBuffer.allocateDirect(indices.length);
         indexBuffer.put(indices);
         indexBuffer.position(0);

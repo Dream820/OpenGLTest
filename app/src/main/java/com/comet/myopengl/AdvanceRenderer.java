@@ -91,7 +91,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glScalef(0.8f, 0.8f, 0.8f);
 
         // Rotate around the axis based on the rotation matrix (rotation, x, y, z)
-//        gl.glRotatef(xrot, 1.0f, 0.0f, 0.0f); // X
+//         gl.glRotatef(xrot, 1.0f, 0.0f, 0.0f); // X
         gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
 
         cube.draw(gl, 0);
