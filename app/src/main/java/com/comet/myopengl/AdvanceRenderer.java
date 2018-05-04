@@ -50,6 +50,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
         gl.glDepthFunc(GL10.GL_LEQUAL); // The Type Of Depth Testing To Do
 
+
         // Really Nice Perspective Calculations
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
         cube.loadGLTexture(gl, context);
@@ -89,9 +90,9 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         // Scale the Cube to 80 percent, otherwise it would be too large for the screen
         gl.glScalef(0.8f, 0.8f, 0.8f);
 
-        // Rotate around the axis based on the rotation matrix (rotation, x, y, z)
-//         gl.glRotatef(xrot, 1.0f, 0.0f, 0.0f); // X
-        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
+//        gl.glRotatef(60, 0.0f, 1.0f, 0.0f); // Y
+
+        gl.glRotatef(20, 1f, 0f, 0f);
 
         cube.draw(gl, 0);
 

@@ -161,12 +161,12 @@ public class Cube2 {
      */
     private byte indices[] = {
             // Faces definition
-            0, 1, 3, 0, 3, 2,        // Face front
-            4, 5, 7, 4, 7, 6,        // Face right
-            8, 9, 11, 8, 11, 10,    // ...
+            0, 1, 3, 0, 3, 2,
+            4, 5, 7, 4, 7, 6,
+            8, 9, 11, 8, 11, 10,
             12, 13, 15, 12, 15, 14,
-            16, 17, 19, 16, 19, 18,
-            20, 21, 23, 20, 23, 22,
+//            16, 17, 19, 16, 19, 18,
+//            20, 21, 23, 20, 23, 22,
     };
 
     /**
@@ -238,7 +238,7 @@ public class Cube2 {
      */
     public void loadGLTexture(GL10 gl, Context context) {
         //Get the texture from the Android resource directory
-        InputStream is = context.getResources().openRawResource(R.drawable.ic_launcher_round);
+        InputStream is = context.getResources().openRawResource(R.raw.ic_launcher);
         Bitmap bitmap = null;
         try {
             //BitmapFactory is an Android graphics utility for images
@@ -272,13 +272,7 @@ public class Cube2 {
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[2]);
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR_MIPMAP_NEAREST);
-        /*
-         * This is a change to the original tutorial, as buildMipMap does not exist anymore
-         * in the Android SDK.
-         *
-         * We check if the GL context is version 1.1 and generate MipMaps by flag.
-         * Otherwise we call our own buildMipMap implementation
-         */
+
         if (gl instanceof GL11) {
             gl.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_GENERATE_MIPMAP, GL11.GL_TRUE);
             GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
