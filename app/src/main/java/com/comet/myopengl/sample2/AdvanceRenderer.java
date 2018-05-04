@@ -88,9 +88,9 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         // Scale the Cube to 80 percent, otherwise it would be too large for the screen
         gl.glScalef(0.8f, 0.8f, 0.8f);
 
-        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
+//        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
 
-//        gl.glRotatef(20, 1f, 0f, 0f);
+        gl.glRotatef(20, 1f, 0f, 0f);
 
         cube.draw(gl, 0);
 

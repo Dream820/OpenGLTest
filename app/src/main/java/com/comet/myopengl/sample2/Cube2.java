@@ -49,29 +49,33 @@ public class Cube2 {
      */
     private int[] textures = new int[3];
 
-    /**
-     * The initial vertex definition
-     */
-    private float vertices[] = {
-            -1.0f, -1.0f, 1.0f,
-            1.0f, -1.0f, 1.0f,
-            -1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
+    //second is right;fourth is left;first is front;third is roar
+    private float vertices[] = {//四个点
+            //front
+            -1.0f, -1.0f, 1.0f,// x y z left_bottom
+            1.0f, -1.0f, 1.0f,//right_bottom
+            -1.0f, 1.0f, 1.0f,//left_top
+            1.0f, 1.0f, 1.0f,//right_top
 
+            //right
             1.0f, -1.0f, 1.0f,
             1.0f, -1.0f, -1.0f,
             1.0f, 1.0f, 1.0f,
             1.0f, 1.0f, -1.0f,
 
+            //roar
             1.0f, -1.0f, -1.0f,
             -1.0f, -1.0f, -1.0f,
             1.0f, 1.0f, -1.0f,
             -1.0f, 1.0f, -1.0f,
 
+            //left
             -1.0f, -1.0f, -1.0f,
             -1.0f, -1.0f, 1.0f,
             -1.0f, 1.0f, -1.0f,
             -1.0f, 1.0f, 1.0f,
+
+
     };
 
     /**
@@ -124,6 +128,15 @@ public class Cube2 {
             1.0f, 0.0f,
             1.0f, 1.0f,
 
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
     };
 
     /**
