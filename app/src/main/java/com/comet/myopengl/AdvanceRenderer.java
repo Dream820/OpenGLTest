@@ -66,7 +66,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glLoadIdentity(); // Reset The Projection Matrix
 
         // Calculate The Aspect Ratio Of The Window
-        GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 100.0f);
+        GLU.gluPerspective(gl, 90.0f, (float) width / (float) height, 0.1f, 100.0f);
 
         gl.glMatrixMode(GL10.GL_MODELVIEW); // Select The Modelview Matrix
         gl.glLoadIdentity(); // Reset The Modelview Matrix
@@ -78,8 +78,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity(); // Reset The Current Modelview Matrix
 
-        // Check if the light flag has been set to enable/disable lighting
-        gl.glEnable(GL10.GL_LIGHTING);
+//        gl.glEnable(GL10.GL_LIGHTING);//启动光源
 
         // Check if the blend flag has been set to enable/disable blending
         gl.glEnable(GL10.GL_BLEND); // Turn Blending On ( NEW )

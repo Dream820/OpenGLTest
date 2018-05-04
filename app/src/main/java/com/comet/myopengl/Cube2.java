@@ -175,7 +175,8 @@ public class Cube2 {
      * Initiate the buffers.
      */
     public Cube2() {
-        ByteBuffer byteBuf = ByteBuffer.allocateDirect(vertices.length * 4);
+        ByteBuffer byteBuf
+                = ByteBuffer.allocateDirect(vertices.length * 4);
         byteBuf.order(ByteOrder.nativeOrder());
         vertexBuffer = byteBuf.asFloatBuffer();
         vertexBuffer.put(vertices);
@@ -218,15 +219,12 @@ public class Cube2 {
         //Set the face rotation
         gl.glFrontFace(GL10.GL_CCW);
 
-        //Point to our buffers
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
         gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);
         gl.glNormalPointer(GL10.GL_FLOAT, 0, normalBuffer);
 
-        //Draw the vertices as triangles, based on the Index Buffer information
         gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer);
 
-        //Disable the client state before leaving
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
         gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
@@ -275,12 +273,12 @@ public class Cube2 {
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR_MIPMAP_NEAREST);
         /*
-		 * This is a change to the original tutorial, as buildMipMap does not exist anymore
-		 * in the Android SDK.
-		 *
-		 * We check if the GL context is version 1.1 and generate MipMaps by flag.
-		 * Otherwise we call our own buildMipMap implementation
-		 */
+         * This is a change to the original tutorial, as buildMipMap does not exist anymore
+         * in the Android SDK.
+         *
+         * We check if the GL context is version 1.1 and generate MipMaps by flag.
+         * Otherwise we call our own buildMipMap implementation
+         */
         if (gl instanceof GL11) {
             gl.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_GENERATE_MIPMAP, GL11.GL_TRUE);
             GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
@@ -315,16 +313,12 @@ public class Cube2 {
         while (height >= 1 || width >= 1) {
             //First of all, generate the texture from our bitmap and set it to the according level
             GLUtils.texImage2D(GL10.GL_TEXTURE_2D, level, bitmap, 0);
-
-            //
             if (height == 1 || width == 1) {
                 break;
             }
 
             //Increase the mipmap level
             level++;
-
-            //
             height /= 2;
             width /= 2;
             Bitmap bitmap2 = Bitmap.createScaledBitmap(bitmap, width, height, true);
