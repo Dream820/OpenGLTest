@@ -1,4 +1,4 @@
-package com.comet.myopengl;
+package com.comet.myopengl.sample2;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
@@ -58,12 +58,12 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        if (height == 0) { // Prevent A Divide By Zero By
-            height = 1; // Making Height Equal One
+        if (height == 0) {  // Prevent A Divide By Zero By
+            height = 1;     // Making Height Equal One
         }
 
         gl.glViewport(0, 0, width, height); // Reset The Current Viewport
-        gl.glMatrixMode(GL10.GL_PROJECTION); // Select The Projection Matrix
+        gl.glMatrixMode(GL10.GL_PROJECTION);       // Select The Projection Matrix
         gl.glLoadIdentity(); // Reset The Projection Matrix
 
         // Calculate The Aspect Ratio Of The Window
