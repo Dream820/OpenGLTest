@@ -21,7 +21,7 @@ import java.nio.ShortBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class OneActivity extends Activity {
+public class OneActivity2 extends Activity {
 
     private GLSurfaceView mGLSurfaceView;
     private MyRenderer mRenderer;
