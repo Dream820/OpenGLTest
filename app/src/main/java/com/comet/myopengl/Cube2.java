@@ -27,14 +27,7 @@ public class Cube2 {
      * The buffer holding the indices
      */
     private ByteBuffer indexBuffer;
-    /**
-     * The buffer holding the normals
-     */
-    private FloatBuffer normalBuffer;
 
-    /**
-     * Our texture pointer
-     */
     private int[] textures = new int[3];
 
     private float picBufferLenth = 0.1f;
@@ -81,37 +74,6 @@ public class Cube2 {
 
     };
 
-    /**
-     * The initial normals for the lighting calculations
-     */
-    private float normals[] = {
-            0.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, -1.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, -1.0f, 0.0f,
-
-            0.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, -1.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, -1.0f, 0.0f,
-
-            0.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, -1.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, -1.0f, 0.0f,
-
-            0.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, -1.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, -1.0f, 0.0f,
-
-            0.0f, 0.0f, 1.0f,
-            0.0f, 0.0f, -1.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, -1.0f, 0.0f,
-
-    };
-
     private float texture[] = {
             0.0f, 0.0f,
             0.0f, 1.0f,
@@ -144,9 +106,6 @@ public class Cube2 {
             1.0f, 1.0f,
     };
 
-    /**
-     * The initial indices definition
-     */
     private byte indices[] = {
             0, 1, 3, 0, 3, 2,
             4, 5, 7, 4, 7, 6,
@@ -171,12 +130,6 @@ public class Cube2 {
         textureBuffer.put(texture);
         textureBuffer.position(0);
 
-        byteBuf = ByteBuffer.allocateDirect(normals.length * 4);
-        byteBuf.order(ByteOrder.nativeOrder());
-        normalBuffer = byteBuf.asFloatBuffer();
-        normalBuffer.put(normals);
-        normalBuffer.position(0);
-
         indexBuffer = ByteBuffer.allocateDirect(indices.length);
         indexBuffer.put(indices);
         indexBuffer.position(0);
@@ -193,7 +146,6 @@ public class Cube2 {
 
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
         gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);//设置纹理
-        gl.glNormalPointer(GL10.GL_FLOAT, 0, normalBuffer);//法线
 
         gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer);
 
