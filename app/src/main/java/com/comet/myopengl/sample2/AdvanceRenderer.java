@@ -52,6 +52,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         // Really Nice Perspective Calculations
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
         cube.loadGLTexture(gl, context);
+
     }
 
     @Override
@@ -75,7 +76,15 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 gl) {
 
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-        gl.glLoadIdentity(); // Reset The Current Modelview Matrix
+        //开启模型试图矩阵
+        gl.glMatrixMode(GL10.GL_MODELVIEW);
+        //改变眼睛所处的位置，眼睛看向的点 是物体所处坐标的中心点
+        // 此处  为，0,0,-3 ( 移动到了-3处，   绕着中心点旋转，到圆心的坐标 就可以通过    //cos^2X +sin^2Y=R^2 这个公式来推导了
+        gl.glLoadIdentity();
+        GLU.gluLookAt(gl,0.0f,
+                1.0f,5.0f, 0.0f,0.0f,0.0f, 0.0f,1.0f,0.0f);
+
+
 
 //        gl.glEnable(GL10.GL_LIGHTING);//启动光源
 
@@ -86,11 +95,11 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         // Drawing
         gl.glTranslatef(0.0f, 0.0f, z); // Move z units into the screen
         // Scale the Cube to 80 percent, otherwise it would be too large for the screen
-        gl.glScalef(0.8f, 0.8f, 0.8f);
+        gl.glScalef(0.4f, 0.4f, 0.4f);
 
 //        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
 
-        gl.glRotatef(20, 1f, 0f, 0f);
+//        gl.glRotatef(30, 1f, 0f, 0f);
 
         cube.draw(gl, 0);
 
