@@ -37,7 +37,7 @@ public class OneActivity extends Activity {
             return;
         }
 
-        mGLSurfaceView = findViewById(R.id.gv_one);
+        mGLSurfaceView = (GLSurfaceView) findViewById(R.id.gv_one);
 
         mGLSurfaceView.setEGLContextClientVersion(2);
         mGLSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
@@ -166,9 +166,9 @@ public class OneActivity extends Activity {
             GLES20.glVertexAttribPointer(mTexCoordHandle, 2, GLES20.GL_FLOAT, false, 0,
                     mTexVertexBuffer);
 
-            int[] texNames = new int[2];
+            int[] texNames = new int[1];
             GLES20.glGenTextures(1, texNames, 0);
-            mTexName = texNames[1];
+            mTexName = texNames[0];
             Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(),
                     R.drawable.keyboard_1);
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
@@ -196,16 +196,17 @@ public class OneActivity extends Activity {
         @Override
         public void onDrawFrame(GL10 unused) {
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+
             GLES20.glUniformMatrix4fv(mMatrixHandle, 1, false, mMVPMatrix, 0);
             GLES20.glUniform1i(mTexSamplerHandle, 0);
 
-            // 用 glDrawElements 来绘制,mVertexIndexBuffer 指定了顶点绘制顺序
+            // 用 glDrawElements 来绘制，mVertexIndexBuffer 指定了顶点绘制顺序
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, VERTEX_INDEX.length,
                     GLES20.GL_UNSIGNED_SHORT, mVertexIndexBuffer);
         }
 
         void destroy() {
-            GLES20.glDeleteTextures(1, new int[]{mTexName}, 0);
+            GLES20.glDeleteTextures(1, new int[] { mTexName }, 0);
         }
     }
 }
