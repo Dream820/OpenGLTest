@@ -82,12 +82,13 @@ public class OneActivity2 extends Activity {
                         "void main() {" +
                         "  gl_FragColor = texture2D(s_texture, v_texCoord);" +
                         "}";
-
+        private static float picBufferLenth = 0.1f;
         private static final float[] VERTEX = {   // in counterclockwise order:
-                1, 1, 0,   // top right
-                -1, 1, 0,  // top left
-                -1, -1, 0, // bottom left
-                1, -1, 0,  // bottom right
+                //front
+                1.0f - picBufferLenth, 0.614f, (float) Math.sqrt(3),//right_top
+                -1.0f + picBufferLenth, 0.614f, (float) Math.sqrt(3),//left_top
+                -1.0f + picBufferLenth, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
+                1.0f - picBufferLenth, -0.614f, (float) Math.sqrt(3),//right_bottom
         };
         private static final short[] VERTEX_INDEX = {
                 0, 1, 2, 0, 2, 3
@@ -206,7 +207,7 @@ public class OneActivity2 extends Activity {
         }
 
         void destroy() {
-            GLES20.glDeleteTextures(1, new int[] { mTexName }, 0);
+            GLES20.glDeleteTextures(1, new int[]{mTexName}, 0);
         }
     }
 }
