@@ -47,44 +47,46 @@ public class Cube2 {
      */
     private int[] textures = new int[3];
 
+    private float picBuffer = 0.1f;
+
     //second is right;fourth is left;first is front;third is roar
     private float vertices[] = {//四个点
 
             //front
-            -1.0f, 0.614f, (float) Math.sqrt(3),//left_top
-            -1.0f, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
-            1.0f, 0.614f, (float) Math.sqrt(3),//right_top
-            1.0f, -0.614f, (float) Math.sqrt(3),//right_bottom
+            -1.0f + picBuffer, 0.614f, (float) Math.sqrt(3),//left_top
+            -1.0f + picBuffer, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
+            1.0f - picBuffer, 0.614f, (float) Math.sqrt(3),//right_top
+            1.0f - picBuffer, -0.614f, (float) Math.sqrt(3),//right_bottom
 
             //right roar
-            2, 0.614f, 0,
-            2, -0.614f, 0,
-            1.0f, 0.614f, -(float) Math.sqrt(3),
-            1.0f, -0.614f, -(float) Math.sqrt(3),
+            2 - picBuffer, 0.614f, 0,
+            2 - picBuffer, -0.614f, 0,
+            1.0f + picBuffer, 0.614f, -(float) Math.sqrt(3),
+            1.0f + picBuffer, -0.614f, -(float) Math.sqrt(3),
 
             //roar
-            -1.0f, 0.614f, -(float) Math.sqrt(3),
-            -1.0f, -0.614f, -(float) Math.sqrt(3),
-            1.0f, 0.614f, -(float) Math.sqrt(3),
-            1.0f, -0.614f, -(float) Math.sqrt(3),
+            -1.0f + picBuffer, 0.614f, -(float) Math.sqrt(3),
+            -1.0f + picBuffer, -0.614f, -(float) Math.sqrt(3),
+            1.0f - picBuffer, 0.614f, -(float) Math.sqrt(3),
+            1.0f - picBuffer, -0.614f, -(float) Math.sqrt(3),
 
             //left front
-            -2, 0.614f, 0,
-            -2, -0.614f, 0,
-            -1.0f, 0.614f, (float) Math.sqrt(3),
-            -1.0f, -0.614f, (float) Math.sqrt(3),
+            -2 + picBuffer, 0.614f, 0,
+            -2 + picBuffer, -0.614f, 0,
+            -1.0f - picBuffer, 0.614f, (float) Math.sqrt(3),
+            -1.0f - picBuffer, -0.614f, (float) Math.sqrt(3),
 
             //left roar
-            -1.0f, 0.614f, -(float) Math.sqrt(3),
-            -1.0f, -0.614f, -(float) Math.sqrt(3),
-            -2, 0.614f, 0,
-            -2, -0.614f, 0,
+            -1.0f - picBuffer, 0.614f, -(float) Math.sqrt(3),
+            -1.0f - picBuffer, -0.614f, -(float) Math.sqrt(3),
+            -2 + picBuffer, 0.614f, 0,
+            -2 + picBuffer, -0.614f, 0,
 
             //right front
-            1.0f, 0.614f, (float) Math.sqrt(3),
-            1.0f, -0.614f, (float) Math.sqrt(3),
-            2.0f, 0.614f, 0,
-            2.0f, -0.614f, 0,
+            1.0f + picBuffer, 0.614f, (float) Math.sqrt(3),
+            1.0f + picBuffer, -0.614f, (float) Math.sqrt(3),
+            2.0f - picBuffer, 0.614f, 0,
+            2.0f - picBuffer, -0.614f, 0,
 
     };
 
