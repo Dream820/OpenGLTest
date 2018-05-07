@@ -74,15 +74,14 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
-
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-        gl.glMatrixMode(GL10.GL_MODELVIEW);
+//        gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glLoadIdentity();
-        GLU.gluLookAt(gl,0.0f,
-                0.6f,2.0f, 0.0f,0.0f,0.0f, 0.0f,1,0f);
+        GLU.gluLookAt(gl, 0.0f,
+                0.6f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1, 0f);
 
         gl.glEnable(GL10.GL_BLEND); //开启混合 如果不开启 就会没有透明
-        gl.glDisable(GL10.GL_DEPTH_TEST); // Turn Depth Testing Off ( NEW )
+        gl.glDisable(GL10.GL_DEPTH_TEST); // 开启时时只绘制前面的一层
 
         gl.glScalef(0.2f, 0.2f, 0.2f);
 
