@@ -235,52 +235,24 @@ public class Cube2 {
      * @param context - The Activity context
      */
     public void loadGLTexture(GL10 gl, Context context) {
-        //Get the texture from the Android resource directory
         InputStream is = context.getResources().openRawResource(R.raw.ic_launcher);
         Bitmap bitmap = null;
         try {
-            //BitmapFactory is an Android graphics utility for images
             bitmap = BitmapFactory.decodeStream(is);
 
         } finally {
-            //Always clear and close
             try {
                 is.close();
             } catch (IOException e) {
             }
         }
 
-        //Generate there texture pointer
         gl.glGenTextures(3, textures, 0);
 
-        //Create Nearest Filtered Texture and bind it to texture 0
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
-
-        //Create Linear Filtered Texture and bind it to texture 1
-//        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
-//        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
-//        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
-//        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
-//
-//        //Create mipmapped textures and bind it to texture 2
-//        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[2]);
-//        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
-//        gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR_MIPMAP_NEAREST);
-//
-//        if (gl instanceof GL11) {
-//            gl.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_GENERATE_MIPMAP, GL11.GL_TRUE);
-//            GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
-//
-//            //
-//        } else {
-//
-//            buildMipmap(gl, bitmap);
-//        }
-
-        //Clean up
         bitmap.recycle();
     }
 
