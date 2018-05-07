@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 public class MyGLSurfaceView extends GLSurfaceView {
-    AdvanceRenderer advanceRenderer;
+    private AdvanceRenderer advanceRenderer;
 
     public MyGLSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -21,9 +21,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
     }
 
     private float oldX;
-    private float oldY;
     private static final float TOUCH_SCALE = 0.2f;
-    private float z = -5.0f; // Depth Into The Screen
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -31,17 +29,13 @@ public class MyGLSurfaceView extends GLSurfaceView {
         float y = event.getY();
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             float dx = x - oldX;
-            float dy = y - oldY;
-            int upperArea = 0;
-
-            if (y < upperArea) {
-                z -= dx * TOUCH_SCALE / 2;
-            } else {
+            if (y >= 0) {
                 advanceRenderer.yrot += dx * TOUCH_SCALE;
             }
+            oldX = x;
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+
         }
-        oldX = x;
-        oldY = y;
         requestRender();
         return true;
     }
