@@ -1,6 +1,7 @@
 package com.comet.myopengl;
 
 import android.content.Context;
+import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.util.Log;
@@ -13,18 +14,20 @@ import javax.microedition.khronos.opengles.GL10;
  * @since 2017/7/24.
  */
 
-public class AdvanceRenderer implements GLSurfaceView.Renderer {
+public class AdvanceRenderer2 implements GLSurfaceView.Renderer {
 
-    private Cube2 cube;
+    private Cube3 cube;
     private Context context;
 
     public float yrot; // Y Rotation
 
 
-    public AdvanceRenderer(Context context) {
-        this.cube = new Cube2();
+    public AdvanceRenderer2(Context context) {
+        this.cube = new Cube3();
         this.context = context;
     }
+
+    private int mProgram;
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -44,6 +47,10 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         // Really Nice Perspective Calculations
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
         cube.loadGLTexture(gl, context);
+
+        mProgram = GLES20.glCreateProgram();
+        mMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
+        mTexSamplerHandle = GLES20.glGetUniformLocation(mProgram, "s_texture");
     }
 
     @Override
@@ -60,6 +67,8 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     }
 
+    private int mMatrixHandle;
+    private int mTexSamplerHandle;
     @Override
     public void onDrawFrame(GL10 gl) {
         Log.d("onDrawFrame", "1111");
@@ -71,6 +80,12 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
         gl.glScalef(0.2f, 0.2f, 0.2f);
         gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
-        cube.draw(gl, 0);
+
+
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+//        GLES20.glUniformMatrix4fv(mMatrixHandle, 1, false, mMVPMatrix, 0);
+        GLES20.glUniform1i(mTexSamplerHandle, 0);
+
+        cube.draw();
     }
 }

@@ -7,17 +7,17 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 public class MyGLSurfaceView extends GLSurfaceView {
-    private AdvanceRenderer advanceRenderer;
+    private AdvanceRenderer2 advanceRenderer;
 
     public MyGLSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        advanceRenderer = new AdvanceRenderer(context);
+        advanceRenderer = new AdvanceRenderer2(context);
         setRenderer(advanceRenderer);
     }
 
     public MyGLSurfaceView(Context context) {
         super(context);
-        advanceRenderer = new AdvanceRenderer(context);
+        advanceRenderer = new AdvanceRenderer2(context);
         setRenderer(advanceRenderer);
     }
 
