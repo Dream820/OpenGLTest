@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.comet.myopengl.sample2.AdvanceRenderer;
-
 public class OpenGLDemoActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {

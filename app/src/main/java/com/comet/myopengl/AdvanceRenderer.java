@@ -1,4 +1,4 @@
-package com.comet.myopengl.sample2;
+package com.comet.myopengl;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
@@ -115,10 +115,4 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         return true;
     }
 
-    /**
-     * Called when the engine is destroyed. Do any necessary clean up because
-     * at this point your renderer instance is now done for.
-     */
-    public void release() {
-    }
 }

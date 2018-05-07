@@ -1,4 +1,4 @@
-package com.comet.myopengl.sample2;
+package com.comet.myopengl;
 
 
 import android.content.Context;
