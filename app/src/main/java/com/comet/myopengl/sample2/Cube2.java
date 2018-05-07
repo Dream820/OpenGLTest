@@ -14,15 +14,7 @@ import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-/**
- * This class is an object representation of
- * a Cube containing the vertex information,
- * texture coordinates, the vertex indices
- * and drawing functionality, which is called
- * by the renderer.
- *
- * @author Savas Ziplies (nea/INsanityDesign)
- */
+
 public class Cube2 {
 
     /**
@@ -47,12 +39,9 @@ public class Cube2 {
      */
     private int[] textures = new int[3];
 
-    //    private float picBufferLenth = 0f;
-//    private float picBufferX = 0;
-//    private float picBufferZ = 0;
-    private float picBufferLenth = 0.2f;
+    private float picBufferLenth = 0.1f;
     private float picBufferX = picBufferLenth / 2;
-    private float picBufferZ = (float) (Math.sqrt(3) / 2d * picBufferLenth);
+    private float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
 
     private float vertices[] = {//四个点
 
@@ -172,11 +161,6 @@ public class Cube2 {
             20, 21, 23, 20, 23, 22,
     };
 
-    /**
-     * The Cube constructor.
-     * <p>
-     * Initiate the buffers.
-     */
     public Cube2() {
 
         ByteBuffer byteBuf
@@ -203,14 +187,6 @@ public class Cube2 {
         indexBuffer.position(0);
     }
 
-    /**
-     * The object own drawing function.
-     * Called from the renderer to redraw this instance
-     * with possible changes in values.
-     *
-     * @param gl     - The GL Context
-     * @param filter - Which texture filter to be used
-     */
     public void draw(GL10 gl, int filter) {
         //Bind the texture according to the set texture filter
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[filter]);
