@@ -47,12 +47,12 @@ public class Cube2 {
      */
     private int[] textures = new int[3];
 
-//    private float picBufferLenth = 0f;
+    //    private float picBufferLenth = 0f;
 //    private float picBufferX = 0;
 //    private float picBufferZ = 0;
     private float picBufferLenth = 0.2f;
     private float picBufferX = picBufferLenth / 2;
-    private float picBufferZ = (float) (Math.sin(60) * picBufferLenth);
+    private float picBufferZ = (float) (Math.sqrt(3) / 2d * picBufferLenth);
 
     private float vertices[] = {//四个点
 
