@@ -41,7 +41,7 @@ public class Cube2 {
     private float picBufferX = picBufferLenth / 2;
     private float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
 
-    private float vertices[] = {//四个点
+    private float vertices[] = {
 
             //front
             -1.0f + picBufferLenth, 0.614f, (float) Math.sqrt(3),//left_top
