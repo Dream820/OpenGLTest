@@ -37,6 +37,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
             oldX = x;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             // 抬起的时候 查看角度 重新复制
+
             Log.d("ACTION_UPACTION_UP", "ACTION_UP");
         }
         return true;

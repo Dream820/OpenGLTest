@@ -44,7 +44,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         // Really Nice Perspective Calculations
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
         cube.loadGLTexture(gl, context);
-
     }
 
     @Override
