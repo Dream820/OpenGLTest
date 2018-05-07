@@ -186,10 +186,8 @@ public class Cube2 {
     }
 
     public void draw(GL10 gl, int filter) {
-        //Bind the texture according to the set texture filter
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[filter]);
 
-        //Enable the vertex, texture and normal state
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
         gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
@@ -212,9 +210,6 @@ public class Cube2 {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.keyboard_1);
 
-        gl.glGenTextures(3, textures, 0);
-
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
