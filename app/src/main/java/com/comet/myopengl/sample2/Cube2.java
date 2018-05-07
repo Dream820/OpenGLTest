@@ -226,12 +226,6 @@ public class Cube2 {
         gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
     }
 
-    /**
-     * Load the textures
-     *
-     * @param gl      - The GL Context
-     * @param context - The Activity context
-     */
     public void loadGLTexture(GL10 gl, Context context) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.keyboard_1);
