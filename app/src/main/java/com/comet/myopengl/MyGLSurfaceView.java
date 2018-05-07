@@ -3,6 +3,7 @@ package com.comet.myopengl;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 public class MyGLSurfaceView extends GLSurfaceView {
@@ -21,7 +22,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
     }
 
     private float oldX;
-    private static final float TOUCH_SCALE = 0.2f;
+    private float TOUCH_SCALE = 0.2f;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -30,13 +31,14 @@ public class MyGLSurfaceView extends GLSurfaceView {
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             float dx = x - oldX;
             if (y >= 0) {
+                Log.d("advanceRendererrr", advanceRenderer.yrot + "");
                 advanceRenderer.yrot += dx * TOUCH_SCALE;
             }
             oldX = x;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
+            // 抬起的时候 查看角度 重新复制
+            Log.d("ACTION_UPACTION_UP", "ACTION_UP");
         }
-        requestRender();
         return true;
     }
 }

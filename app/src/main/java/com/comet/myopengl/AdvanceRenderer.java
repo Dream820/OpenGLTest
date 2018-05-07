@@ -3,6 +3,7 @@ package com.comet.myopengl;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
+import android.util.Log;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -13,18 +14,11 @@ import javax.microedition.khronos.opengles.GL10;
  */
 
 public class AdvanceRenderer implements GLSurfaceView.Renderer {
-    // Proved to be good for normal rotation
-    /* Rotation speed values */
-    private static final float xspeed = 0.5f; // X Rotation Speed
-    private static final float yspeed = 0.5f; // Y Rotation Speed
 
     private Cube2 cube;
     private Context context;
 
     public float yrot; // Y Rotation
-
-    private float oldX;
-    private float oldY;
 
 
     public AdvanceRenderer(Context context) {
@@ -69,6 +63,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
+        Log.d("onDrawFrame", "1111");
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
         GLU.gluLookAt(gl, 0.0f,
@@ -76,7 +71,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glEnable(GL10.GL_DEPTH_TEST); // 开启时时只绘制前面的一层
 
         gl.glScalef(0.2f, 0.2f, 0.2f);
-
         gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
         cube.draw(gl, 0);
     }
