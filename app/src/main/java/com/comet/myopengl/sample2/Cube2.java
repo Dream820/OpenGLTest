@@ -52,12 +52,12 @@ public class Cube2 {
     //second is right;fourth is left;first is front;third is roar
     private float vertices[] = {//四个点
             //front
-            -1.0f, -1.0f, 1.0f,// x y z left_bottom
-            1.0f, -1.0f, 1.0f,//right_bottom
-            -1.0f, 1.0f, 1.0f,//left_top
-            1.0f, 1.0f, 1.0f,//right_top
+            -1.0f, -1.0f, (float) Math.sqrt(3),// x y z left_bottom
+            1.0f, -1.0f, (float) Math.sqrt(3),//right_bottom
+            -1.0f, 1.0f, (float) Math.sqrt(3),//left_top
+            1.0f, 1.0f, (float) Math.sqrt(3),//right_top
 
-            //right
+            //right front
             2, -1.0f, 0,
             1.0f, -1.0f, -1.0f,
             2, 1.0f, 0,
@@ -69,18 +69,19 @@ public class Cube2 {
             1.0f, 1.0f, -1.0f,
             -1.0f, 1.0f, -1.0f,
 
-            //left
+            //left front
             -2, -1.0f, 0,
             -1.0f, -1.0f, 1.0f,
             -2, 1.0f, 0,
             -1.0f, 1.0f, 1.0f,
 
+            //left roar
             -1.0f, -1.0f, -1.0f,
             -2, -1.0f, 0,
             -1.0f, 1.0f, -1.0f,
             -2, 1.0f, 0,
 
-            //right
+            //right roar
             1.0f, -1.0f, 1.0f,
             2.0f, -1.0f, 0,
             1.0f, 1.0f, 1.0f,
