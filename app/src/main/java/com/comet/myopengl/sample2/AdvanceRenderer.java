@@ -82,7 +82,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         // 此处  为，0,0,-3 ( 移动到了-3处，   绕着中心点旋转，到圆心的坐标 就可以通过    //cos^2X +sin^2Y=R^2 这个公式来推导了
         gl.glLoadIdentity();
         GLU.gluLookAt(gl,0.0f,
-                1.0f,5.0f, 0.0f,0.0f,0.0f, 0.0f,1.0f,0.0f);
+                0.0f,2.0f, 0.0f,0.0f,0.0f, 0.0f,1.0f,0.0f);
 
 
 
@@ -99,7 +99,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
 //        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
 
-//        gl.glRotatef(30, 1f, 0f, 0f);
+//        gl.glRotatef(90, 1f, 0f, 0f);
 
         cube.draw(gl, 0);
 

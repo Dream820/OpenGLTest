@@ -58,7 +58,7 @@ public class Cube2 {
             1.0f, 1.0f, 1.0f,//right_top
 
             //right
-           2, -1.0f, 0,
+            2, -1.0f, 0,
             1.0f, -1.0f, -1.0f,
             2, 1.0f, 0,
             1.0f, 1.0f, -1.0f,
