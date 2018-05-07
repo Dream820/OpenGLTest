@@ -59,32 +59,32 @@ public class Cube2 {
 
             //right front
             2, -1.0f, 0,
-            1.0f, -1.0f, -1.0f,
+            1.0f, -1.0f, -(float) Math.sqrt(3),
             2, 1.0f, 0,
-            1.0f, 1.0f, -1.0f,
+            1.0f, 1.0f, -(float) Math.sqrt(3),
 
             //roar
-            1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f, -1.0f,
-            1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, -1.0f,
+            1.0f, -1.0f, -(float) Math.sqrt(3),
+            -1.0f, -1.0f, -(float) Math.sqrt(3),
+            1.0f, 1.0f, -(float) Math.sqrt(3),
+            -1.0f, 1.0f, -(float) Math.sqrt(3),
 
             //left front
             -2, -1.0f, 0,
-            -1.0f, -1.0f, 1.0f,
+            -1.0f, -1.0f, (float) Math.sqrt(3),
             -2, 1.0f, 0,
-            -1.0f, 1.0f, 1.0f,
+            -1.0f, 1.0f, (float) Math.sqrt(3),
 
             //left roar
-            -1.0f, -1.0f, -1.0f,
+            -1.0f, -1.0f, -(float) Math.sqrt(3),
             -2, -1.0f, 0,
-            -1.0f, 1.0f, -1.0f,
+            -1.0f, 1.0f, -(float) Math.sqrt(3),
             -2, 1.0f, 0,
 
             //right roar
-            1.0f, -1.0f, 1.0f,
+            1.0f, -1.0f, (float) Math.sqrt(3),
             2.0f, -1.0f, 0,
-            1.0f, 1.0f, 1.0f,
+            1.0f, 1.0f, (float) Math.sqrt(3),
             2.0f, 1.0f, 0,
 
     };

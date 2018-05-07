@@ -79,31 +79,18 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         //开启模型试图矩阵
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         //改变眼睛所处的位置，眼睛看向的点 是物体所处坐标的中心点
-        // 此处  为，0,0,-3 ( 移动到了-3处，   绕着中心点旋转，到圆心的坐标 就可以通过    //cos^2X +sin^2Y=R^2 这个公式来推导了
         gl.glLoadIdentity();
         GLU.gluLookAt(gl,0.0f,
-                0.0f,2.0f, 0.0f,0.0f,0.0f, 0.0f,1.0f,0.0f);
+                0.6f,2.0f, 0.0f,0.0f,0.0f, 0.0f,1,0f);
 
-
-
-//        gl.glEnable(GL10.GL_LIGHTING);//启动光源
-
-        // Check if the blend flag has been set to enable/disable blending
         gl.glEnable(GL10.GL_BLEND); // Turn Blending On ( NEW )
         gl.glDisable(GL10.GL_DEPTH_TEST); // Turn Depth Testing Off ( NEW )
 
-        // Drawing
-        gl.glTranslatef(0.0f, 0.0f, z); // Move z units into the screen
-        // Scale the Cube to 80 percent, otherwise it would be too large for the screen
-        gl.glScalef(0.4f, 0.4f, 0.4f);
+        gl.glScalef(0.2f, 0.2f, 0.2f);
 
-//        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
-
-//        gl.glRotatef(90, 1f, 0f, 0f);
-
+        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
         cube.draw(gl, 0);
 
-        // Change rotation factors
         xrot += xspeed;
         yrot += yspeed;
     }
