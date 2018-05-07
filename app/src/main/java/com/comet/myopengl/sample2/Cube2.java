@@ -8,8 +8,6 @@ import android.opengl.GLUtils;
 
 import com.comet.myopengl.R;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -235,17 +233,8 @@ public class Cube2 {
      * @param context - The Activity context
      */
     public void loadGLTexture(GL10 gl, Context context) {
-        InputStream is = context.getResources().openRawResource(R.raw.ic_launcher);
-        Bitmap bitmap = null;
-        try {
-            bitmap = BitmapFactory.decodeStream(is);
-
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-            }
-        }
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.keyboard_1);
 
         gl.glGenTextures(3, textures, 0);
 
@@ -254,42 +243,5 @@ public class Cube2 {
         gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
         bitmap.recycle();
-    }
-
-    /**
-     * Our own MipMap generation implementation.
-     * Scale the original bitmap down, always by factor two,
-     * and set it as new mipmap level.
-     * <p>
-     * Thanks to Mike Miller (with minor changes)!
-     *
-     * @param gl     - The GL Context
-     * @param bitmap - The bitmap to mipmap
-     */
-    private void buildMipmap(GL10 gl, Bitmap bitmap) {
-        //
-        int level = 0;
-        //
-        int height = bitmap.getHeight();
-        int width = bitmap.getWidth();
-
-        //
-        while (height >= 1 || width >= 1) {
-            //First of all, generate the texture from our bitmap and set it to the according level
-            GLUtils.texImage2D(GL10.GL_TEXTURE_2D, level, bitmap, 0);
-            if (height == 1 || width == 1) {
-                break;
-            }
-
-            //Increase the mipmap level
-            level++;
-            height /= 2;
-            width /= 2;
-            Bitmap bitmap2 = Bitmap.createScaledBitmap(bitmap, width, height, true);
-
-            //Clean up
-            bitmap.recycle();
-            bitmap = bitmap2;
-        }
     }
 }
