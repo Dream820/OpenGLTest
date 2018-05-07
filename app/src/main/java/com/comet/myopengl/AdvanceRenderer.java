@@ -15,14 +15,14 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
-    private Cube2 cube;
+    private Cube3 cube;
     private Context context;
 
     public float yrot; // Y Rotation
 
 
     public AdvanceRenderer(Context context) {
-        this.cube = new Cube2();
+        this.cube = new Cube3();
         this.context = context;
     }
 
