@@ -22,7 +22,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
     private Cube2 cube;
     private Context context;
 
-    private float xrot; // X Rotation
     private float yrot; // Y Rotation
 
     private float oldX;
@@ -76,15 +75,13 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         GLU.gluLookAt(gl, 0.0f,
                 0.6f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1, 0f);
 
-        gl.glEnable(GL10.GL_BLEND); //开启混合 如果不开启 就会没有透明
-        gl.glDisable(GL10.GL_DEPTH_TEST); // 开启时时只绘制前面的一层
+        gl.glEnable(GL10.GL_DEPTH_TEST); // 开启时时只绘制前面的一层
 
         gl.glScalef(0.2f, 0.2f, 0.2f);
 
-//        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
+        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
         cube.draw(gl, 0);
 
-        xrot += xspeed;
         yrot += yspeed;
     }
 
@@ -106,7 +103,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
                 // Rotate around the axis otherwise
             } else {
-                xrot += dy * TOUCH_SCALE;
                 yrot += dx * TOUCH_SCALE;
             }
         }

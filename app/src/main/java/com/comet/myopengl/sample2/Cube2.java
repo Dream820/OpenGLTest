@@ -51,40 +51,40 @@ public class Cube2 {
     private float vertices[] = {//四个点
 
             //front
-            -1.0f, 1.0f, (float) Math.sqrt(3),//left_top
-            -1.0f, -1.0f, (float) Math.sqrt(3),// x y z left_bottom
-            1.0f, 1.0f, (float) Math.sqrt(3),//right_top
-            1.0f, -1.0f, (float) Math.sqrt(3),//right_bottom
+            -1.0f, 0.614f, (float) Math.sqrt(3),//left_top
+            -1.0f, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
+            1.0f, 0.614f, (float) Math.sqrt(3),//right_top
+            1.0f, -0.614f, (float) Math.sqrt(3),//right_bottom
 
             //right roar
-            2, 1.0f, 0,
-            2, -1.0f, 0,
-            1.0f, 1.0f, -(float) Math.sqrt(3),
-            1.0f, -1.0f, -(float) Math.sqrt(3),
+            2, 0.614f, 0,
+            2, -0.614f, 0,
+            1.0f, 0.614f, -(float) Math.sqrt(3),
+            1.0f, -0.614f, -(float) Math.sqrt(3),
 
             //roar
-            -1.0f, 1.0f, -(float) Math.sqrt(3),
-            -1.0f, -1.0f, -(float) Math.sqrt(3),
-            1.0f, 1.0f, -(float) Math.sqrt(3),
-            1.0f, -1.0f, -(float) Math.sqrt(3),
+            -1.0f, 0.614f, -(float) Math.sqrt(3),
+            -1.0f, -0.614f, -(float) Math.sqrt(3),
+            1.0f, 0.614f, -(float) Math.sqrt(3),
+            1.0f, -0.614f, -(float) Math.sqrt(3),
 
             //left front
-            -2, 1.0f, 0,
-            -2, -1.0f, 0,
-            -1.0f, 1.0f, (float) Math.sqrt(3),
-            -1.0f, -1.0f, (float) Math.sqrt(3),
+            -2, 0.614f, 0,
+            -2, -0.614f, 0,
+            -1.0f, 0.614f, (float) Math.sqrt(3),
+            -1.0f, -0.614f, (float) Math.sqrt(3),
 
             //left roar
-            -1.0f, 1.0f, -(float) Math.sqrt(3),
-            -1.0f, -1.0f, -(float) Math.sqrt(3),
-            -2, 1.0f, 0,
-            -2, -1.0f, 0,
+            -1.0f, 0.614f, -(float) Math.sqrt(3),
+            -1.0f, -0.614f, -(float) Math.sqrt(3),
+            -2, 0.614f, 0,
+            -2, -0.614f, 0,
 
             //right front
-            1.0f, 1.0f, (float) Math.sqrt(3),
-            1.0f, -1.0f, (float) Math.sqrt(3),
-            2.0f, 1.0f, 0,
-            2.0f, -1.0f, 0,
+            1.0f, 0.614f, (float) Math.sqrt(3),
+            1.0f, -0.614f, (float) Math.sqrt(3),
+            2.0f, 0.614f, 0,
+            2.0f, -0.614f, 0,
 
     };
 
