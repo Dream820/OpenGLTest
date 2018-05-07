@@ -76,14 +76,12 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 gl) {
 
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-        //开启模型试图矩阵
         gl.glMatrixMode(GL10.GL_MODELVIEW);
-        //改变眼睛所处的位置，眼睛看向的点 是物体所处坐标的中心点
         gl.glLoadIdentity();
         GLU.gluLookAt(gl,0.0f,
                 0.6f,2.0f, 0.0f,0.0f,0.0f, 0.0f,1,0f);
 
-        gl.glEnable(GL10.GL_BLEND); // Turn Blending On ( NEW )
+        gl.glEnable(GL10.GL_BLEND); //开启混合 如果不开启 就会没有透明
         gl.glDisable(GL10.GL_DEPTH_TEST); // Turn Depth Testing Off ( NEW )
 
         gl.glScalef(0.2f, 0.2f, 0.2f);
