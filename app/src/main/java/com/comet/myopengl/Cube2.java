@@ -112,9 +112,6 @@ public class Cube2 {
 
     };
 
-    /**
-     * The initial texture coordinates (u, v)
-     */
     private float texture[] = {
             0.0f, 0.0f,
             0.0f, 1.0f,
@@ -192,7 +189,6 @@ public class Cube2 {
         gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
         gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
 
-        //Set the face rotation
         gl.glFrontFace(GL10.GL_CCW);
 
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
