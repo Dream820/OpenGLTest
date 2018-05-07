@@ -3,7 +3,6 @@ package com.comet.myopengl;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
-import android.view.MotionEvent;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -14,7 +13,7 @@ import javax.microedition.khronos.opengles.GL10;
  */
 
 public class AdvanceRenderer implements GLSurfaceView.Renderer {
-    private static final float TOUCH_SCALE = 0.2f; // Proved to be good for normal rotation
+    // Proved to be good for normal rotation
     /* Rotation speed values */
     private static final float xspeed = 0.5f; // X Rotation Speed
     private static final float yspeed = 0.5f; // Y Rotation Speed
@@ -22,11 +21,11 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
     private Cube2 cube;
     private Context context;
 
-    private float yrot; // Y Rotation
+    public float yrot; // Y Rotation
 
     private float oldX;
     private float oldY;
-    private float z = -5.0f; // Depth Into The Screen
+
 
     public AdvanceRenderer(Context context) {
         this.cube = new Cube2();
@@ -78,41 +77,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
         gl.glScalef(0.2f, 0.2f, 0.2f);
 
-//        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
-        gl.glRotatef(0, 0.0f, 1.0f, 0.0f); // Y
+        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
         cube.draw(gl, 0);
-
-        yrot += yspeed;
     }
-
-    public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
-
-        // If a touch is moved on the screen
-        if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            // Calculate the change
-            float dx = x - oldX;
-            float dy = y - oldY;
-            // Define an upper area of 10% on the screen
-            int upperArea = 0;
-
-            // Zoom in/out if the touch move has been made in the upper
-            if (y < upperArea) {
-                z -= dx * TOUCH_SCALE / 2;
-
-                // Rotate around the axis otherwise
-            } else {
-                yrot += dx * TOUCH_SCALE;
-            }
-        }
-
-        // Remember the values
-        oldX = x;
-        oldY = y;
-
-        // We handled the event
-        return true;
-    }
-
 }
