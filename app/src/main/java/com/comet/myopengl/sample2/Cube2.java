@@ -47,46 +47,50 @@ public class Cube2 {
      */
     private int[] textures = new int[3];
 
-    private float picBuffer = 0.1f;
+//    private float picBufferLenth = 0f;
+//    private float picBufferX = 0;
+//    private float picBufferZ = 0;
+    private float picBufferLenth = 0.2f;
+    private float picBufferX = picBufferLenth / 2;
+    private float picBufferZ = (float) (Math.sin(60) * picBufferLenth);
 
-    //second is right;fourth is left;first is front;third is roar
     private float vertices[] = {//四个点
 
             //front
-            -1.0f + picBuffer, 0.614f, (float) Math.sqrt(3),//left_top
-            -1.0f + picBuffer, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
-            1.0f - picBuffer, 0.614f, (float) Math.sqrt(3),//right_top
-            1.0f - picBuffer, -0.614f, (float) Math.sqrt(3),//right_bottom
+            -1.0f + picBufferLenth, 0.614f, (float) Math.sqrt(3),//left_top
+            -1.0f + picBufferLenth, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
+            1.0f - picBufferLenth, 0.614f, (float) Math.sqrt(3),//right_top
+            1.0f - picBufferLenth, -0.614f, (float) Math.sqrt(3),//right_bottom
 
             //right roar
-            2 - picBuffer, 0.614f, 0,
-            2 - picBuffer, -0.614f, 0,
-            1.0f + picBuffer, 0.614f, -(float) Math.sqrt(3),
-            1.0f + picBuffer, -0.614f, -(float) Math.sqrt(3),
+            2 - picBufferX, 0.614f, 0 - picBufferZ,
+            2 - picBufferX, -0.614f, 0 - picBufferZ,
+            1.0f + picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+            1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
 
             //roar
-            -1.0f + picBuffer, 0.614f, -(float) Math.sqrt(3),
-            -1.0f + picBuffer, -0.614f, -(float) Math.sqrt(3),
-            1.0f - picBuffer, 0.614f, -(float) Math.sqrt(3),
-            1.0f - picBuffer, -0.614f, -(float) Math.sqrt(3),
+            -1.0f + picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+            -1.0f + picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+            1.0f - picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+            1.0f - picBufferLenth, -0.614f, -(float) Math.sqrt(3),
 
             //left front
-            -2 + picBuffer, 0.614f, 0,
-            -2 + picBuffer, -0.614f, 0,
-            -1.0f - picBuffer, 0.614f, (float) Math.sqrt(3),
-            -1.0f - picBuffer, -0.614f, (float) Math.sqrt(3),
+            -2 + picBufferX, 0.614f, 0 + picBufferZ,
+            -2 + picBufferX, -0.614f, 0 + picBufferZ,
+            -1.0f - picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
+            -1.0f - picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
 
             //left roar
-            -1.0f - picBuffer, 0.614f, -(float) Math.sqrt(3),
-            -1.0f - picBuffer, -0.614f, -(float) Math.sqrt(3),
-            -2 + picBuffer, 0.614f, 0,
-            -2 + picBuffer, -0.614f, 0,
+            -1.0f - picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+            -1.0f - picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
+            -2 + picBufferX, 0.614f, 0 - picBufferZ,
+            -2 + picBufferX, -0.614f, 0 - picBufferZ,
 
             //right front
-            1.0f + picBuffer, 0.614f, (float) Math.sqrt(3),
-            1.0f + picBuffer, -0.614f, (float) Math.sqrt(3),
-            2.0f - picBuffer, 0.614f, 0,
-            2.0f - picBuffer, -0.614f, 0,
+            1.0f + picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
+            1.0f + picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
+            2.0f - picBufferX, 0.614f, 0 + picBufferZ,
+            2.0f - picBufferX, -0.614f, 0 + picBufferZ,
 
     };
 
@@ -174,6 +178,7 @@ public class Cube2 {
      * Initiate the buffers.
      */
     public Cube2() {
+
         ByteBuffer byteBuf
                 = ByteBuffer.allocateDirect(vertices.length * 4);
         byteBuf.order(ByteOrder.nativeOrder());
