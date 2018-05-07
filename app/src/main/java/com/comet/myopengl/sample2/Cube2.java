@@ -57,10 +57,10 @@ public class Cube2 {
             1.0f, -1.0f, (float) Math.sqrt(3),//right_bottom
 
             //right roar
-            2, -1.0f, 0,
-            1.0f, -1.0f, -(float) Math.sqrt(3),
             2, 1.0f, 0,
+            2, -1.0f, 0,
             1.0f, 1.0f, -(float) Math.sqrt(3),
+            1.0f, -1.0f, -(float) Math.sqrt(3),
 
             //roar
             -1.0f, 1.0f, -(float) Math.sqrt(3),
