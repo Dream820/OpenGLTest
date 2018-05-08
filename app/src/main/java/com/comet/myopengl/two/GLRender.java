@@ -20,7 +20,7 @@ public class GLRender implements Renderer {
     int n_close_flag = 0; // 1: close_icon show. 0: close_icon hide.  
     public int textureId;
 
-    IntBuffer vertices = IntBuffer.wrap(new int[]{
+    IntBuffer vertices = BufferUtil.iBuffer(new int[]{
             -one, -one, one,
             one, -one, one,
             one, one, one,
@@ -52,7 +52,7 @@ public class GLRender implements Renderer {
             -one, one, -one,
 
     });
-    IntBuffer texCoords = IntBuffer.wrap(new int[]{
+    IntBuffer texCoords = BufferUtil.iBuffer(new int[]{
             one, 0, 0, 0, 0, one, one, one,
             0, 0, 0, one, one, one, one, 0,
             one, one, one, 0, 0, 0, 0, one,
@@ -61,7 +61,7 @@ public class GLRender implements Renderer {
             one, 0, 0, 0, 0, one, one, one,
     });
 
-    ByteBuffer indices = ByteBuffer.wrap(new byte[]{
+    ByteBuffer indices = BufferUtil.bBuffer(new byte[]{
             0, 1, 3, 2,
             4, 5, 7, 6,
             8, 9, 11, 10,
@@ -70,37 +70,37 @@ public class GLRender implements Renderer {
             20, 21, 23, 22,
     });
 
-    ByteBuffer indices_0 = ByteBuffer.wrap(new byte[]{
+    ByteBuffer indices_0 = BufferUtil.bBuffer(new byte[]{
             0, 1, 3, 2
     });
 
-    ByteBuffer indices_1 = ByteBuffer.wrap(new byte[]{
+    ByteBuffer indices_1 = BufferUtil.bBuffer(new byte[]{
             4, 5, 7, 6
     });
 
-    ByteBuffer indices_2 = ByteBuffer.wrap(new byte[]{
+    ByteBuffer indices_2 = BufferUtil.bBuffer(new byte[]{
             8, 9, 11, 10
     });
 
-    ByteBuffer indices_3 = ByteBuffer.wrap(new byte[]{
+    ByteBuffer indices_3 = BufferUtil.bBuffer(new byte[]{
             12, 13, 15, 14
     });
 
-    ByteBuffer indices_4 = ByteBuffer.wrap(new byte[]{
+    ByteBuffer indices_4 = BufferUtil.bBuffer(new byte[]{
             16, 17, 19, 18
     });
 
-    ByteBuffer indices_5 = ByteBuffer.wrap(new byte[]{
+    ByteBuffer indices_5 = BufferUtil.bBuffer(new byte[]{
             20, 21, 23, 22
     });
 
     //正方形的4个顶点     
-    private IntBuffer quaterBuffer = IntBuffer.wrap(new int[]{
+    private IntBuffer quaterBuffer = BufferUtil.iBuffer(new int[]{
             one, one, 0,
             -one, one, 0,
             one, -one, 0,
             -one, -one, 0});
-    IntBuffer texCoords_rect = IntBuffer.wrap(new int[]{
+    IntBuffer texCoords_rect = BufferUtil.iBuffer(new int[]{
             0, 1, 1, 1, 1, 0, 0, 0,
     });
 
