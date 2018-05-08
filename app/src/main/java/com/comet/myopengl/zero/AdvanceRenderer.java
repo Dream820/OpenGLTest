@@ -135,6 +135,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glEnable(GL10.GL_TEXTURE_2D); // Enable Texture Mapping
         gl.glShadeModel(GL10.GL_SMOOTH); // Enable Smooth Shading
         gl.glClearColor(1.0f,1.0f,1.0f,0.0f); // Black Background
+
         gl.glClearDepthf(1.0f); // Depth Buffer Setup
         gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
         gl.glDepthFunc(GL10.GL_LEQUAL); // The Type Of Depth Testing To Do
