@@ -120,8 +120,7 @@ public class GLRender implements Renderer {
         gl.glRotatef(zrot, 0.0f, 0.0f, 1.0f);
 
         texture = intBuffer.get(1);
-        ;
-        //  5.绑定纹理  
+        //  5.绑定纹理
         gl.glBindTexture(GL10.GL_TEXTURE_2D, texture);
 
         // 6.开启顶点和纹理功能  
@@ -132,28 +131,40 @@ public class GLRender implements Renderer {
         gl.glVertexPointer(3, GL10.GL_FIXED, 0, vertices);
         gl.glTexCoordPointer(2, GL10.GL_FIXED, 0, texCoords);
 
-        // 8.绘制0  
+        // 8.绘制0
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.iBitmap, 0);
         gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, 4, GL10.GL_UNSIGNED_BYTE, indices_0);
 
-        //绘制1  
+        //绘制1
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.jBitmap, 0);
         gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, 4, GL10.GL_UNSIGNED_BYTE, indices_1);
 
         //绘制2  
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.kBitmap, 0);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
         gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, 4, GL10.GL_UNSIGNED_BYTE, indices_2);
 
         //绘制3  
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.lBitmap, 0);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
         gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, 4, GL10.GL_UNSIGNED_BYTE, indices_3);
 
         //绘制4  
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.mBitmap, 0);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
         gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, 4, GL10.GL_UNSIGNED_BYTE, indices_4);
 
         //绘制5  
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.close_Bitmap, 0);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
         gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, 4, GL10.GL_UNSIGNED_BYTE, indices_5);
 
         if (0 == n_close_flag) {

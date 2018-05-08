@@ -17,12 +17,12 @@ public class GLImage {
 
 
     public static void load(Resources resources) {
-        iBitmap = BitmapFactory.decodeResource(resources, R.drawable.keyboard_1);
-        jBitmap = BitmapFactory.decodeResource(resources, R.drawable.keyboard_2);
-        kBitmap = BitmapFactory.decodeResource(resources, R.drawable.keyboard_3);
-        lBitmap = BitmapFactory.decodeResource(resources, R.drawable.keyboard_4);
-        mBitmap = BitmapFactory.decodeResource(resources, R.drawable.keyboard_5);
-        nBitmap = BitmapFactory.decodeResource(resources, R.drawable.keyboard_5);
+        iBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_launcher);
+        jBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_launcher);
+        kBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_launcher);
+        lBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_launcher);
+        mBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_launcher);
+        nBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_launcher);
         close_Bitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_launcher);
     }
 }  
