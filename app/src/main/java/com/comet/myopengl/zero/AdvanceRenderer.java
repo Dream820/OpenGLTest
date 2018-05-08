@@ -8,7 +8,6 @@ import android.util.Log;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -200,9 +199,9 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glScalef(0.2f, 0.2f, 0.2f);
         gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
 
-        IntBuffer textureBuffer = IntBuffer.allocate(6);
-        gl.glGenTextures(6, textureBuffer);
-        textures = textureBuffer.array();
+//        IntBuffer textureBufferii = IntBuffer.allocate(6);
+//        gl.glGenTextures(6, textureBufferii);
+//        textures = textureBufferii.array();
 
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
@@ -214,8 +213,8 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
         gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer);
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
-        gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer1);
+//        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
+//        gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer1);
 
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
