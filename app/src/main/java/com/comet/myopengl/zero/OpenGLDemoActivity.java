@@ -16,6 +16,4 @@ public class OpenGLDemoActivity extends Activity {
         MyGLSurfaceView view = new MyGLSurfaceView(this);
         setContentView(view);
     }
-
-
 }
