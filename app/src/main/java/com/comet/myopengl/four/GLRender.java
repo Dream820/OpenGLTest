@@ -13,7 +13,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class GLRender implements GLSurfaceView.Renderer {
-    boolean key = true;
+    boolean key = false;
     float xrot = 0.0f;
     float yrot = 0.0f;
     float z = -5.0f;
@@ -99,24 +99,15 @@ public class GLRender implements GLSurfaceView.Renderer {
             -one, 0, 0,
             -one, 0, 0,
     };
-    //  纹理映射数据
-    int[] texCoord = new int[]{
-            one, 0, 0, 0, 0, one, one, one,
-            0, 0, 0, one, one, one, one, 0,
-            one, one, one, 0, 0, 0, 0, one,
-            0, one, one, one, one, 0, 0, 0,
-            0, 0, 0, one, one, one, one, 0,
-            one, 0, 0, 0, 0, one, one, one,
-    };
     IntBuffer normals = GLTool.getIntBu(normal);
 
     ByteBuffer indices1 = ByteBuffer.wrap(new byte[]{
-            0, 1, 3, 2,
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0,
-            0, 0, 0, 0,
+            0, 1, 3, 0, 3, 2,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0
     });
     ByteBuffer indices2 = ByteBuffer.wrap(new byte[]{
             0, 0, 0, 0,
@@ -205,13 +196,13 @@ public class GLRender implements GLSurfaceView.Renderer {
 //        yrot += 0.2f;
 
         //混合开关
-        if (key) {
-            gl.glEnable(GL10.GL_BLEND);     // 打开混合
-            gl.glDisable(GL10.GL_DEPTH_TEST);   // 关闭深度测试
-        } else {
-            gl.glDisable(GL10.GL_BLEND);        // 关闭混合
+//        if (key) {
+//            gl.glEnable(GL10.GL_BLEND);     // 打开混合
+//            gl.glDisable(GL10.GL_DEPTH_TEST);   // 关闭深度测试
+//        } else {
+//            gl.glDisable(GL10.GL_BLEND);        // 关闭混合
             gl.glEnable(GL10.GL_DEPTH_TEST);    // 打开深度测试
-        }
+//        }
     }
 
     @Override
@@ -264,6 +255,7 @@ public class GLRender implements GLSurfaceView.Renderer {
             1.0f, 0.0f,
             1.0f, 1.0f,
     };
+
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         ByteBuffer byteBuf
