@@ -1,6 +1,5 @@
 package com.comet.myopengl.zero;
 
-import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.opengl.GLUtils;
@@ -128,16 +127,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
             20, 21, 23, 20, 23, 22
     };
 
-    private Cube2 cube;
-    private Context context;
-
     public float yrot; // Y Rotation
-
-
-    public AdvanceRenderer(Context context) {
-        this.cube = new Cube2();
-        this.context = context;
-    }
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -191,7 +181,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.mBitmap6, 0);
         gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
         gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
-
 
 
         ByteBuffer byteBuf

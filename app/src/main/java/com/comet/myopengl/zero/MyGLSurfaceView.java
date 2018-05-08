@@ -11,13 +11,13 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
     public MyGLSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        advanceRenderer = new AdvanceRenderer(context);
+        advanceRenderer = new AdvanceRenderer();
         setRenderer(advanceRenderer);
     }
 
     public MyGLSurfaceView(Context context) {
         super(context);
-        advanceRenderer = new AdvanceRenderer(context);
+        advanceRenderer = new AdvanceRenderer();
         setRenderer(advanceRenderer);
     }
 
