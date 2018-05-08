@@ -82,29 +82,68 @@ public class OneActivity2 extends Activity {
                         "void main() {" +
                         "  gl_FragColor = texture2D(s_texture, v_texCoord);" +
                         "}";
-        private static float picBufferLenth = 0.1f;
-        private static final float[] VERTEX = {   // in counterclockwise order:
+        private  float picBufferLenth = 0.1f;
+        private  final float[] VERTEX = {   // in counterclockwise order:
                 //front
-                1.0f - picBufferLenth, 0.614f, (float) Math.sqrt(3),//right_top
+//                1.0f - picBufferLenth, 0.614f, (float) Math.sqrt(3),//right_top
+//                -1.0f + picBufferLenth, 0.614f, (float) Math.sqrt(3),//left_top
+//                -1.0f + picBufferLenth, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
+//                1.0f - picBufferLenth, -0.614f, (float) Math.sqrt(3),//right_bottom
                 -1.0f + picBufferLenth, 0.614f, (float) Math.sqrt(3),//left_top
                 -1.0f + picBufferLenth, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
+                1.0f - picBufferLenth, 0.614f, (float) Math.sqrt(3),//right_top
                 1.0f - picBufferLenth, -0.614f, (float) Math.sqrt(3),//right_bottom
         };
-        private static final short[] VERTEX_INDEX = {
-                0, 1, 2, 0, 2, 3
+        private  final short[] VERTEX_INDEX = {
+                0, 1, 3, 0, 3, 2,
         };
-        private static final float[] TEX_VERTEX = {   // in clockwise order:
-                0.5f, 0,  // bottom right
-                0, 0,  // bottom left
-                0, 0.5f,  // top left
-                0.5f, 0.5f,  // top right
+        private  final float[] TEX_VERTEX = {   // in clockwise order:
+//                0.5f, 0,  // bottom right
+//                0, 0,  // bottom left
+//                0, 0.5f,  // top left
+//                0.5f, 0.5f,  // top right
+
+                1.0f, 0.0f,
+                0.0f, 1.0f,
+                0.0f, 0.0f,
+                1.0f, 1.0f,
         };
+        private  float picBufferX = picBufferLenth / 2;
+        private  float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
+
+        private  final float[] VERTEX2 = {   // in counterclockwise order:
+                //right roar
+//                1.0f + picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+//                2 - picBufferX, 0.614f, 0 - picBufferZ,
+//                2 - picBufferX, -0.614f, 0 - picBufferZ,
+//                1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
+                2 - picBufferX, 0.614f, 0 - picBufferZ,
+                2 - picBufferX, -0.614f, 0 - picBufferZ,
+                1.0f + picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+                1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
+
+        };
+        private  final short[] VERTEX_INDEX2 = {
+                4, 5, 7, 4, 7, 6,
+        };
+        private  final float[] TEX_VERTEX2 = {   // in clockwise order:
+                1.0f, 0.0f,
+                0.0f, 1.0f,
+                0.0f, 0.0f,
+                1.0f, 1.0f,
+        };
+
 
         private final Context mContext;
         private final FloatBuffer mVertexBuffer;
         private final FloatBuffer mTexVertexBuffer;
         private final ShortBuffer mVertexIndexBuffer;
         private final float[] mMVPMatrix = new float[16];
+
+        private final FloatBuffer mVertexBuffer2;
+        private final FloatBuffer mTexVertexBuffer2;
+        private final ShortBuffer mVertexIndexBuffer2;
+        private final float[] mMVPMatrix2 = new float[16];
 
         private int mProgram;
         private int mPositionHandle;
@@ -132,6 +171,24 @@ public class OneActivity2 extends Activity {
                     .asFloatBuffer()
                     .put(TEX_VERTEX);
             mTexVertexBuffer.position(0);
+
+            mVertexBuffer2 = ByteBuffer.allocateDirect(VERTEX2.length * 4)
+                    .order(ByteOrder.nativeOrder())
+                    .asFloatBuffer()
+                    .put(VERTEX2);
+            mVertexBuffer2.position(0);
+
+            mVertexIndexBuffer2 = ByteBuffer.allocateDirect(VERTEX_INDEX2.length * 2)
+                    .order(ByteOrder.nativeOrder())
+                    .asShortBuffer()
+                    .put(VERTEX_INDEX2);
+            mVertexIndexBuffer2.position(0);
+
+            mTexVertexBuffer2 = ByteBuffer.allocateDirect(TEX_VERTEX2.length * 4)
+                    .order(ByteOrder.nativeOrder())
+                    .asFloatBuffer()
+                    .put(TEX_VERTEX2);
+            mTexVertexBuffer2.position(0);
         }
 
         static int loadShader(int type, String shaderCode) {
@@ -167,6 +224,14 @@ public class OneActivity2 extends Activity {
             GLES20.glVertexAttribPointer(mTexCoordHandle, 2, GLES20.GL_FLOAT, false, 0,
                     mTexVertexBuffer);
 
+            GLES20.glEnableVertexAttribArray(mPositionHandle);
+            GLES20.glVertexAttribPointer(mPositionHandle, 3, GLES20.GL_FLOAT, false,
+                    12, mVertexBuffer2);
+
+            GLES20.glEnableVertexAttribArray(mTexCoordHandle);
+            GLES20.glVertexAttribPointer(mTexCoordHandle, 2, GLES20.GL_FLOAT, false, 0,
+                    mTexVertexBuffer2);
+
             int[] texNames = new int[1];
             GLES20.glGenTextures(1, texNames, 0);
             mTexName = texNames[0];
@@ -192,18 +257,26 @@ public class OneActivity2 extends Activity {
 
             Matrix.perspectiveM(mMVPMatrix, 0, 45, (float) width / height, 0.1f, 100f);
             Matrix.translateM(mMVPMatrix, 0, 0f, 0f, -5f);
+            Matrix.scaleM(mMVPMatrix, 0, 0.5f, 0.5f, 0.5f);
+
+
+            Matrix.perspectiveM(mMVPMatrix2, 0, 45, (float) width / height, 0.1f, 100f);
+            Matrix.translateM(mMVPMatrix2, 0, 0f, 0f, -5f);
+            Matrix.scaleM(mMVPMatrix2, 0, 0.5f, 0.5f, 0.5f);
         }
 
         @Override
-        public void onDrawFrame(GL10 unused) {
-            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-
+        public void onDrawFrame(GL10 gl) {
             GLES20.glUniformMatrix4fv(mMatrixHandle, 1, false, mMVPMatrix, 0);
             GLES20.glUniform1i(mTexSamplerHandle, 0);
 
-            // 用 glDrawElements 来绘制，mVertexIndexBuffer 指定了顶点绘制顺序
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, VERTEX_INDEX.length,
                     GLES20.GL_UNSIGNED_SHORT, mVertexIndexBuffer);
+
+            GLES20.glUniformMatrix4fv(mMatrixHandle, 1, false, mMVPMatrix2, 0);
+            GLES20.glUniform1i(mTexSamplerHandle, 0);
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, VERTEX_INDEX2.length,
+                    GLES20.GL_UNSIGNED_SHORT, mVertexIndexBuffer2);
         }
 
         void destroy() {
