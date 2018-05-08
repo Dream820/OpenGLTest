@@ -1,6 +1,7 @@
 package com.comet.myopengl.zero;
 
 import android.content.Context;
+import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -11,16 +12,13 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
     public MyGLSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        advanceRenderer = new AdvanceRenderer();
-        setRenderer(advanceRenderer);
-
-    }
-
-    public MyGLSurfaceView(Context context) {
-        super(context);
+        setEGLConfigChooser(8, 8, 8, 8, 16, 0);
+        getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        setZOrderOnTop(true);
         advanceRenderer = new AdvanceRenderer();
         setRenderer(advanceRenderer);
     }
+
 
     private float oldX;
     private float TOUCH_SCALE = 0.2f;

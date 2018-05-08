@@ -48,10 +48,10 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
             1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
 
             //roar
-            -1.0f + picBufferLenth, 0.614f, -(float) Math.sqrt(3),
-            -1.0f + picBufferLenth, -0.614f, -(float) Math.sqrt(3),
             1.0f - picBufferLenth, 0.614f, -(float) Math.sqrt(3),
             1.0f - picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+            -1.0f + picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+            -1.0f + picBufferLenth, -0.614f, -(float) Math.sqrt(3),
 
             //left front
             -2 + picBufferX, 0.614f, 0 + picBufferZ,
@@ -107,7 +107,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
     private byte indices0[] = {
             0, 1, 3, 0, 3, 2
     };
-
     private byte indices1[] = {
             4, 5, 7, 4, 7, 6
     };
@@ -130,7 +129,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         gl.glEnable(GL10.GL_LIGHT0); // Enable Light 0
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE); // Set The Blending Function For Translucency ( NEW )
-        gl.glColor4f(1.0f, 1.0f, 1.0f, 0.5f); // Full Brightness. 50% Alpha ( NEW )
+        gl.glColor4f(1.0f, 1.0f, 1.0f, 1f); // Full Brightness. 50% Alpha ( NEW )
 
         gl.glDisable(GL10.GL_DITHER); // Disable dithering
         gl.glEnable(GL10.GL_TEXTURE_2D); // Enable Texture Mapping
