@@ -36,7 +36,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
     private float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
 
     private float vertices[] = {
-
             //front
             -1.0f + picBufferLenth, 0.614f, (float) Math.sqrt(3),//left_top
             -1.0f + picBufferLenth, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
@@ -72,7 +71,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
             1.0f + picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
             2.0f - picBufferX, 0.614f, 0 + picBufferZ,
             2.0f - picBufferX, -0.614f, 0 + picBufferZ,
-
     };
 
     private float texture[] = {
@@ -144,9 +142,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
         gl.glDepthFunc(GL10.GL_LEQUAL); // The Type Of Depth Testing To Do
 
-        // Really Nice Perspective Calculations
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
-
 
         IntBuffer textureBufferTmp = IntBuffer.allocate(6);
         gl.glGenTextures(6, textureBufferTmp);
@@ -181,7 +177,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.mBitmap6, 0);
         gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
         gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
-
 
         ByteBuffer byteBuf
                 = ByteBuffer.allocateDirect(vertices.length * 4);
@@ -228,16 +223,13 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         }
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glLoadIdentity();
-
         GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 100.0f);
-        gl.glMatrixMode(GL10.GL_MODELVIEW); // Select The Modelview Matrix
-        gl.glLoadIdentity(); // Reset The Modelview Matrix
-
+        gl.glMatrixMode(GL10.GL_MODELVIEW);
+        gl.glLoadIdentity();
     }
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        Log.d("onDrawFrame", "1111");
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
         GLU.gluLookAt(gl, 0.0f,
