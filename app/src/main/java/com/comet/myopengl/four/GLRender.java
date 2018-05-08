@@ -13,7 +13,6 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class GLRender implements GLSurfaceView.Renderer {
-    boolean key = false;
     float xrot = 0.0f;
     float yrot = 0.0f;
     float z = -5.0f;
@@ -102,12 +101,12 @@ public class GLRender implements GLSurfaceView.Renderer {
     IntBuffer normals = GLTool.getIntBu(normal);
 
     ByteBuffer indices1 = ByteBuffer.wrap(new byte[]{
-            0, 1, 3, 0, 3, 2,
-            0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0
+            0, 1, 3, 2,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0
     });
     ByteBuffer indices2 = ByteBuffer.wrap(new byte[]{
             0, 0, 0, 0,
@@ -195,14 +194,7 @@ public class GLRender implements GLSurfaceView.Renderer {
 //        xrot += 0.3f;
 //        yrot += 0.2f;
 
-        //混合开关
-//        if (key) {
-//            gl.glEnable(GL10.GL_BLEND);     // 打开混合
-//            gl.glDisable(GL10.GL_DEPTH_TEST);   // 关闭深度测试
-//        } else {
-//            gl.glDisable(GL10.GL_BLEND);        // 关闭混合
-            gl.glEnable(GL10.GL_DEPTH_TEST);    // 打开深度测试
-//        }
+        gl.glEnable(GL10.GL_DEPTH_TEST);    // 打开深度测试
     }
 
     @Override
@@ -272,23 +264,23 @@ public class GLRender implements GLSurfaceView.Renderer {
         textureBuffer.position(0);
 
 
-        gl.glDisable(GL10.GL_DITHER);
-
-        // 告诉系统对透视进行修正
-        gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
-        // 黑色背景
-        gl.glClearColor(0, 0, 0, 0);
-
-        gl.glEnable(GL10.GL_CULL_FACE);
-        // 启用阴影平滑
-        gl.glShadeModel(GL10.GL_SMOOTH);
-        // 启用深度测试
-        gl.glEnable(GL10.GL_DEPTH_TEST);
-
-        //设置光线,,1.0f为全光线，a=50%
-        gl.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
-        // 基于源象素alpha通道值的半透明混合函数
-        gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
+//        gl.glDisable(GL10.GL_DITHER);
+//
+//        // 告诉系统对透视进行修正
+//        gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
+//        // 黑色背景
+//        gl.glClearColor(0, 0, 0, 0);
+//
+//        gl.glEnable(GL10.GL_CULL_FACE);
+//        // 启用阴影平滑
+//        gl.glShadeModel(GL10.GL_SMOOTH);
+//        // 启用深度测试
+//        gl.glEnable(GL10.GL_DEPTH_TEST);
+//
+//        //设置光线,,1.0f为全光线，a=50%
+//        gl.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+//        // 基于源象素alpha通道值的半透明混合函数
+//        gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
 
         //纹理相关      
         IntBuffer textureBuffer = IntBuffer.allocate(6);
@@ -326,30 +318,24 @@ public class GLRender implements GLSurfaceView.Renderer {
         gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
 
 
-        //深度测试相关
-        gl.glClearDepthf(1.0f);
-        gl.glDepthFunc(GL10.GL_LEQUAL);
+        gl.glEnable(GL10.GL_LIGHT0); // Enable Light 0
+
+        gl.glColor4f(1.0f, 1.0f, 1.0f, 0.5f); // Full Brightness. 50% Alpha ( NEW )
+        gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE); // Set The Blending Function For Translucency ( NEW )
+
+        gl.glDisable(GL10.GL_DITHER); // Disable dithering
+        gl.glEnable(GL10.GL_TEXTURE_2D); // Enable Texture Mapping
+        gl.glShadeModel(GL10.GL_SMOOTH); // Enable Smooth Shading
+        gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f); // Black Background
+        gl.glClearDepthf(1.0f); // Depth Buffer Setup
+        gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
+        gl.glDepthFunc(GL10.GL_LEQUAL); // The Type Of Depth Testing To Do
+
+        // Really Nice Perspective Calculations
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
-        gl.glEnable(GL10.GL_TEXTURE_2D);
-
-        //设置环境光
-        gl.glLightfv(GL10.GL_LIGHT1, GL10.GL_AMBIENT, lightAmbient);
-
-        //设置漫射光
-        gl.glLightfv(GL10.GL_LIGHT1, GL10.GL_DIFFUSE, lightDiffuse);
-
-        //设置光源位置
-        gl.glLightfv(GL10.GL_LIGHT1, GL10.GL_POSITION, lightPosition);
-
-        //开启一号光源
-        gl.glEnable(GL10.GL_LIGHT1);
-
-        //开启混合
-        gl.glEnable(GL10.GL_BLEND);
     }
 
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        key = !key;
         return false;
     }
 }

@@ -1,4 +1,4 @@
-package com.comet.myopengl;
+package com.comet.myopengl.zero;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;

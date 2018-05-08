@@ -1,4 +1,4 @@
-package com.comet.myopengl;
+package com.comet.myopengl.zero;
 
 import android.app.Activity;
 import android.os.Bundle;
