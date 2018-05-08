@@ -15,7 +15,6 @@ public class GLRender implements GLSurfaceView.Renderer {
     boolean key = true;
     float xrot = 0.0f;
     float yrot = 0.0f;
-    float xspeed, yspeed;
     float z = -5.0f;
     int one = 0x10000;
 
