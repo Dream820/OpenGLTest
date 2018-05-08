@@ -71,6 +71,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
         gl.glScalef(0.2f, 0.2f, 0.2f);
         gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
-        cube.draw(gl, 0);
+        cube.draw(gl);
     }
 }
