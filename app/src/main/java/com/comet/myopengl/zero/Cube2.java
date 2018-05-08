@@ -149,27 +149,13 @@ public class Cube2 {
         indexBuffer1 = ByteBuffer.allocateDirect(indices.length);
         indexBuffer1.put(indices1);
         indexBuffer1.position(0);
+
+
+
     }
 
     public void draw(GL10 gl) {
 
-
-        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-        gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
-
-        gl.glFrontFace(GL10.GL_CCW);
-        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
-        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);//设置纹理
-
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
-        gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer);
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
-        gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer1);
-
-        gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
-        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-        gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
     }
 
     public void loadGLTexture(GL10 gl, Context context) {

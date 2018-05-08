@@ -5,6 +5,11 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.util.Log;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -14,6 +19,107 @@ import javax.microedition.khronos.opengles.GL10;
  */
 
 public class AdvanceRenderer implements GLSurfaceView.Renderer {
+
+    private FloatBuffer vertexBuffer;
+    private FloatBuffer textureBuffer;
+    private ByteBuffer indexBuffer;
+    private ByteBuffer indexBuffer1;
+
+    private int[] textures = new int[6];
+
+    private float picBufferLenth = 0.1f;
+    private float picBufferX = picBufferLenth / 2;
+    private float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
+
+    private float vertices[] = {
+
+            //front
+            -1.0f + picBufferLenth, 0.614f, (float) Math.sqrt(3),//left_top
+            -1.0f + picBufferLenth, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
+            1.0f - picBufferLenth, 0.614f, (float) Math.sqrt(3),//right_top
+            1.0f - picBufferLenth, -0.614f, (float) Math.sqrt(3),//right_bottom
+
+            //right roar
+            2 - picBufferX, 0.614f, 0 - picBufferZ,
+            2 - picBufferX, -0.614f, 0 - picBufferZ,
+            1.0f + picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+            1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
+
+            //roar
+            -1.0f + picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+            -1.0f + picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+            1.0f - picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+            1.0f - picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+
+            //left front
+            -2 + picBufferX, 0.614f, 0 + picBufferZ,
+            -2 + picBufferX, -0.614f, 0 + picBufferZ,
+            -1.0f - picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
+            -1.0f - picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
+
+            //left roar
+            -1.0f - picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+            -1.0f - picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
+            -2 + picBufferX, 0.614f, 0 - picBufferZ,
+            -2 + picBufferX, -0.614f, 0 - picBufferZ,
+
+            //right front
+            1.0f + picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
+            1.0f + picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
+            2.0f - picBufferX, 0.614f, 0 + picBufferZ,
+            2.0f - picBufferX, -0.614f, 0 + picBufferZ,
+
+    };
+
+    private float texture[] = {
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+    };
+
+    private byte indices[] = {
+            0, 1, 3, 0, 3, 2,
+//            4, 5, 7, 4, 7, 6,
+//            8, 9, 11, 8, 11, 10,
+//            12, 13, 15, 12, 15, 14,
+//            16, 17, 19, 16, 19, 18,
+//            20, 21, 23, 20, 23, 22,
+    };
+
+    private byte indices1[] = {
+//            0, 1, 3, 0, 3, 2,
+            4, 5, 7, 4, 7, 6,
+//            8, 9, 11, 8, 11, 10,
+//            12, 13, 15, 12, 15, 14,
+//            16, 17, 19, 16, 19, 18,
+//            20, 21, 23, 20, 23, 22,
+    };
 
     private Cube2 cube;
     private Context context;
@@ -44,6 +150,28 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         // Really Nice Perspective Calculations
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
         cube.loadGLTexture(gl, context);
+
+
+        ByteBuffer byteBuf
+                = ByteBuffer.allocateDirect(vertices.length * 4);
+        byteBuf.order(ByteOrder.nativeOrder());
+        vertexBuffer = byteBuf.asFloatBuffer();
+        vertexBuffer.put(vertices);
+        vertexBuffer.position(0);
+
+        byteBuf = ByteBuffer.allocateDirect(texture.length * 4);
+        byteBuf.order(ByteOrder.nativeOrder());
+        textureBuffer = byteBuf.asFloatBuffer();
+        textureBuffer.put(texture);
+        textureBuffer.position(0);
+
+        indexBuffer = ByteBuffer.allocateDirect(indices.length);
+        indexBuffer.put(indices);
+        indexBuffer.position(0);
+
+        indexBuffer1 = ByteBuffer.allocateDirect(indices.length);
+        indexBuffer1.put(indices1);
+        indexBuffer1.position(0);
     }
 
     @Override
@@ -71,6 +199,26 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
         gl.glScalef(0.2f, 0.2f, 0.2f);
         gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
-        cube.draw(gl);
+
+        IntBuffer textureBuffer = IntBuffer.allocate(6);
+        gl.glGenTextures(6, textureBuffer);
+        textures = textureBuffer.array();
+
+        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+        gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+        gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
+
+        gl.glFrontFace(GL10.GL_CCW);
+        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
+        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);//设置纹理
+
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+        gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer);
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
+        gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer1);
+
+        gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
+        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+        gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
     }
 }
