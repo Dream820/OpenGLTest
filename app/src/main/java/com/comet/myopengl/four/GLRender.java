@@ -162,8 +162,6 @@ public class GLRender implements GLSurfaceView.Renderer {
         gl.glLoadIdentity();
 
         gl.glEnable(GL10.GL_LIGHTING);
-
-        ////////////////
         gl.glTranslatef(0.0f, 0.0f, z);
 
         //设置旋转
@@ -178,9 +176,7 @@ public class GLRender implements GLSurfaceView.Renderer {
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
 
-
         //绘制四边形
-
         gl.glBindTexture(GL10.GL_TEXTURE_2D, texture[0]);
         gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, 4, GL10.GL_UNSIGNED_BYTE, indices1);
         gl.glBindTexture(GL10.GL_TEXTURE_2D, texture[1]);

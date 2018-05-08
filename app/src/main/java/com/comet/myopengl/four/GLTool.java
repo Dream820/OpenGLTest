@@ -16,5 +16,4 @@ public class GLTool {
         vertices.position(0);
         return vertices;
     }
-     
 }
