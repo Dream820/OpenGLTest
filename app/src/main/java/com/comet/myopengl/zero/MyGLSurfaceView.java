@@ -35,6 +35,17 @@ public class MyGLSurfaceView extends GLSurfaceView {
             }
             oldX = x;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            //抬起的时候需要计算 接近那个点
+            float ramain = advanceRenderer.yrot % 60;
+            if (ramain >= 0 && ramain < 30) {
+                advanceRenderer.yrot = advanceRenderer.yrot - ramain;
+            } else if (ramain >= 30 && ramain <= 60) {
+                advanceRenderer.yrot = advanceRenderer.yrot + (60 - ramain);
+            } else if (ramain <= 0 && ramain > -30) {
+                advanceRenderer.yrot = advanceRenderer.yrot - ramain;
+            } else if (ramain <= -30 && ramain >= -60) {
+                advanceRenderer.yrot = advanceRenderer.yrot + (-60 - ramain);
+            }
         } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
             oldX = x;
         }
