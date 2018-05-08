@@ -5,6 +5,7 @@ import android.opengl.GLUtils;
 import android.view.KeyEvent;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
@@ -16,7 +17,7 @@ public class GLRender implements GLSurfaceView.Renderer {
     float xrot = 0.0f;
     float yrot = 0.0f;
     float z = -5.0f;
-    int one = 0x10000;
+    int one = 65536;
 
     //光线参数
     FloatBuffer lightAmbient = FloatBuffer.wrap(new float[]{0.5f, 0.5f, 0.5f, 1.0f});
@@ -24,38 +25,47 @@ public class GLRender implements GLSurfaceView.Renderer {
     FloatBuffer lightPosition = FloatBuffer.wrap(new float[]{0.0f, 0.0f, 2.0f, 1.0f});
 
     int[] texture;
-    //  六个面，一个面4个点
-    int[] vertice = new int[]{
-            -one, -one, one,
-            one, -one, one,
-            one, one, one,
-            -one, one, one,
 
-            -one, -one, -one,
-            -one, one, -one,
-            one, one, -one,
-            one, -one, -one,
+    private float picBufferLenth = 0.1f;
+    private float picBufferX = picBufferLenth / 2;
+    private float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
 
-            -one, one, -one,
-            -one, one, one,
-            one, one, one,
-            one, one, -one,
+    private float vertices1[] = {
+            //front
+            -1.0f + picBufferLenth, 0.614f, (float) Math.sqrt(3),//left_top
+            -1.0f + picBufferLenth, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
+            1.0f - picBufferLenth, 0.614f, (float) Math.sqrt(3),//right_top
+            1.0f - picBufferLenth, -0.614f, (float) Math.sqrt(3),//right_bottom
 
-            -one, -one, -one,
-            one, -one, -one,
-            one, -one, one,
-            -one, -one, one,
+            //right roar
+            2 - picBufferX, 0.614f, 0 - picBufferZ,
+            2 - picBufferX, -0.614f, 0 - picBufferZ,
+            1.0f + picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+            1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
 
-            one, -one, -one,
-            one, one, -one,
-            one, one, one,
-            one, -one, one,
+            //roar
+            -1.0f + picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+            -1.0f + picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+            1.0f - picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+            1.0f - picBufferLenth, -0.614f, -(float) Math.sqrt(3),
 
-            -one, -one, -one,
-            -one, -one, one,
-            -one, one, one,
-            -one, one, -one,
+            //left front
+            -2 + picBufferX, 0.614f, 0 + picBufferZ,
+            -2 + picBufferX, -0.614f, 0 + picBufferZ,
+            -1.0f - picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
+            -1.0f - picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
 
+            //left roar
+            -1.0f - picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+            -1.0f - picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
+            -2 + picBufferX, 0.614f, 0 - picBufferZ,
+            -2 + picBufferX, -0.614f, 0 - picBufferZ,
+
+            //right front
+            1.0f + picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
+            1.0f + picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
+            2.0f - picBufferX, 0.614f, 0 + picBufferZ,
+            2.0f - picBufferX, -0.614f, 0 + picBufferZ,
     };
 
     int[] normal = new int[]{
@@ -98,9 +108,7 @@ public class GLRender implements GLSurfaceView.Renderer {
             0, 0, 0, one, one, one, one, 0,
             one, 0, 0, 0, 0, one, one, one,
     };
-    IntBuffer vertices = GLTool.getIntBu(vertice);
     IntBuffer normals = GLTool.getIntBu(normal);
-    IntBuffer texCoords = GLTool.getIntBu(texCoord);
 
     ByteBuffer indices1 = ByteBuffer.wrap(new byte[]{
             0, 1, 3, 2,
@@ -168,8 +176,8 @@ public class GLRender implements GLSurfaceView.Renderer {
         gl.glRotatef(yrot, 1.0f, 0.0f, 0.0f);
 
         gl.glNormalPointer(GL10.GL_FIXED, 0, normals);
-        gl.glVertexPointer(3, GL10.GL_FIXED, 0, vertices);
-        gl.glTexCoordPointer(2, GL10.GL_FIXED, 0, texCoords);
+        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
+        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);
 
         gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
@@ -193,8 +201,8 @@ public class GLRender implements GLSurfaceView.Renderer {
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
         //修改旋转角度
-        xrot += 0.3f;
-        yrot += 0.2f;
+//        xrot += 0.3f;
+//        yrot += 0.2f;
 
         //混合开关
         if (key) {
@@ -223,8 +231,55 @@ public class GLRender implements GLSurfaceView.Renderer {
         gl.glLoadIdentity();
     }
 
+    private FloatBuffer vertexBuffer;
+    private FloatBuffer textureBuffer;
+    private float texture1[] = {
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
+            1.0f, 1.0f,
+    };
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        ByteBuffer byteBuf
+                = ByteBuffer.allocateDirect(vertices1.length * 4);
+        byteBuf.order(ByteOrder.nativeOrder());
+        vertexBuffer = byteBuf.asFloatBuffer();
+        vertexBuffer.put(vertices1);
+        vertexBuffer.position(0);
+
+        byteBuf = ByteBuffer.allocateDirect(texture1.length * 4);
+        byteBuf.order(ByteOrder.nativeOrder());
+        textureBuffer = byteBuf.asFloatBuffer();
+        textureBuffer.put(texture1);
+        textureBuffer.position(0);
+
+
         gl.glDisable(GL10.GL_DITHER);
 
         // 告诉系统对透视进行修正
