@@ -12,9 +12,7 @@ import android.view.MotionEvent;
 import com.comet.myopengl.R;
 
 public class Cube extends Activity {
-
     GLRender render = new GLRender();
-
     private float mPreviousX;
     private float mPreviousY;
     private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
