@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.comet.myopengl.two.Activity01">
+
+        <activity android:name="com.comet.myopengl.three.Cube">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
