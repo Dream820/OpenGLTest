@@ -3,7 +3,6 @@ package com.comet.myopengl.zero;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.opengl.GLUtils;
-import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -130,14 +129,12 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         gl.glEnable(GL10.GL_LIGHT0); // Enable Light 0
-
-        gl.glColor4f(1.0f, 1.0f, 1.0f, 0.5f); // Full Brightness. 50% Alpha ( NEW )
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE); // Set The Blending Function For Translucency ( NEW )
 
         gl.glDisable(GL10.GL_DITHER); // Disable dithering
         gl.glEnable(GL10.GL_TEXTURE_2D); // Enable Texture Mapping
         gl.glShadeModel(GL10.GL_SMOOTH); // Enable Smooth Shading
-        gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f); // Black Background
+        gl.glClearColor(1.0f,1.0f,1.0f,0.0f); // Black Background
         gl.glClearDepthf(1.0f); // Depth Buffer Setup
         gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
         gl.glDepthFunc(GL10.GL_LEQUAL); // The Type Of Depth Testing To Do
