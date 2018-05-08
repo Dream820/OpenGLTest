@@ -6,8 +6,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.comet.myopengl.R;
-
 public class MyGLSurfaceView extends GLSurfaceView {
     private AdvanceRenderer advanceRenderer;
 
@@ -15,7 +13,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
         super(context, attrs);
         advanceRenderer = new AdvanceRenderer();
         setRenderer(advanceRenderer);
-        setBackground(context.getResources().getDrawable(R.drawable.gradiant_guide_theme));
     }
 
     public MyGLSurfaceView(Context context) {
