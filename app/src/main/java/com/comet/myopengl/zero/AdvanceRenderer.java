@@ -12,11 +12,6 @@ import java.nio.IntBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-/**
- * @author jinyalin
- * @since 2017/7/24.
- */
-
 public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     private FloatBuffer vertexBuffer;
