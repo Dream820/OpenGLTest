@@ -3,11 +3,13 @@ package com.comet.myopengl.zero;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
+import android.opengl.GLUtils;
 import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -20,9 +22,13 @@ import javax.microedition.khronos.opengles.GL10;
 public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     private FloatBuffer vertexBuffer;
-    private FloatBuffer textureBuffer;
-    private ByteBuffer indexBuffer;
+    private FloatBuffer floatBuffer;
+    private ByteBuffer indexBuffer0;
     private ByteBuffer indexBuffer1;
+    private ByteBuffer indexBuffer2;
+    private ByteBuffer indexBuffer3;
+    private ByteBuffer indexBuffer4;
+    private ByteBuffer indexBuffer5;
 
     private int[] textures = new int[6];
 
@@ -102,22 +108,24 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
             1.0f, 1.0f,
     };
 
-    private byte indices[] = {
-            0, 1, 3, 0, 3, 2,
-//            4, 5, 7, 4, 7, 6,
-//            8, 9, 11, 8, 11, 10,
-//            12, 13, 15, 12, 15, 14,
-//            16, 17, 19, 16, 19, 18,
-//            20, 21, 23, 20, 23, 22,
+    private byte indices0[] = {
+            0, 1, 3, 0, 3, 2
     };
 
     private byte indices1[] = {
-//            0, 1, 3, 0, 3, 2,
-            4, 5, 7, 4, 7, 6,
-//            8, 9, 11, 8, 11, 10,
-//            12, 13, 15, 12, 15, 14,
-//            16, 17, 19, 16, 19, 18,
-//            20, 21, 23, 20, 23, 22,
+            4, 5, 7, 4, 7, 6
+    };
+    private byte indices2[] = {
+            8, 9, 11, 8, 11, 10
+    };
+    private byte indices3[] = {
+            12, 13, 15, 12, 15, 14
+    };
+    private byte indices4[] = {
+            16, 17, 19, 16, 19, 18
+    };
+    private byte indices5[] = {
+            20, 21, 23, 20, 23, 22
     };
 
     private Cube2 cube;
@@ -148,7 +156,42 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
         // Really Nice Perspective Calculations
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
-        cube.loadGLTexture(gl, context);
+
+
+        IntBuffer textureBufferTmp = IntBuffer.allocate(6);
+        gl.glGenTextures(6, textureBufferTmp);
+        textures = textureBufferTmp.array();
+
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.mBitmap1, 0);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
+
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
+        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.mBitmap2, 0);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
+
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[2]);
+        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.mBitmap3, 0);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
+
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[3]);
+        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.mBitmap4, 0);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
+
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[4]);
+        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.mBitmap5, 0);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
+
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[5]);
+        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.mBitmap6, 0);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
+
 
 
         ByteBuffer byteBuf
@@ -160,17 +203,33 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
         byteBuf = ByteBuffer.allocateDirect(texture.length * 4);
         byteBuf.order(ByteOrder.nativeOrder());
-        textureBuffer = byteBuf.asFloatBuffer();
-        textureBuffer.put(texture);
-        textureBuffer.position(0);
+        floatBuffer = byteBuf.asFloatBuffer();
+        floatBuffer.put(texture);
+        floatBuffer.position(0);
 
-        indexBuffer = ByteBuffer.allocateDirect(indices.length);
-        indexBuffer.put(indices);
-        indexBuffer.position(0);
+        indexBuffer0 = ByteBuffer.allocateDirect(indices0.length);
+        indexBuffer0.put(indices0);
+        indexBuffer0.position(0);
 
-        indexBuffer1 = ByteBuffer.allocateDirect(indices.length);
+        indexBuffer1 = ByteBuffer.allocateDirect(indices1.length);
         indexBuffer1.put(indices1);
         indexBuffer1.position(0);
+
+        indexBuffer2 = ByteBuffer.allocateDirect(indices2.length);
+        indexBuffer2.put(indices2);
+        indexBuffer2.position(0);
+
+        indexBuffer3 = ByteBuffer.allocateDirect(indices3.length);
+        indexBuffer3.put(indices3);
+        indexBuffer3.position(0);
+
+        indexBuffer4 = ByteBuffer.allocateDirect(indices4.length);
+        indexBuffer4.put(indices4);
+        indexBuffer4.position(0);
+
+        indexBuffer5 = ByteBuffer.allocateDirect(indices5.length);
+        indexBuffer5.put(indices5);
+        indexBuffer5.position(0);
     }
 
     @Override
@@ -199,22 +258,26 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glScalef(0.2f, 0.2f, 0.2f);
         gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
 
-//        IntBuffer textureBufferii = IntBuffer.allocate(6);
-//        gl.glGenTextures(6, textureBufferii);
-//        textures = textureBufferii.array();
-
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
         gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
 
         gl.glFrontFace(GL10.GL_CCW);
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
-        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);//设置纹理
+        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, floatBuffer);//设置纹理
 
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
-        gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer);
-//        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
-//        gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, GL10.GL_UNSIGNED_BYTE, indexBuffer1);
+        gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
+        gl.glDrawElements(GL10.GL_TRIANGLES, indices1.length, GL10.GL_UNSIGNED_BYTE, indexBuffer1);
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[2]);
+        gl.glDrawElements(GL10.GL_TRIANGLES, indices2.length, GL10.GL_UNSIGNED_BYTE, indexBuffer2);
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[3]);
+        gl.glDrawElements(GL10.GL_TRIANGLES, indices3.length, GL10.GL_UNSIGNED_BYTE, indexBuffer3);
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[4]);
+        gl.glDrawElements(GL10.GL_TRIANGLES, indices4.length, GL10.GL_UNSIGNED_BYTE, indexBuffer4);
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[5]);
+        gl.glDrawElements(GL10.GL_TRIANGLES, indices5.length, GL10.GL_UNSIGNED_BYTE, indexBuffer5);
 
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
