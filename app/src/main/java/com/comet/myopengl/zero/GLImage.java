@@ -21,6 +21,5 @@ class GLImage {
         mBitmap4 = BitmapFactory.decodeResource(resources, R.drawable.keyboard_2);
         mBitmap5 = BitmapFactory.decodeResource(resources, R.drawable.keyboard_1);
         mBitmap6 = BitmapFactory.decodeResource(resources, R.drawable.keyboard_5);
-
     }
 }

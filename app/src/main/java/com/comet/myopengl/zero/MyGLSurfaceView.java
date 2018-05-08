@@ -29,16 +29,15 @@ public class MyGLSurfaceView extends GLSurfaceView {
         float x = event.getX();
         float y = event.getY();
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            Log.d("onTouchEventtt", advanceRenderer.yrot + "");
             float dx = x - oldX;
             if (y >= 0) {
-                Log.d("advanceRendererrr", advanceRenderer.yrot + "");
                 advanceRenderer.yrot += dx * TOUCH_SCALE;
             }
             oldX = x;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            // 抬起的时候 查看角度 重新复制
-
-            Log.d("ACTION_UPACTION_UP", "ACTION_UP");
+        } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            oldX = x;
         }
         return true;
     }
