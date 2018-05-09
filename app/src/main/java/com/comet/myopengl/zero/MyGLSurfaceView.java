@@ -59,7 +59,11 @@ public class MyGLSurfaceView extends GLSurfaceView {
         return true;
     }
 
-    //缓存六个图 转过去的时候加载新图
+    public void changeAnimatorStatus(int a) {
+
+        advanceRenderer.animatorStatus = a;
+
+    }
 
 
 

@@ -3,7 +3,6 @@ package com.comet.myopengl.zero;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -25,9 +24,16 @@ public class OpenGLDemoActivity extends Activity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d("requestRender", "1111");
-                gv_one.requestRender();
+                gv_one.changeAnimatorStatus(1);
             }
-        }, 2000);
+        }, 1000);
+
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                gv_one.changeAnimatorStatus(2);
+            }
+        }, 4000);
     }
 }

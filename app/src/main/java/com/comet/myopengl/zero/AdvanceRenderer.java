@@ -120,6 +120,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
     };
 
     public float yrot; // Y Rotation
+    public float firstAnimationRotation; // Y Rotation
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -230,16 +231,18 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     public int animatorStatus = 0;
 
+    public float angleFirstAnimator = 90;
+    public float angleFirstAnimatorPer = 2;
+
     @Override
-    public void onDrawFrame(GL10 gl) {
+    public void onDrawFrame(GL10 gl) {//20毫秒刷新一次
+        Log.d("onDrawFrameee", System.currentTimeMillis() + "");
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
         GLU.gluLookAt(gl, 0.0f,
                 0.4f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1, 0f);
         gl.glEnable(GL10.GL_DEPTH_TEST); // 开启时时只绘制前面的一层
-
         gl.glScalef(0.2f, 0.2f, 0.2f);
-        gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); // Y
 
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
@@ -251,8 +254,15 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
         switch (animatorStatus) {
             case 1:
+                gl.glTranslatef(0, 0, (float) Math.sqrt(3));
+                gl.glRotatef(angleFirstAnimator, 0.0f, 1.0f, 0.0f);
+                gl.glTranslatef(0, 0, -(float) Math.sqrt(3));
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
+                angleFirstAnimator -= angleFirstAnimatorPer;
+                if (angleFirstAnimator == -angleFirstAnimatorPer) {
+                    animatorStatus = -1;
+                }
                 break;
             case 2:
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
