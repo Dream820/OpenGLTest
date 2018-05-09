@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 public class MyGLSurfaceView extends GLSurfaceView {
@@ -25,6 +26,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (!advanceRenderer.isCorrecting) {
+            advanceRenderer.isCorrecting = true;
             float x = event.getX();
             float y = event.getY();
             if (event.getAction() == MotionEvent.ACTION_MOVE) {
@@ -34,8 +36,8 @@ public class MyGLSurfaceView extends GLSurfaceView {
                 }
                 oldX = x;
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                Log.d("onTouchEventtt", "ACTION_UP");
                 //抬起的时候需要计算 接近那个点
-                advanceRenderer.isCorrecting = true;
                 float ramain = advanceRenderer.yrot % 60;
                 if (ramain >= 0 && ramain < 30) {
                     advanceRenderer.plusOrMinus = -1;
@@ -43,16 +45,15 @@ public class MyGLSurfaceView extends GLSurfaceView {
                 } else if (ramain >= 30 && ramain <= 60f) {
                     advanceRenderer.plusOrMinus = 1;
                     advanceRenderer.time = (int) ((60f - ramain) / 3f) + 1;
-                    advanceRenderer.loadTexture = true;
                 } else if (ramain <= 0 && ramain > -30) {
                     advanceRenderer.plusOrMinus = -1;
                     advanceRenderer.time = (int) (ramain / 3f) + 1;
                 } else if (ramain <= -30 && ramain >= -60) {
                     advanceRenderer.plusOrMinus = 1;
                     advanceRenderer.time = (int) (-60f - ramain) / 3 + 1;
-                    advanceRenderer.loadTexture = true;
                 }
             } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                Log.d("onTouchEventtt", "ACTION_DOWN");
                 advanceRenderer.animatorStatus = 4;
                 oldX = x;
             }

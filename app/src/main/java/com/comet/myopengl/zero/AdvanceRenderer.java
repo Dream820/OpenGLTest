@@ -30,42 +30,44 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
     private float picBufferX = picBufferLenth / 2;
     private float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
 
+    private float picUpY = 1f;
+
     private float vertices[] = {
             //front
-            -1.0f + picBufferLenth, 0.614f, (float) Math.sqrt(3),//left_top
-            -1.0f + picBufferLenth, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
-            1.0f - picBufferLenth, 0.614f, (float) Math.sqrt(3),//right_top
-            1.0f - picBufferLenth, -0.614f, (float) Math.sqrt(3),//right_bottom
+            -1.0f + picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),//left_top
+            -1.0f + picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),// x y z left_bottom
+            1.0f - picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),//right_top
+            1.0f - picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),//right_bottom
 
             //left front
-            -2 + picBufferX, 0.614f, 0 + picBufferZ,
-            -2 + picBufferX, -0.614f, 0 + picBufferZ,
-            -1.0f - picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
-            -1.0f - picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
+            -2 + picBufferX, 0.614f + picUpY, 0 + picBufferZ,
+            -2 + picBufferX, -0.614f + picUpY, 0 + picBufferZ,
+            -1.0f - picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
+            -1.0f - picBufferX, -0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
 
             //left roar
-            -1.0f - picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
-            -1.0f - picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
-            -2 + picBufferX, 0.614f, 0 - picBufferZ,
-            -2 + picBufferX, -0.614f, 0 - picBufferZ,
+            -1.0f - picBufferX, 0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,
+            -1.0f - picBufferX, -0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,
+            -2 + picBufferX, 0.614f + picUpY, 0 - picBufferZ,
+            -2 + picBufferX, -0.614f + picUpY, 0 - picBufferZ,
 
             //roar
-            1.0f - picBufferLenth, 0.614f, -(float) Math.sqrt(3),
-            1.0f - picBufferLenth, -0.614f, -(float) Math.sqrt(3),
-            -1.0f + picBufferLenth, 0.614f, -(float) Math.sqrt(3),
-            -1.0f + picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+            1.0f - picBufferLenth, 0.614f + picUpY, -(float) Math.sqrt(3),
+            1.0f - picBufferLenth, -0.614f + picUpY, -(float) Math.sqrt(3),
+            -1.0f + picBufferLenth, 0.614f + picUpY, -(float) Math.sqrt(3),
+            -1.0f + picBufferLenth, -0.614f + picUpY, -(float) Math.sqrt(3),
 
             //right roar
-            2 - picBufferX, 0.614f, 0 - picBufferZ,
-            2 - picBufferX, -0.614f, 0 - picBufferZ,
-            1.0f + picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
-            1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
+            2 - picBufferX, 0.614f + picUpY, 0 - picBufferZ,
+            2 - picBufferX, -0.614f + picUpY, 0 - picBufferZ,
+            1.0f + picBufferX, 0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,
+            1.0f + picBufferX, -0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,
 
             //right front
-            1.0f + picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
-            1.0f + picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
-            2.0f - picBufferX, 0.614f, 0 + picBufferZ,
-            2.0f - picBufferX, -0.614f, 0 + picBufferZ,
+            1.0f + picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
+            1.0f + picBufferX, -0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
+            2.0f - picBufferX, 0.614f + picUpY, 0 + picBufferZ,
+            2.0f - picBufferX, -0.614f + picUpY, 0 + picBufferZ,
     };
 
     private float texture[] = {
@@ -244,7 +246,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
         GLU.gluLookAt(gl, 0.0f,
-                0.4f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1, 0f);
+                0.6f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1, 0f);
         gl.glEnable(GL10.GL_DEPTH_TEST); // 开启时时只绘制前面的一层
         gl.glScalef(0.2f, 0.2f, 0.2f);
 
