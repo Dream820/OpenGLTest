@@ -295,9 +295,8 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
                 break;
             case 3:
                 gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f);
-                gl.glRotatef(xrot / 100, 1.0f, 0.0f, 0.0f);
+                gl.glRotatef((float) xrot / 100f, 1.0f, 0.0f, 0.0f);
                 xrot = xrot + perX;
-                Log.d("xrotxrot", xrot + "");
                 if (xrot == 200) {
                     perX = -5;
                 }
