@@ -25,29 +25,39 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
-        if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            Log.d("onTouchEventtt", advanceRenderer.yrot + "");
-            float dx = x - oldX;
-            if (y >= 0) {
-                advanceRenderer.yrot += dx * TOUCH_SCALE;
+        if (!advanceRenderer.isCorrecting) {
+            float x = event.getX();
+            float y = event.getY();
+            if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                Log.d("onTouchEventtt", advanceRenderer.yrot + "");
+                float dx = x - oldX;
+                if (y >= 0) {
+                    advanceRenderer.yrot += dx * TOUCH_SCALE;
+                }
+                oldX = x;
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                //抬起的时候需要计算 接近那个点
+                float ramain = advanceRenderer.yrot % 60;
+                if (ramain >= 0 && ramain < 30) {
+                    advanceRenderer.plusOrMinus = -1;
+                    advanceRenderer.time = (int) (ramain / 3f) + 1;
+                    advanceRenderer.isCorrecting = true;
+                } else if (ramain >= 30 && ramain <= 60f) {
+                    advanceRenderer.plusOrMinus = 1;
+                    advanceRenderer.time = (int) ((60f - ramain) / 3f) + 1;
+                    advanceRenderer.isCorrecting = true;
+                } else if (ramain <= 0 && ramain > -30) {
+                    advanceRenderer.plusOrMinus = -1;
+                    advanceRenderer.time = (int) (ramain / 3f) + 1;
+                    advanceRenderer.isCorrecting = true;
+                } else if (ramain <= -30 && ramain >= -60) {
+                    advanceRenderer.plusOrMinus = 1;
+                    advanceRenderer.time = (int) (-60f - ramain) / 3 + 1;
+                    advanceRenderer.isCorrecting = true;
+                }
+            } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                oldX = x;
             }
-            oldX = x;
-        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            //抬起的时候需要计算 接近那个点
-            float ramain = advanceRenderer.yrot % 60;
-            if (ramain >= 0 && ramain < 30) {
-                advanceRenderer.yrot = advanceRenderer.yrot - ramain;
-            } else if (ramain >= 30 && ramain <= 60) {
-                advanceRenderer.yrot = advanceRenderer.yrot + (60 - ramain);
-            } else if (ramain <= 0 && ramain > -30) {
-                advanceRenderer.yrot = advanceRenderer.yrot - ramain;
-            } else if (ramain <= -30 && ramain >= -60) {
-                advanceRenderer.yrot = advanceRenderer.yrot + (-60 - ramain);
-            }
-        } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            oldX = x;
         }
         return true;
     }

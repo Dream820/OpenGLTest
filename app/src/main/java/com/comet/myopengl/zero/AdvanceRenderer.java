@@ -220,6 +220,11 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glLoadIdentity();
     }
 
+    boolean isCorrecting = false;
+    int plusOrMinus = -1;
+    int time = 0;
+    float perAngle = 3;
+
     @Override
     public void onDrawFrame(GL10 gl) {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
@@ -255,5 +260,30 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
         gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
+        if (isCorrecting) {
+            if (time > 1) {
+                yrot = yrot + plusOrMinus * perAngle;
+                time -= 1;
+            } else if (time == 1) {
+                //最后一次直接等于 ortho
+                lastCorrect();
+                time -= 1;
+            } else {
+                isCorrecting = false;
+            }
+        }
+    }
+
+    public void lastCorrect() {
+        float ramain = yrot % 60;
+        if (ramain >= 0 && ramain < 30) {
+            yrot = yrot - ramain;
+        } else if (ramain >= 30 && ramain <= 60f) {
+            yrot = yrot + 60 - 58;
+        } else if (ramain <= 0 && ramain > -30) {
+            yrot = yrot - ramain;
+        } else if (ramain <= -30 && ramain >= -60) {
+            yrot = yrot + (-60 - ramain);
+        }
     }
 }
