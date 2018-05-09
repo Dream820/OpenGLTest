@@ -40,6 +40,5 @@ class GLImage {
         options.inJustDecodeBounds = false; // 计算好压缩比例后，这次可以去加载原图了
         options.inSampleSize = inSampleSize; // 设置为刚才计算的压缩比例
         return BitmapFactory.decodeResource(resources, id, options); // 解码文件
-
     }
 }
