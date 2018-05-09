@@ -373,7 +373,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     public void setTexture(GL10 gl) {
         // 需要转换那个一个
-        Log.d("setTexture", "");
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.mBitmap7, 0);
         gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
