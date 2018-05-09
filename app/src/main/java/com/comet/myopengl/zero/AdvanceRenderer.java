@@ -119,8 +119,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
             20, 21, 23, 20, 23, 22
     };
 
-    public float yrot; // Y Rotation
-    public float firstAnimationRotation; // Y Rotation
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -223,6 +221,10 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glLoadIdentity();
     }
 
+    public float yrot; // Y Rotation
+    public float xrot; // Y Rotation
+    public float perX = 0.5f;
+
     public boolean isCorrecting = false;
     public int plusOrMinus = -1;
     public int time = 0;
@@ -292,6 +294,16 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
                 }
                 break;
             case 3:
+
+                gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f);
+                gl.glRotatef(xrot, 1.0f, 0.0f, 0.0f);
+                xrot += perX;
+                if (xrot == 5) {
+                    perX = -0.5f;
+                }
+                if (xrot == -5) {
+                    perX = 0.5f;
+                }
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
 
