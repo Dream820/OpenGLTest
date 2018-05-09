@@ -223,7 +223,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     public float yrot; // Y Rotation
     public float xrot; // Y Rotation
-    public float perX = 0.2f;
+    public float perX = 1f;
 
     public boolean isCorrecting = false;
     public int plusOrMinus = -1;
@@ -294,15 +294,15 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
                 }
                 break;
             case 3:
-
                 gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f);
                 gl.glRotatef(xrot, 1.0f, 0.0f, 0.0f);
-                xrot += perX;
-                if (xrot == 3) {
-                    perX = -0.2f;
+                xrot = (xrot * 10 + perX) / 10;
+                Log.d("xrotxrot", xrot + "");
+                if (xrot == 2) {
+                    perX = -1f;
                 }
-                if (xrot == -3) {
-                    perX = 0.2f;
+                if (xrot == -2) {
+                    perX = 1f;
                 }
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
