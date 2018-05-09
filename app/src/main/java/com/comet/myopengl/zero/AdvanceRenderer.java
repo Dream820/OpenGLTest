@@ -294,7 +294,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
                 }
                 break;
             case 3:
-                gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f);
                 gl.glRotatef((float) xrot / 100f, 1.0f, 0.0f, 0.0f);
                 xrot = xrot + perX;
                 if (xrot == 200) {
@@ -303,6 +302,23 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
                 if (xrot == -200) {
                     perX = 5;
                 }
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
+
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices1.length, GL10.GL_UNSIGNED_BYTE, indexBuffer1);
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[2]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices2.length, GL10.GL_UNSIGNED_BYTE, indexBuffer2);
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[3]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices3.length, GL10.GL_UNSIGNED_BYTE, indexBuffer3);
+
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[4]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices4.length, GL10.GL_UNSIGNED_BYTE, indexBuffer4);
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[5]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices5.length, GL10.GL_UNSIGNED_BYTE, indexBuffer5);
+                break;
+            case 4:
+                gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f);
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
 
@@ -332,6 +348,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
                 lastCorrect();
                 time -= 1;
             } else {
+                animatorStatus = 3;
                 isCorrecting = false;
             }
         }

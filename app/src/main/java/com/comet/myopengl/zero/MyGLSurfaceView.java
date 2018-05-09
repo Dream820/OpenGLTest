@@ -53,6 +53,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
                     advanceRenderer.loadTexture = true;
                 }
             } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                advanceRenderer.animatorStatus = 4;
                 oldX = x;
             }
         }
