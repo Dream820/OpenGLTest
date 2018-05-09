@@ -210,7 +210,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        Log.d("onSurfaceChangeddd", "111");
         if (height == 0) {
             height = 1;
         }
