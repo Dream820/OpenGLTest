@@ -291,7 +291,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
                     animatorStatus = 3;
                 }
                 break;
-
             case 3:
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
