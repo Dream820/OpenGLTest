@@ -43,12 +43,14 @@ public class MyGLSurfaceView extends GLSurfaceView {
                 } else if (ramain >= 30 && ramain <= 60f) {
                     advanceRenderer.plusOrMinus = 1;
                     advanceRenderer.time = (int) ((60f - ramain) / 3f) + 1;
+                    advanceRenderer.loadTexture = true;
                 } else if (ramain <= 0 && ramain > -30) {
                     advanceRenderer.plusOrMinus = -1;
                     advanceRenderer.time = (int) (ramain / 3f) + 1;
                 } else if (ramain <= -30 && ramain >= -60) {
                     advanceRenderer.plusOrMinus = 1;
                     advanceRenderer.time = (int) (-60f - ramain) / 3 + 1;
+                    advanceRenderer.loadTexture = true;
                 }
             } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 oldX = x;
@@ -56,4 +58,10 @@ public class MyGLSurfaceView extends GLSurfaceView {
         }
         return true;
     }
+
+    //缓存六个图 转过去的时候加载新图
+
+
+
+
 }

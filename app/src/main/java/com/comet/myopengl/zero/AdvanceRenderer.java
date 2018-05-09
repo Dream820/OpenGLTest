@@ -3,6 +3,7 @@ package com.comet.myopengl.zero;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.opengl.GLUtils;
+import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -220,10 +221,11 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glLoadIdentity();
     }
 
-    boolean isCorrecting = false;
-    int plusOrMinus = -1;
-    int time = 0;
-    float perAngle = 3;
+    public boolean isCorrecting = false;
+    public int plusOrMinus = -1;
+    public int time = 0;
+    public float perAngle = 3;
+    public boolean loadTexture = false;
 
     @Override
     public void onDrawFrame(GL10 gl) {
@@ -272,6 +274,10 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
                 isCorrecting = false;
             }
         }
+        if (loadTexture) {
+            loadTexture = false;
+            setTexture(gl);
+        }
     }
 
     public void lastCorrect() {
@@ -285,5 +291,14 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         } else if (ramain <= -30 && ramain >= -60) {
             yrot = yrot + (-60 - ramain);
         }
+    }
+
+    public void setTexture(GL10 gl) {
+        // 需要转换那个一个
+        Log.d("setTexture", "");
+        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+        GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.mBitmap7, 0);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NEAREST);
+        gl.glTexParameterx(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_NEAREST);
     }
 }

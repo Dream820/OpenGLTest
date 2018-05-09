@@ -13,6 +13,7 @@ class GLImage {
     public static Bitmap mBitmap4;
     public static Bitmap mBitmap5;
     public static Bitmap mBitmap6;
+    public static Bitmap mBitmap7;
 
     public static void load(Resources resources) {
         mBitmap1 = BitmapFactory.decodeResource(resources, R.drawable.keyboard_5);
@@ -20,6 +21,7 @@ class GLImage {
         mBitmap3 = BitmapFactory.decodeResource(resources, R.drawable.keyboard_3);
         mBitmap4 = BitmapFactory.decodeResource(resources, R.drawable.keyboard_2);
         mBitmap5 = BitmapFactory.decodeResource(resources, R.drawable.keyboard_1);
-        mBitmap6 = BitmapFactory.decodeResource(resources, R.drawable.keyboard_5);
+        mBitmap6 = BitmapFactory.decodeResource(resources, R.drawable.keyboard_6);
+        mBitmap7 = BitmapFactory.decodeResource(resources, R.drawable.keyboard_7);
     }
 }
