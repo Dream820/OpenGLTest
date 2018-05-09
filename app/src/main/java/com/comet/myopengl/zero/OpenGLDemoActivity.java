@@ -29,11 +29,11 @@ public class OpenGLDemoActivity extends Activity {
         }, 1000);
 
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                gv_one.changeAnimatorStatus(2);
-            }
-        }, 4000);
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                gv_one.changeAnimatorStatus(2);
+//            }
+//        }, 4000);
     }
 }

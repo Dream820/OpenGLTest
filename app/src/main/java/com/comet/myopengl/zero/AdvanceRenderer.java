@@ -37,18 +37,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
             1.0f - picBufferLenth, 0.614f, (float) Math.sqrt(3),//right_top
             1.0f - picBufferLenth, -0.614f, (float) Math.sqrt(3),//right_bottom
 
-            //right roar
-            2 - picBufferX, 0.614f, 0 - picBufferZ,
-            2 - picBufferX, -0.614f, 0 - picBufferZ,
-            1.0f + picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
-            1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
-
-            //roar
-            1.0f - picBufferLenth, 0.614f, -(float) Math.sqrt(3),
-            1.0f - picBufferLenth, -0.614f, -(float) Math.sqrt(3),
-            -1.0f + picBufferLenth, 0.614f, -(float) Math.sqrt(3),
-            -1.0f + picBufferLenth, -0.614f, -(float) Math.sqrt(3),
-
             //left front
             -2 + picBufferX, 0.614f, 0 + picBufferZ,
             -2 + picBufferX, -0.614f, 0 + picBufferZ,
@@ -60,6 +48,18 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
             -1.0f - picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
             -2 + picBufferX, 0.614f, 0 - picBufferZ,
             -2 + picBufferX, -0.614f, 0 - picBufferZ,
+
+            //roar
+            1.0f - picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+            1.0f - picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+            -1.0f + picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+            -1.0f + picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+
+            //right roar
+            2 - picBufferX, 0.614f, 0 - picBufferZ,
+            2 - picBufferX, -0.614f, 0 - picBufferZ,
+            1.0f + picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+            1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
 
             //right front
             1.0f + picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
@@ -261,18 +261,25 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
                 angleFirstAnimator -= angleFirstAnimatorPer;
                 if (angleFirstAnimator == -angleFirstAnimatorPer) {
-                    animatorStatus = -1;
+                    animatorStatus = 2;
                 }
                 break;
             case 2:
+
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
+
+                gl.glRotatef(30, 0.0f, 1.0f, 0.0f);
+
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices1.length, GL10.GL_UNSIGNED_BYTE, indexBuffer1);
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[2]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices2.length, GL10.GL_UNSIGNED_BYTE, indexBuffer2);
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[3]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices3.length, GL10.GL_UNSIGNED_BYTE, indexBuffer3);
+
+
+                gl.glRotatef(-30, 0.0f, 1.0f, 0.0f);
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[4]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices4.length, GL10.GL_UNSIGNED_BYTE, indexBuffer4);
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[5]);
