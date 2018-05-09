@@ -280,7 +280,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[3]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices3.length, GL10.GL_UNSIGNED_BYTE, indexBuffer3);
 
-
                 gl.glRotatef(-angleSecond * 2, 0.0f, 1.0f, 0.0f);
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[4]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices4.length, GL10.GL_UNSIGNED_BYTE, indexBuffer4);
