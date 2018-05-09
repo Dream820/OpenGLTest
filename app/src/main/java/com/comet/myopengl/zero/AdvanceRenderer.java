@@ -211,6 +211,7 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
+        Log.d("onSurfaceChangeddd", "111");
         if (height == 0) {
             height = 1;
         }
@@ -226,6 +227,8 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
     public int time = 0;
     public float perAngle = 3;
     public boolean loadTexture = false;
+
+    public int animatorStatus = 0;
 
     @Override
     public void onDrawFrame(GL10 gl) {
@@ -246,18 +249,26 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
         gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, floatBuffer);//设置纹理
 
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
-        gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
-        gl.glDrawElements(GL10.GL_TRIANGLES, indices1.length, GL10.GL_UNSIGNED_BYTE, indexBuffer1);
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[2]);
-        gl.glDrawElements(GL10.GL_TRIANGLES, indices2.length, GL10.GL_UNSIGNED_BYTE, indexBuffer2);
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[3]);
-        gl.glDrawElements(GL10.GL_TRIANGLES, indices3.length, GL10.GL_UNSIGNED_BYTE, indexBuffer3);
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[4]);
-        gl.glDrawElements(GL10.GL_TRIANGLES, indices4.length, GL10.GL_UNSIGNED_BYTE, indexBuffer4);
-        gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[5]);
-        gl.glDrawElements(GL10.GL_TRIANGLES, indices5.length, GL10.GL_UNSIGNED_BYTE, indexBuffer5);
+        switch (animatorStatus) {
+            case 1:
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
+                break;
+            case 2:
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[1]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices1.length, GL10.GL_UNSIGNED_BYTE, indexBuffer1);
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[2]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices2.length, GL10.GL_UNSIGNED_BYTE, indexBuffer2);
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[3]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices3.length, GL10.GL_UNSIGNED_BYTE, indexBuffer3);
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[4]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices4.length, GL10.GL_UNSIGNED_BYTE, indexBuffer4);
+                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[5]);
+                gl.glDrawElements(GL10.GL_TRIANGLES, indices5.length, GL10.GL_UNSIGNED_BYTE, indexBuffer5);
+                break;
+        }
 
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);

@@ -2,12 +2,16 @@ package com.comet.myopengl.zero;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.comet.myopengl.R;
 
 public class OpenGLDemoActivity extends Activity {
+    MyGLSurfaceView gv_one;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,5 +20,14 @@ public class OpenGLDemoActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main2);
+        gv_one = findViewById(R.id.gv_one);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("requestRender", "1111");
+                gv_one.requestRender();
+            }
+        }, 2000);
     }
 }
