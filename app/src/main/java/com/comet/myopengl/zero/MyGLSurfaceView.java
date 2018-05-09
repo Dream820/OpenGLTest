@@ -12,6 +12,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
     public MyGLSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.setEGLContextClientVersion(1);
         setEGLConfigChooser(8, 8, 8, 8, 16, 0);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
         setZOrderOnTop(true);

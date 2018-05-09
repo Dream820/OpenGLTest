@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.comet.myopengl.zero.OpenGLDemoActivity">
+        <activity
+            android:name="com.comet.myopengl.zero.OpenGLDemoActivity"
+            android:hardwareAccelerated="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
