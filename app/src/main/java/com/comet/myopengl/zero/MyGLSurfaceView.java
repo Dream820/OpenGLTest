@@ -61,12 +61,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
     }
 
     public void changeAnimatorStatus(int a) {
-
         advanceRenderer.animatorStatus = a;
-
     }
-
-
-
-
 }
