@@ -302,6 +302,8 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
                 if (xrot == -200) {
                     perX = 5;
                 }
+                gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f);
+
                 gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
                 gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
 
