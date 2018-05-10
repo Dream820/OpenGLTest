@@ -196,7 +196,7 @@ public class SimpleOneActivity2 extends Activity {
             GLES20.glViewport(0, 0, width, height);
             Matrix.perspectiveM(mMVPMatrix, 0, 45, (float) width / height, 0.1f, 100f);
             Matrix.translateM(mMVPMatrix, 0, 0f, 0f, -5f);
-            Matrix.scaleM(mMVPMatrix, 0, 0.1f, 0.1f, 0.1f);
+            Matrix.scaleM(mMVPMatrix, 0, 0.4f, 0.4f, 0.4f);
         }
 
         @Override
