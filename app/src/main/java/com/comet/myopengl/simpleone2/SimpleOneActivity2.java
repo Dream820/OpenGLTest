@@ -1,7 +1,6 @@
 package com.comet.myopengl.simpleone2;
 
 import android.app.Activity;
-import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
@@ -42,7 +41,7 @@ public class SimpleOneActivity2 extends Activity {
 
         mGLSurfaceView.setEGLContextClientVersion(2);
         mGLSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
-        mRenderer = new MyRenderer(this);
+        mRenderer = new MyRenderer();
         mGLSurfaceView.setRenderer(mRenderer);
         mGLSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
     }
@@ -184,7 +183,6 @@ public class SimpleOneActivity2 extends Activity {
         private ByteBuffer indexBuffer4;
         private ByteBuffer indexBuffer5;
 
-        private final Context mContext;
         private final FloatBuffer mVertexBuffer;
         private final FloatBuffer mTexVertexBuffer;
         private final float[] mMVPMatrix = new float[16];
@@ -196,8 +194,7 @@ public class SimpleOneActivity2 extends Activity {
         private int mTexSamplerHandle;
         private int mTexName;
 
-        MyRenderer(final Context context) {
-            mContext = context;
+        MyRenderer() {
             mVertexBuffer = ByteBuffer.allocateDirect(VERTEX.length * 4)
                     .order(ByteOrder.nativeOrder())
                     .asFloatBuffer()
