@@ -100,6 +100,8 @@ public class GLReader implements GLSurfaceView.Renderer {
         gl.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 20, 4);
 
+        xrot += 1.0f;
+        yrot += 0.5f;
     }
 
     @Override
