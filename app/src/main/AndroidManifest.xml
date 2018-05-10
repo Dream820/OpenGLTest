@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.comet.myopengl.cube1.SimpleOpenGLActivity"
+            android:name="com.comet.myopengl.simpleone2.SimpleOneActivity2Side"
             android:hardwareAccelerated="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
