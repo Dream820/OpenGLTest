@@ -22,7 +22,7 @@ import java.nio.ShortBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class SimpleOneActivity extends Activity {
+public class SimpleOneActivity2 extends Activity {
 
 
     private GLSurfaceView mGLSurfaceView;
@@ -85,20 +85,24 @@ public class SimpleOneActivity extends Activity {
                         "  gl_FragColor = texture2D(s_texture, v_texCoord);" +
                         "}";
 
-        private static final float[] VERTEX = {   // in counterclockwise order:
-                1, 1, 0,   // top right
-                -1, 1, 0,  // top left
-                -1, -1, 0, // bottom left
-                1, -1, 0,  // bottom right
+        private float picBufferLenth = 0.1f;
+        private float picBufferX = picBufferLenth / 2;
+        private float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
+        private float picUpY = 1f;
+        private final float[] VERTEX = {   // in counterclockwise order:
+                -1.0f + picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),//left_top
+                -1.0f + picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),// x y z left_bottom
+                1.0f - picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),//right_top
+                1.0f - picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),//right_bottom
         };
         private static final short[] VERTEX_INDEX = {
-                0, 1, 2, 0, 2, 3
+                0, 1, 3, 0, 3, 2
         };
         private static final float[] TEX_VERTEX = {   // in clockwise order:
-                0.5f, 0,  // bottom right
-                0, 0,  // bottom left
-                0, 0.5f,  // top left
-                0.5f, 0.5f,  // top right
+                0.0f, 0.0f,
+                0.0f, 1.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
         };
 
         private final Context mContext;
@@ -190,9 +194,9 @@ public class SimpleOneActivity extends Activity {
         @Override
         public void onSurfaceChanged(GL10 unused, int width, int height) {
             GLES20.glViewport(0, 0, width, height);
-
             Matrix.perspectiveM(mMVPMatrix, 0, 45, (float) width / height, 0.1f, 100f);
             Matrix.translateM(mMVPMatrix, 0, 0f, 0f, -5f);
+            Matrix.scaleM(mMVPMatrix, 0, 0.1f, 0.1f, 0.1f);
         }
 
         @Override
