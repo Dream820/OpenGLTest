@@ -1,4 +1,4 @@
-package com.comet.myopengl.simpleone;
+package com.comet.myopengl.simpleone2;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -19,7 +19,7 @@ import java.nio.IntBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-public class SimpleRender implements GLSurfaceView.Renderer {
+public class SimpleRender2 implements GLSurfaceView.Renderer {
 
     private float picBufferLenth = 0.1f;
     private float picUpY = 1f;
