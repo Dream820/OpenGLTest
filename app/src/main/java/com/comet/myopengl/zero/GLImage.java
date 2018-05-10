@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 
 import com.comet.myopengl.R;
 
-class GLImage {
+public class GLImage {
     public static Bitmap mBitmap1;
     public static Bitmap mBitmap2;
     public static Bitmap mBitmap3;
