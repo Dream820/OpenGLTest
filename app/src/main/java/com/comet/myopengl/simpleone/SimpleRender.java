@@ -5,6 +5,10 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.opengl.GLUtils;
 
+import com.comet.myopengl.MyApplication;
+import com.comet.myopengl.R;
+import com.comet.myopengl.dice.MatrixState;
+import com.comet.myopengl.dice.MyGLUtils;
 import com.comet.myopengl.zero.GLImage;
 
 import java.nio.ByteBuffer;
@@ -42,9 +46,14 @@ public class SimpleRender implements GLSurfaceView.Renderer {
     private FloatBuffer vertexBuffer;
     private FloatBuffer floatBuffer;
     private ByteBuffer indexBuffer0;
+    private int mMVPMatrixHandle;
+    private int mProgram;
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        mProgram = MyGLUtils.buildProgram(MyApplication.myApplication, R.raw.dice_bg_vertex, R.raw.dice_bg_fragment);
+        mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "u_MVPMatrix");
+
         gl.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA); // Set The Blending Function For Translucency ( NEW )
         gl.glEnable(GL10.GL_TEXTURE_2D);
         gl.glEnable(GL10.GL_DEPTH_TEST);
@@ -103,6 +112,7 @@ public class SimpleRender implements GLSurfaceView.Renderer {
         gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, floatBuffer);//设置纹理
 
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(), 0);
         gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
     }
 }
