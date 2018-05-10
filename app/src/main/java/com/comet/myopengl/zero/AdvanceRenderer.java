@@ -3,7 +3,6 @@ package com.comet.myopengl.zero;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.opengl.GLUtils;
-import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -12,6 +11,8 @@ import java.nio.IntBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import static android.opengl.GLES10.GL_LINE_STRIP;
 
 public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
@@ -243,7 +244,6 @@ public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {//20毫秒刷新一次
-        Log.d("onDrawFrameee", System.currentTimeMillis() + "");
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
         GLU.gluLookAt(gl, 0.0f,
