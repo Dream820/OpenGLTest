@@ -29,6 +29,7 @@ public class SimpleOneActivity2Side extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        GLImage.load(getResources());
         setContentView(R.layout.activity_main);
 
         if (!Utils.supportGlEs20(this)) {
@@ -36,9 +37,7 @@ public class SimpleOneActivity2Side extends Activity {
             finish();
             return;
         }
-
         mGLSurfaceView = (GLSurfaceView) findViewById(R.id.gv_one);
-
         mGLSurfaceView.setEGLContextClientVersion(2);
         mGLSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
         mRenderer = new MyRenderer(this);
