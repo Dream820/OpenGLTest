@@ -1,5 +1,6 @@
 package com.comet.myopengl.simpleone;
 
+import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.opengl.GLUtils;
@@ -44,19 +45,9 @@ public class SimpleRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        gl.glEnable(GL10.GL_LIGHT0); // Enable Light 0
-        gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE); // Set The Blending Function For Translucency ( NEW )
-        gl.glColor4f(1.0f, 1.0f, 1.0f, 1f); // Full Brightness. 50% Alpha ( NEW )
-
-        gl.glDisable(GL10.GL_DITHER); // Disable dithering
-        gl.glEnable(GL10.GL_TEXTURE_2D); // Enable Texture Mapping
-        gl.glShadeModel(GL10.GL_SMOOTH); // Enable Smooth Shading
-
-        gl.glClearDepthf(1.0f); // Depth Buffer Setup
-        gl.glEnable(GL10.GL_DEPTH_TEST); // Enables Depth Testing
-        gl.glDepthFunc(GL10.GL_LEQUAL); // The Type Of Depth Testing To Do
-
-        gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
+        gl.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA); // Set The Blending Function For Translucency ( NEW )
+        gl.glEnable(GL10.GL_TEXTURE_2D);
+        gl.glEnable(GL10.GL_DEPTH_TEST);
 
         IntBuffer textureBufferTmp = IntBuffer.allocate(6);
         gl.glGenTextures(6, textureBufferTmp);
@@ -92,10 +83,8 @@ public class SimpleRender implements GLSurfaceView.Renderer {
             height = 1;
         }
         gl.glMatrixMode(GL10.GL_PROJECTION);
-        gl.glLoadIdentity();
         GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 100.0f);
         gl.glMatrixMode(GL10.GL_MODELVIEW);
-        gl.glLoadIdentity();
     }
 
     @Override
@@ -104,22 +93,16 @@ public class SimpleRender implements GLSurfaceView.Renderer {
         gl.glLoadIdentity();
         GLU.gluLookAt(gl, 0.0f,
                 0.6f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1, 0f);
-        gl.glEnable(GL10.GL_DEPTH_TEST); // 开启时时只绘制前面的一层
         gl.glScalef(0.2f, 0.2f, 0.2f);
 
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
         gl.glEnableClientState(GL10.GL_NORMAL_ARRAY);
 
-        gl.glFrontFace(GL10.GL_CCW);
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
         gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, floatBuffer);//设置纹理
 
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
-        gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
-
-        gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
-        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-        gl.glDisableClientState(GL10.GL_NORMAL_ARRAY);
+        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
     }
 }
