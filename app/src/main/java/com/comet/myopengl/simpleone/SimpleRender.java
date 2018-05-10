@@ -103,6 +103,6 @@ public class SimpleRender implements GLSurfaceView.Renderer {
         gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, floatBuffer);//设置纹理
 
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
-        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
+        gl.glDrawElements(GL10.GL_TRIANGLES, indices0.length, GL10.GL_UNSIGNED_BYTE, indexBuffer0);
     }
 }

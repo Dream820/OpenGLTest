@@ -12,8 +12,6 @@ import java.nio.IntBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import static android.opengl.GLES10.GL_LINE_STRIP;
-
 public class AdvanceRenderer implements GLSurfaceView.Renderer {
 
     private FloatBuffer vertexBuffer;
