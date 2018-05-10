@@ -76,10 +76,7 @@ public class Background {
 
     private void initShader() {
         mProgram = MyGLUtils.buildProgram(mContext, R.raw.dice_bg_vertex, R.raw.dice_bg_fragment);
-
         mTextureId = MyGLUtils.loadTexture(mContext, R.drawable.container_marble, new int[2]);
-
-        // Set program handles. These will later be used to pass in values to the program.
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "u_MVPMatrix");
         mTextureUniformHandle = GLES20.glGetUniformLocation(mProgram, "u_Texture");
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "a_Position");
@@ -93,7 +90,6 @@ public class Background {
 
         GLES20.glUseProgram(mProgram);
         Log.d("drawSelf111", "drawSelf");
-        // Pass in the position information
         mVerticesBuffer.position(0);
         GLES20.glVertexAttribPointer(mPositionHandle, 3, GLES20.GL_FLOAT, false,
                 3 * 4, mVerticesBuffer);
