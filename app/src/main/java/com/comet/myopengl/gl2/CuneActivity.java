@@ -7,13 +7,15 @@ import android.os.Bundle;
 import com.comet.myopengl.zero.GLImage;
 
 public class CuneActivity extends Activity {
-    /** Called when the activity is first created. */  
-    @Override  
+    /**
+     * Called when the activity is first created.
+     */
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         GLImage.load(getResources());
-        GLSurfaceView   glView = new GLSurfaceView(this);
+        GLSurfaceView glView = new GLSurfaceView(this);
         glView.setRenderer(new CubeRender());
         setContentView(glView);
-    }  
+    }
 } 
