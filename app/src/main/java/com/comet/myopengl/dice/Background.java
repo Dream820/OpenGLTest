@@ -76,7 +76,7 @@ public class Background {
 
     private void initShader() {
         mProgram = MyGLUtils.buildProgram(mContext, R.raw.dice_bg_vertex, R.raw.dice_bg_fragment);
-        mTextureId = MyGLUtils.loadTexture(mContext, R.drawable.container_marble, new int[2]);
+        mTextureId = MyGLUtils.loadTexture(mContext, R.drawable.ic_launcher, new int[2]);
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "u_MVPMatrix");
         mTextureUniformHandle = GLES20.glGetUniformLocation(mProgram, "u_Texture");
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "a_Position");
@@ -96,7 +96,8 @@ public class Background {
         GLES20.glEnableVertexAttribArray(mPositionHandle);
 
         mVerticesTextureBuffer.position(0);
-        GLES20.glVertexAttribPointer(mTextureCoordinationHandle, 2, GLES20.GL_FLOAT, false, 2 * 4, mVerticesTextureBuffer);
+        GLES20.glVertexAttribPointer(mTextureCoordinationHandle, 2,
+                GLES20.GL_FLOAT, false, 2 * 4, mVerticesTextureBuffer);
         GLES20.glEnableVertexAttribArray(mTextureCoordinationHandle);
 
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId);
