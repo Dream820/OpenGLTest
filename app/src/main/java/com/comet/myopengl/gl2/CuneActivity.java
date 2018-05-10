@@ -15,7 +15,7 @@ public class CuneActivity extends Activity {
         super.onCreate(savedInstanceState);
         GLImage.load(getResources());
         GLSurfaceView glView = new GLSurfaceView(this);
-        glView.setRenderer(new Test2Renderer());
+        glView.setRenderer(new mRenderer());
         setContentView(glView);
     }
 } 
