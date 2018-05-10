@@ -2,13 +2,13 @@ package com.comet.myopengl.dice;
 
 import android.content.Context;
 import android.opengl.GLES20;
+import android.util.Log;
 
 import com.comet.myopengl.R;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-
 
 
 /**
@@ -36,7 +36,7 @@ public class Background {
     private int mProgram;
     private Context mContext;
 
-    public Background(Context context){
+    public Background(Context context) {
         mContext = context;
 
         initData();
@@ -44,24 +44,24 @@ public class Background {
     }
 
     //初始化数据
-    private void initData(){
+    private void initData() {
         final float[] VerticesData = {
                 // X, Y, Z,
                 -30.0f, 0.0f, -16.0f,
-                30.0f,  0.0f,-16.0f,
-                30.0f,  0.0f,16.0f,
+                30.0f, 0.0f, -16.0f,
+                30.0f, 0.0f, 16.0f,
                 -30.0f, 0.0f, -16.0f,
-                30.0f,  0.0f,16.0f,
+                30.0f, 0.0f, 16.0f,
                 -30.0f, 0.0f, 16.0f,
         };
 
         final float[] TextureCoordinateData = {
-                0,0,
-                1,0,
-                1,1,
-                0,0,
-                1,1,
-                0,1
+                0, 0,
+                1, 0,
+                1, 1,
+                0, 0,
+                1, 1,
+                0, 1
         };
 
         // Initialize the buffers.
@@ -74,18 +74,16 @@ public class Background {
 
     }
 
-    private void initShader(){
+    private void initShader() {
         mProgram = MyGLUtils.buildProgram(mContext, R.raw.dice_bg_vertex, R.raw.dice_bg_fragment);
 
-        mTextureId = MyGLUtils.loadTexture(mContext,R.drawable.container_marble,new int[2]);
+        mTextureId = MyGLUtils.loadTexture(mContext, R.drawable.container_marble, new int[2]);
 
         // Set program handles. These will later be used to pass in values to the program.
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "u_MVPMatrix");
-        mTextureUniformHandle = GLES20.glGetUniformLocation(mProgram,"u_Texture");
+        mTextureUniformHandle = GLES20.glGetUniformLocation(mProgram, "u_Texture");
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "a_Position");
-//        mColorHandle = GLES20.glGetAttribLocation(mProgram, "a_Color");
-        mTextureCoordinationHandle = GLES20.glGetAttribLocation(mProgram,"a_TexCoordinate");
-//        mGlobalTimeHandle = GLES20.glGetUniformLocation(mProgram,"u_GlobalTime");
+        mTextureCoordinationHandle = GLES20.glGetAttribLocation(mProgram, "a_TexCoordinate");
 
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_REPEAT);
         GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_REPEAT);
@@ -94,15 +92,15 @@ public class Background {
     public void drawSelf() {
 
         GLES20.glUseProgram(mProgram);
-
+        Log.d("drawSelf111", "drawSelf");
         // Pass in the position information
         mVerticesBuffer.position(0);
         GLES20.glVertexAttribPointer(mPositionHandle, 3, GLES20.GL_FLOAT, false,
-                3*4, mVerticesBuffer);
+                3 * 4, mVerticesBuffer);
         GLES20.glEnableVertexAttribArray(mPositionHandle);
 
         mVerticesTextureBuffer.position(0);
-        GLES20.glVertexAttribPointer(mTextureCoordinationHandle,2, GLES20.GL_FLOAT,false,2*4,mVerticesTextureBuffer);
+        GLES20.glVertexAttribPointer(mTextureCoordinationHandle, 2, GLES20.GL_FLOAT, false, 2 * 4, mVerticesTextureBuffer);
         GLES20.glEnableVertexAttribArray(mTextureCoordinationHandle);
 
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureId);
@@ -110,5 +108,5 @@ public class Background {
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
 
     }
-    
+
 }
