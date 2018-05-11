@@ -167,10 +167,8 @@ class Cube {
         Matrix.setIdentityM(modelM, 0);
     }
 
-    public void draw(final float[] mvpMatrix, final int program, final float alpha) {
-        //GLES20.glUseProgram(program); // TODO: initialise at program compilation
+    public void draw(final float[] mvpMatrix, final int program) {
 
-        // Set program handles
         mvpMatrixHandle = GLES20.glGetUniformLocation(program, "uMVPMatrix");
         texUniformHandle = GLES20.glGetUniformLocation(program, "uTex");
         alphaUniformHandle = GLES20.glGetUniformLocation(program, "uAlpha");
@@ -202,8 +200,6 @@ class Cube {
 
         // Apply the projection and view transformation
         GLES20.glUniformMatrix4fv(mvpMatrixHandle, 1, false, mvpMatrix, 0);
-
-        GLES20.glUniform1f(alphaUniformHandle, alpha);
 
         for (int i = 0; i < 6; i++) {
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texDataHandle[i]);

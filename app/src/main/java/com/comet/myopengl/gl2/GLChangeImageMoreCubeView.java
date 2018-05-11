@@ -89,13 +89,6 @@ public class GLChangeImageMoreCubeView extends GLSurfaceView {
         return true;
     }
 
-    public void spinCube(float dx, float dy, float dz) {
-        mRenderer.mDeltaX += dx;
-        mRenderer.mDeltaY += dy;
-        mRenderer.mDeltaZ += dz;
-        requestRender();
-    }
-
     private class CubeRenderer implements Renderer {
 
         volatile public float mDeltaX, mDeltaY, mDeltaZ;
@@ -253,7 +246,6 @@ public class GLChangeImageMoreCubeView extends GLSurfaceView {
             GLES20.glEnableVertexAttribArray(iTexCoords);
 
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-//            GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, iTexId);
             GLES20.glUniform1i(iTexLoc, 0);
 
             Matrix.setIdentityM(m_fIdentity, 0);
