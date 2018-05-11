@@ -4,15 +4,17 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.opengl.GLUtils;
 import android.opengl.Matrix;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.comet.myopengl.zero.GLImage;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -103,7 +105,6 @@ public class ComBineView extends GLSurfaceView {
         int iProgId;
         int iPosition;
         int iVPMatrix;
-        int iTexId;
         int iTexLoc;
         int iTexCoords;
 
@@ -121,56 +122,46 @@ public class ComBineView extends GLSurfaceView {
         private float picBufferLenth = 0.1f;
         private float picBufferX = picBufferLenth / 2;
         private float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
+        private float picUpY = 1f;
 
-        private float cube[] = {
+        private float[] VERTEX = {   // in counterclockwise order:
                 //front
-                -1.0f + picBufferLenth, 0.614f, (float) Math.sqrt(3),//left_top
-                -1.0f + picBufferLenth, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
-                1.0f - picBufferLenth, 0.614f, (float) Math.sqrt(3),//right_top
-                1.0f - picBufferLenth, -0.614f, (float) Math.sqrt(3),//right_bottom
-
-                //right roar
-                2 - picBufferX, 0.614f, 0 - picBufferZ,
-                2 - picBufferX, -0.614f, 0 - picBufferZ,
-                1.0f + picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
-                1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
-
-                //roar
-                -1.0f + picBufferLenth, 0.614f, -(float) Math.sqrt(3),
-                -1.0f + picBufferLenth, -0.614f, -(float) Math.sqrt(3),
-                1.0f - picBufferLenth, 0.614f, -(float) Math.sqrt(3),
-                1.0f - picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+                -1.0f + picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),//left_top
+                -1.0f + picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),// x y z left_bottom
+                1.0f - picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),//right_top
+                1.0f - picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),//right_bottom
 
                 //left front
-                -2 + picBufferX, 0.614f, 0 + picBufferZ,
-                -2 + picBufferX, -0.614f, 0 + picBufferZ,
-                -1.0f - picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
-                -1.0f - picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
+                -2 + picBufferX, 0.614f + picUpY, 0 + picBufferZ,
+                -2 + picBufferX, -0.614f + picUpY, 0 + picBufferZ,
+                -1.0f - picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
+                -1.0f - picBufferX, -0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
 
                 //left roar
-                -1.0f - picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
-                -1.0f - picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
-                -2 + picBufferX, 0.614f, 0 - picBufferZ,
-                -2 + picBufferX, -0.614f, 0 - picBufferZ,
+                -1.0f - picBufferX, 0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,
+                -1.0f - picBufferX, -0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,
+                -2 + picBufferX, 0.614f + picUpY, 0 - picBufferZ,
+                -2 + picBufferX, -0.614f + picUpY, 0 - picBufferZ,
+
+                //roar
+                1.0f - picBufferLenth, 0.614f + picUpY, -(float) Math.sqrt(3),
+                1.0f - picBufferLenth, -0.614f + picUpY, -(float) Math.sqrt(3),
+                -1.0f + picBufferLenth, 0.614f + picUpY, -(float) Math.sqrt(3),
+                -1.0f + picBufferLenth, -0.614f + picUpY, -(float) Math.sqrt(3),
+
+                //right roar
+                2 - picBufferX, 0.614f + picUpY, 0 - picBufferZ,
+                2 - picBufferX, -0.614f + picUpY, 0 - picBufferZ,
+                1.0f + picBufferX, 0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,
+                1.0f + picBufferX, -0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,
 
                 //right front
-                1.0f + picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
-                1.0f + picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
-                2.0f - picBufferX, 0.614f, 0 + picBufferZ,
-                2.0f - picBufferX, -0.614f, 0 + picBufferZ,
-
+                1.0f + picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
+                1.0f + picBufferX, -0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
+                2.0f - picBufferX, 0.614f + picUpY, 0 + picBufferZ,
+                2.0f - picBufferX, -0.614f + picUpY, 0 + picBufferZ,
         };
-
-        short[] indeces = {
-                   0, 1, 3, 0, 3, 2,
-                   4, 5, 7, 4, 7, 6,
-                   8, 9, 11, 8, 11, 10,
-                   12, 13, 15, 12, 15, 14,
-                   16, 17, 19, 16, 19, 18,
-                   20, 21, 23, 20, 23, 22,
-        };
-
-        float[] tex = {
+        private final float[] TEX_VERTEX = {   // in clockwise order:
                 0.0f, 0.0f,
                 0.0f, 1.0f,
                 1.0f, 0.0f,
@@ -201,6 +192,34 @@ public class ComBineView extends GLSurfaceView {
                 1.0f, 0.0f,
                 1.0f, 1.0f,
         };
+
+        private byte indices0[] = {
+                0, 1, 3, 0, 3, 2
+        };
+        private byte indices1[] = {
+                4, 5, 7, 4, 7, 6
+        };
+        private byte indices2[] = {
+                8, 9, 11, 8, 11, 10
+        };
+        private byte indices3[] = {
+                12, 13, 15, 12, 15, 14
+        };
+        private byte indices4[] = {
+                16, 17, 19, 16, 19, 18
+        };
+        private byte indices5[] = {
+                20, 21, 23, 20, 23, 22
+        };
+        private int[] mTexName;
+        private ByteBuffer indexBuffer0;
+        private ByteBuffer indexBuffer1;
+        private ByteBuffer indexBuffer2;
+        private ByteBuffer indexBuffer3;
+        private ByteBuffer indexBuffer4;
+        private ByteBuffer indexBuffer5;
+        private FloatBuffer mVertexBuffer;
+        private FloatBuffer mTexVertexBuffer;
 
         final String strVShader =
                 "attribute vec4 a_position;" +
@@ -225,36 +244,56 @@ public class ComBineView extends GLSurfaceView {
                         "gl_FragColor = textureCube(u_texId, v_texCoords);" +
                         "}";
 
-        FloatBuffer cubeBuffer = null;
-        ShortBuffer indexBuffer = null;
-        FloatBuffer texBuffer = null;
 
         public CubeRenderer() {
-            cubeBuffer = ByteBuffer.allocateDirect(cube.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
-            cubeBuffer.put(cube).position(0);
+            mVertexBuffer = ByteBuffer.allocateDirect(VERTEX.length * 4)
+                    .order(ByteOrder.nativeOrder())
+                    .asFloatBuffer()
+                    .put(VERTEX);
+            mVertexBuffer.position(0);
 
-            indexBuffer = ByteBuffer.allocateDirect(indeces.length * 4).order(ByteOrder.nativeOrder()).asShortBuffer();
-            indexBuffer.put(indeces).position(0);
+            indexBuffer0 = ByteBuffer.allocateDirect(indices0.length);
+            indexBuffer0.put(indices0);
+            indexBuffer0.position(0);
 
-            texBuffer = ByteBuffer.allocateDirect(tex.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
-            texBuffer.put(tex).position(0);
+            indexBuffer1 = ByteBuffer.allocateDirect(indices1.length);
+            indexBuffer1.put(indices1);
+            indexBuffer1.position(0);
+
+            indexBuffer2 = ByteBuffer.allocateDirect(indices2.length);
+            indexBuffer2.put(indices2);
+            indexBuffer2.position(0);
+
+            indexBuffer3 = ByteBuffer.allocateDirect(indices3.length);
+            indexBuffer3.put(indices3);
+            indexBuffer3.position(0);
+
+            indexBuffer4 = ByteBuffer.allocateDirect(indices4.length);
+            indexBuffer4.put(indices4);
+            indexBuffer4.position(0);
+
+            indexBuffer5 = ByteBuffer.allocateDirect(indices5.length);
+            indexBuffer5.put(indices5);
+            indexBuffer5.position(0);
+
+            mTexVertexBuffer = ByteBuffer.allocateDirect(TEX_VERTEX.length * 4)
+                    .order(ByteOrder.nativeOrder())
+                    .asFloatBuffer()
+                    .put(TEX_VERTEX);
+            mTexVertexBuffer.position(0);
         }
 
         public void onDrawFrame(GL10 arg0) {
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
             GLES20.glUseProgram(iProgId);
 
-            cubeBuffer.position(0);
-            GLES20.glVertexAttribPointer(iPosition, 3, GLES20.GL_FLOAT, false, 0, cubeBuffer);
+            GLES20.glVertexAttribPointer(iPosition, 3, GLES20.GL_FLOAT, false,
+                    12, mVertexBuffer);
+
             GLES20.glEnableVertexAttribArray(iPosition);
-
-            texBuffer.position(0);
-            GLES20.glVertexAttribPointer(iTexCoords, 3, GLES20.GL_FLOAT, false, 0, texBuffer);
+            GLES20.glVertexAttribPointer(iTexCoords, 2, GLES20.GL_FLOAT, false, 0,
+                    mTexVertexBuffer);
             GLES20.glEnableVertexAttribArray(iTexCoords);
-
-            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, iTexId);
-            GLES20.glUniform1i(iTexLoc, 0);
 
             Matrix.setIdentityM(m_fIdentity, 0);
 
@@ -276,7 +315,37 @@ public class ComBineView extends GLSurfaceView {
             Matrix.multiplyMM(m_fVPMatrix, 0, m_fProjMatrix, 0, m_fVPMatrix, 0);
             GLES20.glUniformMatrix4fv(iVPMatrix, 1, false, m_fVPMatrix, 0);
 
-            GLES20.glDrawElements(GLES20.GL_TRIANGLES, 36, GLES20.GL_UNSIGNED_SHORT, indexBuffer);
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[0]);
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices0.length,
+                    GLES20.GL_UNSIGNED_BYTE, indexBuffer0);
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[1]);
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices1.length,
+                    GLES20.GL_UNSIGNED_BYTE, indexBuffer1);
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[2]);
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices2.length,
+                    GLES20.GL_UNSIGNED_BYTE, indexBuffer2);
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[3]);
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices3.length,
+                    GLES20.GL_UNSIGNED_BYTE, indexBuffer3);
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[4]);
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices4.length,
+                    GLES20.GL_UNSIGNED_BYTE, indexBuffer4);
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[5]);
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices5.length,
+                    GLES20.GL_UNSIGNED_BYTE, indexBuffer5);
+
+
         }
 
         public void onSurfaceChanged(GL10 arg0, int width, int height) {
@@ -300,56 +369,51 @@ public class ComBineView extends GLSurfaceView {
             iTexLoc = GLES20.glGetUniformLocation(iProgId, "u_texId");
             iTexCoords = GLES20.glGetAttribLocation(iProgId, "a_texCoords");
 
-            int[] textureId = new int[1];
 
-            // Face 0 - Red
-            byte[] cubePixels0 = {127, 0, 0};
-            // Face 1 - Green
-            byte[] cubePixels1 = {0, 127, 0};
-            // Face 2 - Blue
-            byte[] cubePixels2 = {0, 0, 127};
-            // Face 3 - Yellow
-            byte[] cubePixels3 = {127, 127, 0};
-            // Face 4 - Purple
-            byte[] cubePixels4 = {127, 0, 127};
-            // Face 5 - White
-            byte[] cubePixels5 = {127, 127, 127};
+            mTexName = new int[6];
+            GLES20.glGenTextures(6, mTexName, 0);
 
-            ByteBuffer cubePixels = ByteBuffer.allocateDirect(3);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[0]);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                    GLES20.GL_LINEAR);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
+                    GLES20.GL_LINEAR);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLImage.mBitmap1, 0);
 
-            // Generate a texture object
-            GLES20.glGenTextures(1, textureId, 0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[1]);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                    GLES20.GL_LINEAR);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
+                    GLES20.GL_LINEAR);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLImage.mBitmap2, 0);
 
-            // Bind the texture object
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureId[0]);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[2]);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                    GLES20.GL_LINEAR);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
+                    GLES20.GL_LINEAR);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLImage.mBitmap3, 0);
 
-            cubePixels.put(cubePixels0).position(0);
-            GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GLES20.GL_RGB, 1, 1, 0,
-                    GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[3]);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                    GLES20.GL_LINEAR);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
+                    GLES20.GL_LINEAR);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLImage.mBitmap4, 0);
 
-            cubePixels.put(cubePixels1).position(0);
-            GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GLES20.GL_RGB, 1, 1, 0,
-                    GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[4]);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                    GLES20.GL_LINEAR);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
+                    GLES20.GL_LINEAR);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLImage.mBitmap5, 0);
 
-            cubePixels.put(cubePixels2).position(0);
-            GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GLES20.GL_RGB, 1, 1, 0,
-                    GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
-
-            cubePixels.put(cubePixels3).position(0);
-            GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GLES20.GL_RGB, 1, 1, 0,
-                    GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
-
-            cubePixels.put(cubePixels4).position(0);
-            GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GLES20.GL_RGB, 1, 1, 0,
-                    GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
-
-            cubePixels.put(cubePixels5).position(0);
-            GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GLES20.GL_RGB, 1, 1, 0,
-                    GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
-
-            GLES20.glTexParameteri(GLES20.GL_TEXTURE_CUBE_MAP, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
-            GLES20.glTexParameteri(GLES20.GL_TEXTURE_CUBE_MAP, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
-            iTexId = textureId[0];
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[5]);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                    GLES20.GL_LINEAR);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
+                    GLES20.GL_LINEAR);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLImage.mBitmap6, 0);
         }
 
     }
