@@ -302,51 +302,33 @@ public class GLChangeImageMoreCubeView extends GLSurfaceView {
 
             int[] textureId = new int[1];
 
-            // Face 0 - Red
             byte[] cubePixels0 = {127, 0, 0};
-            // Face 1 - Green
             byte[] cubePixels1 = {0, 127, 0};
-            // Face 2 - Blue
             byte[] cubePixels2 = {0, 0, 127};
-            // Face 3 - Yellow
             byte[] cubePixels3 = {127, 127, 0};
-            // Face 4 - Purple
             byte[] cubePixels4 = {127, 0, 127};
-            // Face 5 - White
             byte[] cubePixels5 = {127, 127, 127};
-
             ByteBuffer cubePixels = ByteBuffer.allocateDirect(3);
-
-            // Generate a texture object
             GLES20.glGenTextures(1, textureId, 0);
-
-            // Bind the texture object
             GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureId[0]);
-
             cubePixels.put(cubePixels0).position(0);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GLES20.GL_RGB, 1, 1, 0,
                     GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
-
             cubePixels.put(cubePixels1).position(0);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GLES20.GL_RGB, 1, 1, 0,
                     GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
-
             cubePixels.put(cubePixels2).position(0);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GLES20.GL_RGB, 1, 1, 0,
                     GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
-
             cubePixels.put(cubePixels3).position(0);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GLES20.GL_RGB, 1, 1, 0,
                     GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
-
             cubePixels.put(cubePixels4).position(0);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GLES20.GL_RGB, 1, 1, 0,
                     GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
-
             cubePixels.put(cubePixels5).position(0);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GLES20.GL_RGB, 1, 1, 0,
                     GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
-
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_CUBE_MAP, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_CUBE_MAP, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
             iTexId = textureId[0];
