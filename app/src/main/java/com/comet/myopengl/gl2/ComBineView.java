@@ -362,7 +362,8 @@ public class ComBineView extends GLSurfaceView {
             GLES20.glDepthFunc(GLES20.GL_LEQUAL);
             GLES20.glFrontFace(GLES20.GL_CCW);
 
-            Matrix.setLookAtM(m_fViewMatrix, 0, 0, 0, 6, 0, 0, 0, 0, 1, 0);
+            Matrix.setLookAtM(m_fViewMatrix,
+                    0, 0, 0, 6, 0, 0, 0, 0, 1, 0);
             Matrix.setIdentityM(mAccumulatedRotation, 0);
 
             iProgId = loadProgram(strVShader, strFShader);
