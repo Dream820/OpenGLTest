@@ -27,7 +27,6 @@ public class GLCubeView extends GLSurfaceView {
         setEGLContextClientVersion(2);
         setRenderer(mRenderer = new CubeRenderer());
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
-        //important: only renders when requestRender() is called, saving processing
     }
 
     @Override
@@ -97,44 +96,95 @@ public class GLCubeView extends GLSurfaceView {
         float[] m_fViewMatrix = new float[16];
         float[] m_fIdentity = new float[16];
         float[] m_fVPMatrix = new float[16];
-        /**
-         * Store the accumulated rotation.
-         */
+
         private float[] mAccumulatedRotation = new float[16];
-        /**
-         * Store the current rotation.
-         */
+
         private float[] mCurrentRotation = new float[16];
-        /**
-         * A temporary matrix
-         */
+
         private float[] mTemporaryMatrix = new float[16];
 
-        float[] cube = {
-                2, 2, 2, -2, 2, 2, -2, -2, 2, 2, -2, 2, //0-1-2-3 front
-                2, 2, 2, 2, -2, 2, 2, -2, -2, 2, 2, -2,//0-3-4-5 right
-                2, -2, -2, -2, -2, -2, -2, 2, -2, 2, 2, -2,//4-7-6-5 back
-                -2, 2, 2, -2, 2, -2, -2, -2, -2, -2, -2, 2,//1-6-7-2 left
-                2, 2, 2, 2, 2, -2, -2, 2, -2, -2, 2, 2, //top
-                2, -2, 2, -2, -2, 2, -2, -2, -2, 2, -2, -2,//bottom
+        private float picBufferLenth = 0.1f;
+        private float picBufferX = picBufferLenth / 2;
+        private float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
+
+        private float cube[] = {
+                //front
+                -1.0f + picBufferLenth, 0.614f, (float) Math.sqrt(3),//left_top
+                -1.0f + picBufferLenth, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
+                1.0f - picBufferLenth, 0.614f, (float) Math.sqrt(3),//right_top
+                1.0f - picBufferLenth, -0.614f, (float) Math.sqrt(3),//right_bottom
+
+                //right roar
+                2 - picBufferX, 0.614f, 0 - picBufferZ,
+                2 - picBufferX, -0.614f, 0 - picBufferZ,
+                1.0f + picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+                1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
+
+                //roar
+                -1.0f + picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+                -1.0f + picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+                1.0f - picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+                1.0f - picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+
+                //left front
+                -2 + picBufferX, 0.614f, 0 + picBufferZ,
+                -2 + picBufferX, -0.614f, 0 + picBufferZ,
+                -1.0f - picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
+                -1.0f - picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
+
+                //left roar
+                -1.0f - picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+                -1.0f - picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
+                -2 + picBufferX, 0.614f, 0 - picBufferZ,
+                -2 + picBufferX, -0.614f, 0 - picBufferZ,
+
+                //right front
+                1.0f + picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
+                1.0f + picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
+                2.0f - picBufferX, 0.614f, 0 + picBufferZ,
+                2.0f - picBufferX, -0.614f, 0 + picBufferZ,
+
         };
 
         short[] indeces = {
-                0, 1, 2, 0, 2, 3,
-                4, 5, 6, 4, 6, 7,
-                8, 9, 10, 8, 10, 11,
-                12, 13, 14, 12, 14, 15,
-                16, 17, 18, 16, 18, 19,
-                20, 21, 22, 20, 22, 23,
+                   0, 1, 3, 0, 3, 2,
+                   4, 5, 7, 4, 7, 6,
+                   8, 9, 11, 8, 11, 10,
+                   12, 13, 15, 12, 15, 14,
+                   16, 17, 19, 16, 19, 18,
+                   20, 21, 23, 20, 23, 22,
         };
 
         float[] tex = {
-                1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1, 1, //0-1-2-3 front
-                1, 1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1,//0-3-4-5 right
-                1, -1, -1, -1, -1, -1, -1, 1, -1, 1, 1, -1,//4-7-6-5 back
-                -1, 1, 1, -1, 1, -1, -1, -1, -1, -1, -1, 1,//1-6-7-2 left
-                1, 1, 1, 1, 1, -1, -1, 1, -1, -1, 1, 1, //top
-                1, -1, 1, -1, -1, 1, -1, -1, -1, 1, -1, -1,//bottom
+                0.0f, 0.0f,
+                0.0f, 1.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+
+                0.0f, 0.0f,
+                0.0f, 1.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+
+                0.0f, 0.0f,
+                0.0f, 1.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+
+                0.0f, 0.0f,
+                0.0f, 1.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+
+                0.0f, 0.0f,
+                0.0f, 1.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+
+                0.0f, 0.0f,
+                0.0f, 1.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
         };
 
         final String strVShader =
@@ -161,10 +211,8 @@ public class GLCubeView extends GLSurfaceView {
                         "}";
 
         FloatBuffer cubeBuffer = null;
-        FloatBuffer colorBuffer = null;
         ShortBuffer indexBuffer = null;
         FloatBuffer texBuffer = null;
-        FloatBuffer normBuffer = null;
 
         public CubeRenderer() {
             cubeBuffer = ByteBuffer.allocateDirect(cube.length * 4).order(ByteOrder.nativeOrder()).asFloatBuffer();
@@ -178,7 +226,6 @@ public class GLCubeView extends GLSurfaceView {
         }
 
         public void onDrawFrame(GL10 arg0) {
-//              GLES20.glEnable(GLES20.GL_TEXTURE_CUBE_MAP);
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
             GLES20.glUseProgram(iProgId);
 
@@ -194,12 +241,8 @@ public class GLCubeView extends GLSurfaceView {
             GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, iTexId);
             GLES20.glUniform1i(iTexLoc, 0);
 
-            // Draw a cube.
-            // Translate the cube into the screen.
             Matrix.setIdentityM(m_fIdentity, 0);
-//	             Matrix.translateM(m_fIdentity, 0, 0.0f, 0.8f, -3.5f);
 
-            // Set a matrix that contains the current rotation.
             Matrix.setIdentityM(mCurrentRotation, 0);
             Matrix.rotateM(mCurrentRotation, 0, mDeltaX, 1.0f, 0.0f, 0.0f);
             Matrix.rotateM(mCurrentRotation, 0, mDeltaY, 0.0f, 1.0f, 0.0f);
@@ -208,28 +251,24 @@ public class GLCubeView extends GLSurfaceView {
             mDeltaY = 0.0f;
             mDeltaZ = 0.0f;
 
-            // Multiply the current rotation by the accumulated rotation, and then set the accumulated
-            // rotation to the result.
             Matrix.multiplyMM(mTemporaryMatrix, 0, mCurrentRotation, 0, mAccumulatedRotation, 0);
             System.arraycopy(mTemporaryMatrix, 0, mAccumulatedRotation, 0, 16);
 
-            // Rotate the cube taking the overall rotation into account.
             Matrix.multiplyMM(mTemporaryMatrix, 0, m_fIdentity, 0, mAccumulatedRotation, 0);
             System.arraycopy(mTemporaryMatrix, 0, m_fIdentity, 0, 16);
 
             Matrix.multiplyMM(m_fVPMatrix, 0, m_fViewMatrix, 0, m_fIdentity, 0);
             Matrix.multiplyMM(m_fVPMatrix, 0, m_fProjMatrix, 0, m_fVPMatrix, 0);
-//              Matrix.translateM(m_fVPMatrix, 0, 0, 0, 1);
             GLES20.glUniformMatrix4fv(iVPMatrix, 1, false, m_fVPMatrix, 0);
 
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, 36, GLES20.GL_UNSIGNED_SHORT, indexBuffer);
-//              GLES20.glDisable(GLES20.GL_TEXTURE_CUBE_MAP);
         }
 
         public void onSurfaceChanged(GL10 arg0, int width, int height) {
             GLES20.glViewport(0, 0, width, height);
             Matrix.frustumM(m_fProjMatrix, 0, -(float) width / height, (float) width / height, -1, 1, 1, 10);
         }
+
         @Override
         public void onSurfaceCreated(GL10 arg0, EGLConfig arg1) {
             GLES20.glClearColor(0, 0, 0, 0);
