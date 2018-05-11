@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradiant_guide_theme">
 
-    <com.comet.myopengl.gl2.GLCubeView
+    <com.comet.myopengl.gl2.GLChangeImageMoreCubeView
         android:id="@+id/gv_one"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
