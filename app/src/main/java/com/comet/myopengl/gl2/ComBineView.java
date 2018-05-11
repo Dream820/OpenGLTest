@@ -1,4 +1,4 @@
-package com.comet.myopengl.simpleone2;
+package com.comet.myopengl.gl2;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
