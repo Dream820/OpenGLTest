@@ -299,13 +299,10 @@ public class GLCubeView extends GLSurfaceView {
             iVPMatrix = GLES20.glGetUniformLocation(iProgId, "u_VPMatrix");
             iTexLoc = GLES20.glGetUniformLocation(iProgId, "u_texId");
             iTexCoords = GLES20.glGetAttribLocation(iProgId, "a_texCoords");
-            iTexId = CreateCubeTexture();
-        }
 
-        public int CreateCubeTexture() {
             int[] textureId = new int[1];
 
-            // Face 0 - Red        
+            // Face 0 - Red
             byte[] cubePixels0 = {127, 0, 0};
             // Face 1 - Green
             byte[] cubePixels1 = {0, 127, 0};
@@ -359,10 +356,8 @@ public class GLCubeView extends GLSurfaceView {
             // Set the filtering mode
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_CUBE_MAP, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_CUBE_MAP, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
-
-            return textureId[0];
+            iTexId = textureId[0];
         }
-
 
     }
 
