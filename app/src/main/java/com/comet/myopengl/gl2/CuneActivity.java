@@ -1,9 +1,11 @@
 package com.comet.myopengl.gl2;
 
 import android.app.Activity;
-import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
+import com.comet.myopengl.R;
 import com.comet.myopengl.zero.GLImage;
 
 public class CuneActivity extends Activity {
@@ -14,7 +16,9 @@ public class CuneActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         GLImage.load(getResources());
-        GLSurfaceView glView = new GLCubeView(this);
-        setContentView(glView);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_main2);
     }
 } 
