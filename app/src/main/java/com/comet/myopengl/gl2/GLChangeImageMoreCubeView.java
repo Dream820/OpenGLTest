@@ -121,36 +121,36 @@ public class GLChangeImageMoreCubeView extends GLSurfaceView {
                 -1.0f + picBufferLenth, -0.614f, (float) Math.sqrt(3),// x y z left_bottom
                 1.0f - picBufferLenth, 0.614f, (float) Math.sqrt(3),//right_top
                 1.0f - picBufferLenth, -0.614f, (float) Math.sqrt(3),//right_bottom
-
-                //right roar
-                2 - picBufferX, 0.614f, 0 - picBufferZ,
-                2 - picBufferX, -0.614f, 0 - picBufferZ,
-                1.0f + picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
-                1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
-
-                //roar
-                -1.0f + picBufferLenth, 0.614f, -(float) Math.sqrt(3),
-                -1.0f + picBufferLenth, -0.614f, -(float) Math.sqrt(3),
-                1.0f - picBufferLenth, 0.614f, -(float) Math.sqrt(3),
-                1.0f - picBufferLenth, -0.614f, -(float) Math.sqrt(3),
-
-                //left front
-                -2 + picBufferX, 0.614f, 0 + picBufferZ,
-                -2 + picBufferX, -0.614f, 0 + picBufferZ,
-                -1.0f - picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
-                -1.0f - picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
-
-                //left roar
-                -1.0f - picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
-                -1.0f - picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
-                -2 + picBufferX, 0.614f, 0 - picBufferZ,
-                -2 + picBufferX, -0.614f, 0 - picBufferZ,
-
-                //right front
-                1.0f + picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
-                1.0f + picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
-                2.0f - picBufferX, 0.614f, 0 + picBufferZ,
-                2.0f - picBufferX, -0.614f, 0 + picBufferZ,
+//
+//                //right roar
+//                2 - picBufferX, 0.614f, 0 - picBufferZ,
+//                2 - picBufferX, -0.614f, 0 - picBufferZ,
+//                1.0f + picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+//                1.0f + picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
+//
+//                //roar
+//                -1.0f + picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+//                -1.0f + picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+//                1.0f - picBufferLenth, 0.614f, -(float) Math.sqrt(3),
+//                1.0f - picBufferLenth, -0.614f, -(float) Math.sqrt(3),
+//
+//                //left front
+//                -2 + picBufferX, 0.614f, 0 + picBufferZ,
+//                -2 + picBufferX, -0.614f, 0 + picBufferZ,
+//                -1.0f - picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
+//                -1.0f - picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
+//
+//                //left roar
+//                -1.0f - picBufferX, 0.614f, -(float) Math.sqrt(3) + picBufferZ,
+//                -1.0f - picBufferX, -0.614f, -(float) Math.sqrt(3) + picBufferZ,
+//                -2 + picBufferX, 0.614f, 0 - picBufferZ,
+//                -2 + picBufferX, -0.614f, 0 - picBufferZ,
+//
+//                //right front
+//                1.0f + picBufferX, 0.614f, (float) Math.sqrt(3) - picBufferZ,
+//                1.0f + picBufferX, -0.614f, (float) Math.sqrt(3) - picBufferZ,
+//                2.0f - picBufferX, 0.614f, 0 + picBufferZ,
+//                2.0f - picBufferX, -0.614f, 0 + picBufferZ,
 
         };
 
