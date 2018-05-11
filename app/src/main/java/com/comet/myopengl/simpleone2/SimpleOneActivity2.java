@@ -58,11 +58,6 @@ public class SimpleOneActivity2 extends Activity {
         mGLSurfaceView.onResume();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mRenderer.destroy();
-    }
 
     private static class MyRenderer implements GLSurfaceView.Renderer {
 
@@ -192,7 +187,7 @@ public class SimpleOneActivity2 extends Activity {
         private int mMatrixHandle;
         private int mTexCoordHandle;
         private int mTexSamplerHandle;
-        private int mTexName;
+        private int[] mTexName;
 
         MyRenderer() {
             mVertexBuffer = ByteBuffer.allocateDirect(VERTEX.length * 4)
@@ -265,32 +260,50 @@ public class SimpleOneActivity2 extends Activity {
             GLES20.glVertexAttribPointer(mTexCoordHandle, 2, GLES20.GL_FLOAT, false, 0,
                     mTexVertexBuffer);
 
-            int[] texNames = new int[6];
-            GLES20.glGenTextures(1, texNames, 0);
-            mTexName = texNames[0];
-            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName);
+            mTexName = new int[6];
+            GLES20.glGenTextures(6, mTexName, 0);
+
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[0]);
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
                     GLES20.GL_LINEAR);
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
                     GLES20.GL_LINEAR);
-            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S,
-                    GLES20.GL_REPEAT);
-            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
-                    GLES20.GL_REPEAT);
             GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLImage.mBitmap1, 0);
 
-            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[1]);
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
                     GLES20.GL_LINEAR);
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
                     GLES20.GL_LINEAR);
-            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S,
-                    GLES20.GL_REPEAT);
-            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T,
-                    GLES20.GL_REPEAT);
             GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLImage.mBitmap2, 0);
+
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[2]);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                    GLES20.GL_LINEAR);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
+                    GLES20.GL_LINEAR);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLImage.mBitmap3, 0);
+
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[3]);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                    GLES20.GL_LINEAR);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
+                    GLES20.GL_LINEAR);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLImage.mBitmap4, 0);
+
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[4]);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                    GLES20.GL_LINEAR);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
+                    GLES20.GL_LINEAR);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLImage.mBitmap5, 0);
+
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[5]);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                    GLES20.GL_LINEAR);
+            GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
+                    GLES20.GL_LINEAR);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLImage.mBitmap6, 0);
         }
 
         @Override
@@ -304,25 +317,37 @@ public class SimpleOneActivity2 extends Activity {
         @Override
         public void onDrawFrame(GL10 unused) {
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-
             GLES20.glUniformMatrix4fv(mMatrixHandle, 1, false, mMVPMatrix, 0);
-            GLES20.glUniform1i(mTexSamplerHandle, 0);
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[0]);
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices0.length,
                     GLES20.GL_UNSIGNED_BYTE, indexBuffer0);
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[1]);
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices1.length,
                     GLES20.GL_UNSIGNED_BYTE, indexBuffer1);
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[2]);
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices2.length,
                     GLES20.GL_UNSIGNED_BYTE, indexBuffer2);
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[3]);
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices3.length,
                     GLES20.GL_UNSIGNED_BYTE, indexBuffer3);
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[4]);
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices4.length,
                     GLES20.GL_UNSIGNED_BYTE, indexBuffer4);
+
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[5]);
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices5.length,
                     GLES20.GL_UNSIGNED_BYTE, indexBuffer5);
-        }
-
-        void destroy() {
-            GLES20.glDeleteTextures(1, new int[]{mTexName}, 0);
         }
     }
 }

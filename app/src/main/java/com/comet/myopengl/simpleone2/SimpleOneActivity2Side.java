@@ -85,20 +85,33 @@ public class SimpleOneActivity2Side extends Activity {
         private float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
         private float picUpY = 1f;
         private final float[] VERTEX = {   // in counterclockwise order:
-                //left roar
-                -1.0f - picBufferX, 0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,
-                -1.0f - picBufferX, -0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,
-                -2 + picBufferX, 0.614f + picUpY, 0 - picBufferZ,
-                -2 + picBufferX, -0.614f + picUpY, 0 - picBufferZ,
+                //front
+                -1.0f + picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),//left_top
+                -1.0f + picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),// x y z left_bottom
+                1.0f - picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),//right_top
+                1.0f - picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),//right_bottom
+
+                //left front
+                -2 + picBufferX, 0.614f + picUpY, 0 + picBufferZ,
+                -2 + picBufferX, -0.614f + picUpY, 0 + picBufferZ,
+                -1.0f - picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
+                -1.0f - picBufferX, -0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
         };
         private final short[] VERTEX_INDEX = {
-                0, 1, 3, 0, 3, 2
+                0, 1, 3, 0, 3, 2,
+                4, 5, 7, 4, 7, 6
         };
         private final float[] TEX_VERTEX = {   // in clockwise order:
                 0.0f, 0.0f,
                 0.0f, 1.0f,
                 1.0f, 0.0f,
                 1.0f, 1.0f,
+
+                0.0f, 0.0f,
+                0.0f, 1.0f,
+                1.0f, 0.0f,
+                1.0f, 1.0f,
+
         };
 
         private final FloatBuffer mVertexBuffer;
@@ -206,6 +219,9 @@ public class SimpleOneActivity2Side extends Activity {
             GLES20.glUniform1i(mTexSamplerHandle, 0);
 
             // 用 glDrawElements 来绘制，mVertexIndexBuffer 指定了顶点绘制顺序
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, VERTEX_INDEX.length,
+                    GLES20.GL_UNSIGNED_SHORT, mVertexIndexBuffer);
+
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, VERTEX_INDEX.length,
                     GLES20.GL_UNSIGNED_SHORT, mVertexIndexBuffer);
         }

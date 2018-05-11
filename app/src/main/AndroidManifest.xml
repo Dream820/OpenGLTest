@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.comet.myopengl.simpleone2.SimpleOneActivity2Side"
+            android:name="com.comet.myopengl.simpleone2.SimpleOneActivity2"
             android:hardwareAccelerated="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
