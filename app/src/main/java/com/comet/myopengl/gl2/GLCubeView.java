@@ -323,37 +323,30 @@ public class GLCubeView extends GLSurfaceView {
             // Bind the texture object
             GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureId[0]);
 
-            // Load the cube face - Positive X
             cubePixels.put(cubePixels0).position(0);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GLES20.GL_RGB, 1, 1, 0,
                     GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
 
-            // Load the cube face - Negative X
             cubePixels.put(cubePixels1).position(0);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GLES20.GL_RGB, 1, 1, 0,
                     GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
 
-            // Load the cube face - Positive Y
             cubePixels.put(cubePixels2).position(0);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GLES20.GL_RGB, 1, 1, 0,
                     GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
 
-            // Load the cube face - Negative Y
             cubePixels.put(cubePixels3).position(0);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GLES20.GL_RGB, 1, 1, 0,
                     GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
 
-            // Load the cube face - Positive Z
             cubePixels.put(cubePixels4).position(0);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GLES20.GL_RGB, 1, 1, 0,
                     GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
 
-            // Load the cube face - Negative Z
             cubePixels.put(cubePixels5).position(0);
             GLES20.glTexImage2D(GLES20.GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GLES20.GL_RGB, 1, 1, 0,
                     GLES20.GL_RGB, GLES20.GL_UNSIGNED_BYTE, cubePixels);
 
-            // Set the filtering mode
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_CUBE_MAP, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_CUBE_MAP, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
             iTexId = textureId[0];
