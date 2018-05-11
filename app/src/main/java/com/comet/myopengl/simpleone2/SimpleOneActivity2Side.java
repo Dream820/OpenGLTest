@@ -140,9 +140,12 @@ public class SimpleOneActivity2Side extends Activity {
             return shader;
         }
 
+        float[] m_fViewMatrix = new float[16];
+
         @Override
         public void onSurfaceCreated(GL10 unused, EGLConfig config) {
             GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+            Matrix.setLookAtM(m_fViewMatrix, 0, 0, 0, 6, 0, 0, 0, 0, 1, 0);
 
             mProgram = GLES20.glCreateProgram();
             int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, VERTEX_SHADER);
@@ -166,11 +169,6 @@ public class SimpleOneActivity2Side extends Activity {
             GLES20.glVertexAttribPointer(mTexCoordHandle, 2, GLES20.GL_FLOAT, false, 0,
                     mTexVertexBuffer);
 
-//            int[] texNames = new int[1];
-//            GLES20.glGenTextures(1, texNames, 0);
-//            mTexName = texNames[0];
-//            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-//            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName);
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
                     GLES20.GL_LINEAR);
             GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER,
