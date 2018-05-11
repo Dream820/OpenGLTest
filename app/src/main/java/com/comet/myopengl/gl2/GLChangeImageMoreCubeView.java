@@ -253,7 +253,7 @@ public class GLChangeImageMoreCubeView extends GLSurfaceView {
             GLES20.glEnableVertexAttribArray(iTexCoords);
 
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, iTexId);
+//            GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, iTexId);
             GLES20.glUniform1i(iTexLoc, 0);
 
             Matrix.setIdentityM(m_fIdentity, 0);
