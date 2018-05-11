@@ -1,9 +1,12 @@
 package com.comet.myopengl.cubeok;
 
+import android.util.Log;
+
 public class DisplayCubeRenderer implements CubeRenderer {
     public Cube displaycube;
 
     public DisplayCubeRenderer(final int tex[]) {
+        Log.d("CubeCube", "EEE");
         displaycube = new Cube(
             new int[] {
                 tex[0], tex[1], tex[2],

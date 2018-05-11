@@ -29,18 +29,6 @@ public class GLRendererEx implements GLSurfaceView.Renderer {
     int noccube;
     int quit;
 
-    // GUI
-    // MAIN MENU
-    private Button btnBegin;
-    private Button btnIncreaseD;
-    private Button btnDecreaseD;
-    private Button lblWarning;
-    private Button lblTitle;
-    // PLAY
-    private Button btnQuit;
-    // Configuration variables
-    private int d = 2;
-    // Matrices
     private final float guiMatrix[]
             = new float[16];
 
@@ -68,28 +56,28 @@ public class GLRendererEx implements GLSurfaceView.Renderer {
 
     // Shader constants/variables
     private final String vertexShaderCode =
-        "uniform mat4 uMVPMatrix;"                 +
-        "attribute vec4 aPosition;"                +
-        "attribute vec4 aColour;"                  +
-        "varying vec4 vColour;"                    +
-        "attribute vec2 aTexCoord;"                +
-        "varying vec2 vTexCoord;"                  +
-        "void main() {"                            +
-        "   vColour = aColour;"                    +
-        "   vTexCoord = aTexCoord;"                +
-        "   gl_Position = uMVPMatrix * aPosition;" +
-        "}";
+            "uniform mat4 uMVPMatrix;" +
+                    "attribute vec4 aPosition;" +
+                    "attribute vec4 aColour;" +
+                    "varying vec4 vColour;" +
+                    "attribute vec2 aTexCoord;" +
+                    "varying vec2 vTexCoord;" +
+                    "void main() {" +
+                    "   vColour = aColour;" +
+                    "   vTexCoord = aTexCoord;" +
+                    "   gl_Position = uMVPMatrix * aPosition;" +
+                    "}";
 
     private final String fragmentShaderCode =
-        "precision mediump float;"                      +
-        "varying vec4 vColour;"                         +
-        "uniform sampler2D uTex;"                       +
-        "varying vec2 vTexCoord;"                       +
-        "uniform float uAlpha;"                         +
-        "void main() {"                                 +
-        "   gl_FragColor = texture2D(uTex, vTexCoord);" +
-        "   gl_FragColor.a *= uAlpha;"                  +
-        "}";
+            "precision mediump float;" +
+                    "varying vec4 vColour;" +
+                    "uniform sampler2D uTex;" +
+                    "varying vec2 vTexCoord;" +
+                    "uniform float uAlpha;" +
+                    "void main() {" +
+                    "   gl_FragColor = texture2D(uTex, vTexCoord);" +
+                    "   gl_FragColor.a *= uAlpha;" +
+                    "}";
 
     private int program;
 
@@ -131,13 +119,13 @@ public class GLRendererEx implements GLSurfaceView.Renderer {
 
         // Load resources
         inside = loadTexture(context, R.drawable.keyboard_1);
-        textures = new int[] {
-            loadTexture(context, R.drawable.keyboard_1),
-            loadTexture(context, R.drawable.keyboard_2),
-            loadTexture(context, R.drawable.keyboard_3),
-            loadTexture(context, R.drawable.keyboard_4),
-            loadTexture(context, R.drawable.keyboard_5),
-            loadTexture(context, R.drawable.keyboard_6)
+        textures = new int[]{
+                loadTexture(context, R.drawable.keyboard_1),
+                loadTexture(context, R.drawable.keyboard_2),
+                loadTexture(context, R.drawable.keyboard_3),
+                loadTexture(context, R.drawable.keyboard_4),
+                loadTexture(context, R.drawable.keyboard_5),
+                loadTexture(context, R.drawable.keyboard_6)
         };
         begin = loadTexture(context, R.drawable.keyboard_1);
         leftarrow = loadTexture(context, R.drawable.keyboard_1);
@@ -151,58 +139,6 @@ public class GLRendererEx implements GLSurfaceView.Renderer {
         cube = new DisplayCubeRenderer(textures);
 
         Matrix.setIdentityM(guiMatrix, 0);
-
-        btnBegin = new Button(begin) {
-            @Override
-            public void onClick() {
-                // Prevent restarting the Noccube when re-initialising the screen (e.g after putting the screen to sleep)
-                if (!(cube instanceof NOCCubeRenderer)) {
-                    NOCCube noccube = new NOCCube(d);
-                    cube = new NOCCubeRenderer(noccube, inside, textures);
-
-                    state = PLAY;
-                }
-            }
-        };
-        btnIncreaseD = new Button(rightarrow) {
-            @Override
-            public void onClick() {
-                d++;
-            }
-        };
-        btnDecreaseD = new Button(leftarrow) {
-            @Override
-            public void onClick() {
-                d = d > 2 ? d-1 : 2;
-            }
-        };
-        lblWarning = new Button(warning); // TODO: make label class (parent of button)
-        lblTitle = new Button(noccube);
-
-        btnQuit = new Button(quit) {
-            @Override
-            public void onClick() {
-                state = MAIN_MENU;
-                cube = new DisplayCubeRenderer(textures);
-            }
-        };
-    }
-
-    public void handleInput(final float x, final float y, final int input_type) {
-        //Log.d("SAM", "TOUCHED: " + x + ", " + y);
-
-        switch (state) {
-            case MAIN_MENU: {
-                btnBegin.update(x, y, true); /*TODO: CHANGE*/ btnBegin.update(0, 0, false);
-                btnIncreaseD.update(x, y, true); /*TODO: CHANGE*/ btnIncreaseD.update(0, 0, false);
-                btnDecreaseD.update(x, y, true); /*TODO: CHANGE*/ btnDecreaseD.update(0, 0, false);
-                break;
-            }
-            case PLAY: {
-                btnQuit.update(x, y, true); /*TODO: CHANGE*/ btnQuit.update(0, 0, false);
-                break;
-            }
-        }
     }
 
     public void onDrawFrame(GL10 unused) {
@@ -214,28 +150,6 @@ public class GLRendererEx implements GLSurfaceView.Renderer {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         Matrix.multiplyMM(vpMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
-
-        switch (state) {
-            case MAIN_MENU: {
-                btnBegin.draw(guiMatrix, program);
-                btnIncreaseD.draw(guiMatrix, program);
-                if (d > 2 ) btnDecreaseD.draw(guiMatrix, program);
-                if (d >= 6) lblWarning.draw(guiMatrix, program);
-                lblTitle.draw(guiMatrix, program);
-                break;
-            }
-            case PLAY: {
-                /* TODO: *throws up*
-                         Pretty sure this causes a massive slow down... */
-                if (((NOCCubeRenderer)cube).getAnimationState() == NOCCubeRenderer.COMPLETE) {
-                    state = MAIN_MENU;
-                    cube = new DisplayCubeRenderer(textures);
-                }
-                else if (((NOCCubeRenderer)cube).getAnimationState() < NOCCubeRenderer.SOLVED) {
-                    btnQuit.draw(guiMatrix, program);
-                }
-            }
-        }
         cube.draw(vpMatrix, program, dt);
     }
 
@@ -248,22 +162,11 @@ public class GLRendererEx implements GLSurfaceView.Renderer {
         // Set projection matrix, to be used on eye co-ordinates on frame draw
         Matrix.frustumM(projectionMatrix, 0, ratio * -1, ratio * 1, -1, 1, 3, 32);
 
-        /*float tmpMatrix[] = new float[16];
-        Matrix.orthoM(guiMatrix, 0, ratio * -1, ratio * 1, -1, 1, 3, 32);
-        Matrix.setLookAtM(tmpMatrix, 0, eyeX, eyeY, eyeZ, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-        Matrix.multiplyMM(guiMatrix, 0, guiMatrix.clone(), 0, tmpMatrix, 0);*/
-
-        btnBegin.set(0.0f, -0.625f, 0.5f, 0.125f);
-        btnIncreaseD.set(0.75f, -0.625f, 0.1875f, 0.125f);
-        btnDecreaseD.set(-0.75f, -0.625f, 0.1875f, 0.125f);
-        lblWarning.set(0.0f, 0.0f, 0.5f, 0.25f);
-        lblTitle.set(0.0f, 0.625f, 0.75f, 0.125f);
-
-        btnQuit.set(0.8125f, 0.875f, 0.1875f, 0.125f);
     }
 
     public void adjustViewAngle(float latAdj, float longAdj) {
-        latitude += latAdj; longitude += longAdj;
+        latitude += latAdj;
+        longitude += longAdj;
         setViewMatrix(latitude, longitude);
     }
 
@@ -282,71 +185,8 @@ public class GLRendererEx implements GLSurfaceView.Renderer {
         Matrix.setLookAtM(viewMatrix, 0, eyeX, eyeY, eyeZ, 0.0f, 0.0f, 0.0f, upX, upY, upZ);
     }
 
-    public int castRay(final float point[], final float x, final float y) {
-        final float tmpMatrix[] = new float[16];
-
-        // Homogeneous clip co-ordinates
-        final float ray[] = new float[] { x, y, -1.0f, 1.0f };
-
-        // Eye co-ordinates
-        Matrix.invertM(tmpMatrix, 0, projectionMatrix, 0);
-        Matrix.multiplyMV(ray, 0, tmpMatrix, 0, ray.clone(), 0);
-        ray[2] = -1.0f; ray[3] = 0.0f; // forwards facing, not a point
-
-        // World co-ordinates
-        Matrix.invertM(tmpMatrix, 0, viewMatrix, 0);
-        Matrix.multiplyMV(ray, 0, tmpMatrix, 0, ray.clone(), 0);
-        final float D[] = new float[] { ray[0], ray[1], ray[2] }; // xyz
-
-        // Normalise (any point to this?)
-        final float mag = (float) Math.sqrt( D[0]*D[0] + D[1]*D[1] + D[2]*D[2] );
-        D[0] /= mag; D[1] /= mag; D[2] /= mag;
-
-        /*
-        Log.d("SAM", "RAY: " + Float.toString(ray[0]) + ", " + Float.toString(ray[1]) + ", " + Float.toString(ray[2]));
-        Log.d("SAM", "Dsam :" + D[0] + ", " + D[1] + ", " + D[2]);
-        Log.d("SAM", "EYE: " + Float.toString(eyeX) + ", " + Float.toString(eyeY) + ", " + Float.toString(eyeZ));
-        */
-
-        float distance = Float.POSITIVE_INFINITY;
-        int face = -1;
-
-        for (int i = 0; i < 6; i++) {
-            final float n[] = { NOCCubeRenderer.normal[3*i], NOCCubeRenderer.normal[3*i+1], NOCCubeRenderer.normal[3*i+2] };
-            final float d = (float) Math.sqrt(n[0]*n[0] + n[1]*n[1] + n[2]*n[2]);
-
-            final float denom = (D[0]*n[0] + D[1]*n[1] + D[2]*n[2]);
-            if (denom == 0.0f) continue;
-
-            float t = -( (eyeX*n[0] + eyeY*n[1] + eyeZ*n[2]) - d ) / denom;
-
-            final float p[] = { //point
-                eyeX + t*D[0],
-                eyeY + t*D[1],
-                eyeZ + t*D[2],
-            };
-
-            if (!((-1.0f <= p[0] && p[0] <= 1.0f) && (-1.0f <= p[1] && p[1] <= 1.0f) && (-1.0f <= p[2] && p[2] <= 1.0f))) {
-                t = Float.POSITIVE_INFINITY;
-            }
-
-            if (t < distance) {
-                distance = t;
-                face = i;
-            }
-        }
-
-        point[0] = eyeX + distance*D[0];
-        point[1] = eyeY + distance*D[1];
-        point[2] = eyeZ + distance*D[2];
-
-        //Log.d("SAM", "POINT: " + point[0] + ", " + point[1] + ", " + point[2]);
-
-        return face;
-    }
-
     // Loader/setup functions
-    public static int loadShader(int type, String shaderCode){
+    public static int loadShader(int type, String shaderCode) {
         int shader = GLES20.glCreateShader(type);
         GLES20.glShaderSource(shader, shaderCode);
         GLES20.glCompileShader(shader);
@@ -379,8 +219,7 @@ public class GLRendererEx implements GLSurfaceView.Renderer {
             bitmap.recycle();
         }
 
-        if (textureHandle[0] == 0)
-        {
+        if (textureHandle[0] == 0) {
             throw new RuntimeException("Error loading texture.");
         }
 
