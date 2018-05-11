@@ -287,13 +287,13 @@ public class ComBineView extends GLSurfaceView {
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
             GLES20.glUseProgram(iProgId);
 
+            GLES20.glEnableVertexAttribArray(iPosition);
             GLES20.glVertexAttribPointer(iPosition, 3, GLES20.GL_FLOAT, false,
                     12, mVertexBuffer);
 
-            GLES20.glEnableVertexAttribArray(iPosition);
+            GLES20.glEnableVertexAttribArray(iTexCoords);
             GLES20.glVertexAttribPointer(iTexCoords, 2, GLES20.GL_FLOAT, false, 0,
                     mTexVertexBuffer);
-            GLES20.glEnableVertexAttribArray(iTexCoords);
 
             Matrix.setIdentityM(m_fIdentity, 0);
 
@@ -314,6 +314,8 @@ public class ComBineView extends GLSurfaceView {
             Matrix.multiplyMM(m_fVPMatrix, 0, m_fViewMatrix, 0, m_fIdentity, 0);
             Matrix.multiplyMM(m_fVPMatrix, 0, m_fProjMatrix, 0, m_fVPMatrix, 0);
             GLES20.glUniformMatrix4fv(iVPMatrix, 1, false, m_fVPMatrix, 0);
+
+            GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[0]);
