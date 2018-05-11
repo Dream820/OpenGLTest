@@ -1,0 +1,2 @@
+1 simpleone2 用的GLES20 显示图片
+2 gl2 用的 GLES20 显示 矩形

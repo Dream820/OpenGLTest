@@ -123,7 +123,9 @@ public class AdvanceRenderer2 implements GLSurfaceView.Renderer {
             20, 21, 23, 20, 23, 22
     };
 
-
+    private int mTexCoordHandle;
+    private int mTexSamplerHandle;
+    private int mProgram;
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         gl.glEnable(GL10.GL_LIGHT0); // Enable Light 0
@@ -143,6 +145,9 @@ public class AdvanceRenderer2 implements GLSurfaceView.Renderer {
         IntBuffer textureBufferTmp = IntBuffer.allocate(6);
         gl.glGenTextures(6, textureBufferTmp);
         textures = textureBufferTmp.array();
+
+        mProgram = GLES20.glCreateProgram();
+        mTexSamplerHandle = GLES20.glGetUniformLocation(mProgram, "s_texture");
 
         gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
         GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, GLImage.mBitmap1, 0);
@@ -264,7 +269,10 @@ public class AdvanceRenderer2 implements GLSurfaceView.Renderer {
                 gl.glTranslatef(0, 0, (float) Math.sqrt(3));
                 gl.glRotatef(angleFirstAnimator, 0.0f, 1.0f, 0.0f);
                 gl.glTranslatef(0, 0, -(float) Math.sqrt(3));
-                gl.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
+
+                GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textures[0]);
+                GLES20.glUniform1i(mTexSamplerHandle, 0);
                 GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices0.length, GLES20.GL_UNSIGNED_BYTE, indexBuffer0);
                 angleFirstAnimator -= angleFirstAnimatorPer;
                 if (angleFirstAnimator == -angleFirstAnimatorPer) {
