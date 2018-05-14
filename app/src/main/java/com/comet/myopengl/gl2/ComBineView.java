@@ -308,7 +308,7 @@ public class ComBineView extends GLSurfaceView {
             Matrix.multiplyMM(mTemporaryMatrix, 0, mCurrentRotation, 0, mAccumulatedRotation, 0);
             System.arraycopy(mTemporaryMatrix, 0, mAccumulatedRotation, 0, 16);
 
-            Matrix.multiplyMM(mTemporaryMatrix, 0, m_fIdentity, 0, mAccumulatedRotation, 0);
+//            Matrix.multiplyMM(mTemporaryMatrix, 0, m_fIdentity, 0, mAccumulatedRotation, 0);
             System.arraycopy(mTemporaryMatrix, 0, m_fIdentity, 0, 16);
 
             Matrix.multiplyMM(m_fVPMatrix, 0, m_fViewMatrix, 0, m_fIdentity, 0);

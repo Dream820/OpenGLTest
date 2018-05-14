@@ -6,10 +6,8 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.comet.myopengl.R;
-import com.comet.myopengl.one.Utils;
 import com.comet.myopengl.zero.GLImage;
 
 import java.nio.ByteBuffer;
@@ -31,11 +29,6 @@ public class SimpleOneActivity2Side extends Activity {
         GLImage.load(getResources());
         setContentView(R.layout.activity_main);
 
-        if (!Utils.supportGlEs20(this)) {
-            Toast.makeText(this, "GLES 2.0 not supported!", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
         mGLSurfaceView = findViewById(R.id.gv_one);
         mGLSurfaceView.setEGLContextClientVersion(2);
         mGLSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
