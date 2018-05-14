@@ -1,4 +1,4 @@
-package com.comet.myopengl.opengl;
+package com.comet.myopengl.gl3;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
