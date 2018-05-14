@@ -13,22 +13,21 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
-import static android.opengl.GLES20.GL_FLOAT;
-import static android.opengl.GLES20.glEnableVertexAttribArray;
-import static android.opengl.GLES20.glUniform4f;
-import static android.opengl.GLES20.glVertexAttribPointer;
-
 public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
-    private static final int POSITION_COMPONENT_COUNT = 2;//数量 3 xyz 4xyzc
+    private static final int POSITION_COMOPNENT_COUNT = 2;//数量 3 xyz 4xyzc
+    private static final int BYTES_PER_FLOAT = 4;
     private float[] tableVertices = {
-            0f, 0f,
-            0f, 14f,
-            9f, 14f,
+            -0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f,
 
-            0f, 0f,
-            9f, 0f,
-            9f, 14f
+            -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
+
+            -0.5f, 0f, 0.5f, 0f,
+
+            0f, -0.25f, 0f, 0.25f,
+
+            -0.6f, -0.6f, 0.6f, 0.6f, -0.6f, 0.6f,
+
+            -0.6f, -0.6f, 0.6f, -0.6f, 0.6f, 0.6f,
     };
     private FloatBuffer vertexData;
     private static final String A_POSITION = "a_Position";
@@ -37,8 +36,9 @@ public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
 
     private static final String U_COLOR = "u_Color";
     public FirstOpenGLProjectRenderer() {
-        vertexData = ByteBuffer.allocate(tableVertices.length * 4)
-                .order(ByteOrder.nativeOrder()).asFloatBuffer();
+        vertexData = ByteBuffer.allocateDirect(tableVertices.length * BYTES_PER_FLOAT)
+                .order(ByteOrder.nativeOrder())
+                .asFloatBuffer();
         vertexData.put(tableVertices);
     }
 
@@ -63,10 +63,11 @@ public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
 
         vertexData.position(0);
 
-        glVertexAttribPointer(aPostionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT,
-                false
-                , 0, vertexData);//将位置参数绑定 着色器
-        glEnableVertexAttribArray(aPostionLocation);
+        GLES20.glVertexAttribPointer(aPostionLocation, POSITION_COMOPNENT_COUNT,
+                GLES20.GL_FLOAT, false,
+                0, vertexData);// 指定了渲染时索引值为 aPostionLocation 的顶点属性数组的数据格式和位置
+        GLES20.glEnableVertexAttribArray(
+                aPostionLocation);// Enable or disable a generic vertex attribute array
 
 
     }
@@ -78,7 +79,8 @@ public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        GLES20.glClear(GL_COLOR_BUFFER_BIT);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+
         GLES20.glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f,
                 1.0f);//为 u_Color 这个 Uniform 设置颜色值 RGB 为 0 1 0 1 绿色
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 10, 6);//画三角形

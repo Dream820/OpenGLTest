@@ -15,9 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name="com.comet.myopengl.study.StudyActivity"
-            android:hardwareAccelerated="false">
+        <activity android:name="com.comet.myopengl.study.StudyActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
