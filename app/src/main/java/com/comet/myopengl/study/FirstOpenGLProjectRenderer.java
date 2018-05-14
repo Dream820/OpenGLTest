@@ -1,5 +1,6 @@
 package com.comet.myopengl.study;
 
+import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
 import com.comet.myopengl.MyApplication;
@@ -13,10 +14,14 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
+import static android.opengl.GLES20.GL_FLOAT;
+import static android.opengl.GLES20.glEnableVertexAttribArray;
+import static android.opengl.GLES20.glUniform4f;
+import static android.opengl.GLES20.glVertexAttribPointer;
 
 public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
-    private static final int POSITION_COMPONENT_COUNT = 2;
-    float[] tableVertices = {
+    private static final int POSITION_COMPONENT_COUNT = 2;//数量 3 xyz 4xyzc
+    private float[] tableVertices = {
             0f, 0f,
             0f, 14f,
             9f, 14f,
@@ -25,8 +30,12 @@ public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
             9f, 0f,
             9f, 14f
     };
-    FloatBuffer vertexData;
+    private FloatBuffer vertexData;
+    private static final String A_POSITION = "a_Position";
+    private int aPostionLocation;
+    private int uColorLocation;
 
+    private static final String U_COLOR = "u_Color";
     public FirstOpenGLProjectRenderer() {
         vertexData = ByteBuffer.allocate(tableVertices.length * 4)
                 .order(ByteOrder.nativeOrder()).asFloatBuffer();
@@ -43,8 +52,22 @@ public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
         String fragmentShaderSource = TextResourceReader.
                 readTextFileFromResource(MyApplication.myApplication,
                         R.raw.simple_fragment_shader);//读取片段着色器
-        int vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource);
-        int fragmentShader = ShaderHelper.compileFragmentShader(fragmentShaderSource);
+        int vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource);//返回shader位置
+        int fragmentShader = ShaderHelper.compileFragmentShader(fragmentShaderSource);//解析着色器
+        int program = ShaderHelper.linkProgram(vertexShader, fragmentShader);//生成一个工程 将着色器传入
+
+        GLES20.glUseProgram(program);//使用工程
+
+        uColorLocation = GLES20.glGetUniformLocation(program, U_COLOR);//返回着色器参数 在缓冲区中的位置
+        aPostionLocation = GLES20.glGetUniformLocation(program, A_POSITION);//返回着色器参数 在缓冲区中的位置
+
+        vertexData.position(0);
+
+        glVertexAttribPointer(aPostionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT,
+                false
+                , 0, vertexData);//将位置参数绑定 着色器
+        glEnableVertexAttribArray(aPostionLocation);
+
 
     }
 
@@ -56,5 +79,7 @@ public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onDrawFrame(GL10 gl) {
         gl.glClear(GL_COLOR_BUFFER_BIT);
+        glUniform4f(uColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
+
     }
 }

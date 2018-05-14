@@ -29,14 +29,14 @@ public class ShaderHelper {
     }
 
     private static int compileShader(int glVertexShader, String shaderCode) {
-        final int shaderObjectid = glCreateShader(glVertexShader);
+        final int shaderObjectid = glCreateShader(glVertexShader);//生成shader的缓存
         if (shaderObjectid == 0) {
             return 0;
         }
         //把字符串转换成shader 并绑定id
-        glShaderSource(shaderObjectid, shaderCode);
+        glShaderSource(shaderObjectid, shaderCode);//shader的缓存 绑定shader规则
 
-        glCompileShader(shaderObjectid);
+        glCompileShader(shaderObjectid);//把shader缓存 绑定的规则 compile
         final int[] compileStatus = new int[1];
         glGetShaderiv(shaderObjectid, GL_COMPILE_STATUS, compileStatus, 0);
         Log.d("compileShader", shaderCode + "||" + glGetShaderInfoLog(shaderObjectid));
@@ -51,7 +51,7 @@ public class ShaderHelper {
         if (programObjectId == 0) {
             return 0;
         }
-        glAttachShader(programObjectId, vertexShaderId);
+        glAttachShader(programObjectId, vertexShaderId);    //将
         glAttachShader(programObjectId, fragmentShaderId);
         glLinkProgram(programObjectId);
 
