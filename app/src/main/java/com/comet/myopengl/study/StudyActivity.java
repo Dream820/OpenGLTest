@@ -7,7 +7,7 @@ import android.content.pm.ConfigurationInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
-public class MyActivity extends Activity {
+public class StudyActivity extends Activity {
     private GLSurfaceView glSurfaceView;
     private boolean rendererSet = false;
 

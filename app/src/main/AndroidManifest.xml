@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.comet.myopengl">
-    <uses-feature android:glEsVersion="0x00010000" android:required="true" />
+
+    <uses-feature
+        android:glEsVersion="0x00010000"
+        android:required="true" />
 
     <application
         android:name=".MyApplication"
@@ -13,7 +16,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.comet.myopengl.simpleone2.SimpleOneActivity2Side"
+            android:name="com.comet.myopengl.study.StudyActivity"
             android:hardwareAccelerated="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

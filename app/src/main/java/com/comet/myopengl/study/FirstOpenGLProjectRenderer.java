@@ -44,7 +44,7 @@ public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        gl.glClearColor(1f, 0f, 0f, 0f);
+        GLES20.glClearColor(1f, 0f, 0f, 0f);
 
         String vertexShaderSource = TextResourceReader.
                 readTextFileFromResource(MyApplication.myApplication,
@@ -73,13 +73,27 @@ public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        gl.glViewport(0, 0, width, height);
+        GLES20.glViewport(0, 0, width, height);
     }
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        gl.glClear(GL_COLOR_BUFFER_BIT);
-        glUniform4f(uColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
+        GLES20.glClear(GL_COLOR_BUFFER_BIT);
+        GLES20.glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f,
+                1.0f);//为 u_Color 这个 Uniform 设置颜色值 RGB 为 0 1 0 1 绿色
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 10, 6);//画三角形
+
+        GLES20.glUniform4f(uColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
+
+        GLES20.glUniform4f(uColorLocation, 1.0f, 0.0f, 0.0f, 1.0f);
+        GLES20.glDrawArrays(GLES20.GL_LINES, 6, 2);
+
+        GLES20.glUniform4f(uColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+        GLES20.glDrawArrays(GLES20.GL_POINTS, 8, 1);
+
+        GLES20.glUniform4f(uColorLocation, 1.0f, 0.0f, 0.0f, 1.0f);
+        GLES20.glDrawArrays(GLES20.GL_POINTS, 9, 1);
 
     }
 }
