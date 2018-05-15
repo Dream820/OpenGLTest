@@ -44,6 +44,7 @@ public class AirHook2Renderer implements GLSurfaceView.Renderer {
     private static final int COLOR_COMPNENT_COUNT = 3;
     private static final int STRIDE = (POSITION_COMOPNENT_COUNT + COLOR_COMPNENT_COUNT) * BYTES_PER_FLOAT;
     private int aColorLocation;
+    private int program;
 
     public AirHook2Renderer() {
         vertexData = ByteBuffer.allocateDirect(tableVertices.length * BYTES_PER_FLOAT)
@@ -64,7 +65,7 @@ public class AirHook2Renderer implements GLSurfaceView.Renderer {
                         R.raw.simple_fragment_shader);//读取片段着色器
         int vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource);//返回shader位置 定点着色器写入 编译
         int fragmentShader = ShaderHelper.compileFragmentShader(fragmentShaderSource);//解析着色器
-        int program = ShaderHelper.linkProgram(vertexShader, fragmentShader);//生成一个工程 将着色器传入
+        program = ShaderHelper.linkProgram(vertexShader, fragmentShader);//生成一个工程 将着色器传入
 
         GLES20.glUseProgram(program);//使用工程
 
@@ -72,13 +73,12 @@ public class AirHook2Renderer implements GLSurfaceView.Renderer {
         aPostionLocation = GLES20.glGetAttribLocation(program, A_POSITION);//返回着色器参数 在缓冲区中的位置
 
         vertexData.position(0);
-
         GLES20.glVertexAttribPointer(aPostionLocation, POSITION_COMOPNENT_COUNT,
                 GLES20.GL_FLOAT, false,
-                0, vertexData);// 指定了渲染时索引值为 aPostionLocation 的顶点属性数组的数据格式和位置
+                0, vertexData);
+        GLES20.glEnableVertexAttribArray(aPostionLocation);
         GLES20.glEnableVertexAttribArray(
-                aPostionLocation);// Enable or disable a generic vertex attribute array
-
+                aPostionLocation);
 
         vertexData.position(POSITION_COMOPNENT_COUNT);
         GLES20.glVertexAttribPointer(aColorLocation,
@@ -97,21 +97,11 @@ public class AirHook2Renderer implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 gl) {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        GLES20.glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f,
-                1.0f);//为 u_Color 这个 Uniform 设置颜色值 RGB 为 0 1 0 1 绿色
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 10, 6);//画三角形
-
-        GLES20.glUniform4f(uColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
-
-        GLES20.glUniform4f(uColorLocation, 1.0f, 0.0f, 0.0f, 1.0f);
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, 6);
         GLES20.glDrawArrays(GLES20.GL_LINES, 6, 2);
 
-        GLES20.glUniform4f(uColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
         GLES20.glDrawArrays(GLES20.GL_POINTS, 8, 1);
 
-        GLES20.glUniform4f(uColorLocation, 1.0f, 0.0f, 0.0f, 1.0f);
         GLES20.glDrawArrays(GLES20.GL_POINTS, 9, 1);
-
     }
 }
