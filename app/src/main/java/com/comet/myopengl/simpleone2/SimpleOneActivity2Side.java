@@ -153,9 +153,9 @@ public class SimpleOneActivity2Side extends Activity {
             GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             Matrix.setLookAtM(m_fViewMatrix, 0, 0, 0, 6, 0, 0, 0, 0, 1, 0);
 
-            mProgram = GLES20.glCreateProgram();
             int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, VERTEX_SHADER);
             int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, FRAGMENT_SHADER);
+            mProgram = GLES20.glCreateProgram();
             GLES20.glAttachShader(mProgram, vertexShader);
             GLES20.glAttachShader(mProgram, fragmentShader);
             GLES20.glLinkProgram(mProgram);

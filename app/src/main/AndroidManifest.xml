@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.comet.myopengl.study.StudyActivity">
+        <activity android:name="com.comet.myopengl.simpleone2.SimpleOneActivity2Side">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
