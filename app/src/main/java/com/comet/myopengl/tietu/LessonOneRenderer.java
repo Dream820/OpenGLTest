@@ -266,7 +266,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
 
         Matrix.setIdentityM(mModelMatrix, 0);
         Matrix.translateM(mModelMatrix, 0, 0.0f, 0.0f, -5.0f);
-        Matrix.rotateM(mModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);
+        Matrix.rotateM(mModelMatrix, 0, 10, 1.0f, 0.0f, 0.0f);
         for (int i = 0; i < mCubePositions.length; i++) {
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle[i]);
             GLES20.glUniform1i(mTextureUniformHandle, 0);
@@ -278,13 +278,16 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
 
     private void drawCube(final FloatBuffer cubePositionsBuffer, final FloatBuffer cubeColorsBuffer, final FloatBuffer cubeTextureCoordinatesBuffer) {
         cubePositionsBuffer.position(0);
-        GLES20.glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE, GLES20.GL_FLOAT, false, 0, cubePositionsBuffer);
+        GLES20.glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE,
+                GLES20.GL_FLOAT, false, 0, cubePositionsBuffer);
         GLES20.glEnableVertexAttribArray(mPositionHandle);
         cubeColorsBuffer.position(0);
-        GLES20.glVertexAttribPointer(mColorHandle, COLOR_DATA_SIZE, GLES20.GL_FLOAT, false, 0, cubeColorsBuffer);
+        GLES20.glVertexAttribPointer(mColorHandle, COLOR_DATA_SIZE,
+                GLES20.GL_FLOAT, false, 0, cubeColorsBuffer);
         GLES20.glEnableVertexAttribArray(mColorHandle);
         cubeTextureCoordinatesBuffer.position(0);
-        GLES20.glVertexAttribPointer(mTextureCoordinateHandle, TEXTURE_COORDINATE_DATA_SIZE, GLES20.GL_FLOAT, false, 0, cubeTextureCoordinatesBuffer);
+        GLES20.glVertexAttribPointer(mTextureCoordinateHandle, TEXTURE_COORDINATE_DATA_SIZE,
+                GLES20.GL_FLOAT, false, 0, cubeTextureCoordinatesBuffer);
         GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
         Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
