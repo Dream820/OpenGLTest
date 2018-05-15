@@ -56,7 +56,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         final float cubePosition[][] =
                 {
                         // Front face
-                        { -1.0f + picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),
+                        {-1.0f + picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),
                                 -1.0f + picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),
                                 1.0f - picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),
                                 -1.0f + picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),
@@ -66,12 +66,13 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
 
                         {
                                 // Right face
-                                1.0f, 1.0f, 1.0f,
-                                1.0f, -1.0f, 1.0f,
-                                1.0f, 1.0f, -1.0f,
-                                1.0f, -1.0f, 1.0f,
-                                1.0f, -1.0f, -1.0f,
-                                1.0f, 1.0f, -1.0f,
+                                -2 + picBufferX, 0.614f + picUpY, 0 + picBufferZ,
+                                -2 + -1.0f - picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,, -0.614f + picUpY, 0 + picBufferZ,
+                                -1.0f - picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
+                                -2 + picBufferX, -0.614f + picUpY, 0 + picBufferZ,
+                                -1.0f - picBufferX, -0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
+                                -1.0f - picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
+
                         },
                         {
                                 // Back face
