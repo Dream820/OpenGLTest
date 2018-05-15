@@ -55,7 +55,6 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
 
         final float cubePosition[][] =
                 {
-                        // Front face
                         {-1.0f + picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),
                                 -1.0f + picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),
                                 1.0f - picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),
@@ -65,50 +64,51 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
                         },
 
                         {
-                                // Right face
-                                -2 + picBufferX, 0.614f + picUpY, 0 + picBufferZ,
-                                -2 + -1.0f - picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,, -0.614f + picUpY, 0 + picBufferZ,
-                                -1.0f - picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
-                                -2 + picBufferX, -0.614f + picUpY, 0 + picBufferZ,
-                                -1.0f - picBufferX, -0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
-                                -1.0f - picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,
+                                2 - picBufferX, 0.614f + picUpY, 0 - picBufferZ,//left_top
+                                2 - picBufferX, -0.614f + picUpY, 0 - picBufferZ,// x y z left_bottom
+                                1.0f + picBufferX, 0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,//right_top
+                                2 - picBufferX, -0.614f + picUpY, 0 - picBufferZ,// x y z left_bottom
+                                1.0f + picBufferX, -0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,//right_bottom
+                                1.0f + picBufferX, 0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,//right_top
 
                         },
                         {
-                                // Back face
-                                1.0f, 1.0f, -1.0f,
-                                1.0f, -1.0f, -1.0f,
-                                -1.0f, 1.0f, -1.0f,
-                                1.0f, -1.0f, -1.0f,
-                                -1.0f, -1.0f, -1.0f,
-                                -1.0f, 1.0f, -1.0f,
+                                1.0f + picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,//left_top
+                                1.0f + picBufferX, -0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,// x y z left_bottom
+                                2.0f - picBufferX, 0.614f + picUpY, 0 + picBufferZ,//right_top
+                                1.0f + picBufferX, -0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,// x y z left_bottom
+                                2.0f - picBufferX, -0.614f + picUpY, 0 + picBufferZ,//right_bottom
+                                2.0f - picBufferX, 0.614f + picUpY, 0 + picBufferZ,//right_top
                         },
-                        // Left face
+
                         {
-                                -1.0f, 1.0f, -1.0f,
-                                -1.0f, -1.0f, -1.0f,
-                                -1.0f, 1.0f, 1.0f,
-                                -1.0f, -1.0f, -1.0f,
-                                -1.0f, -1.0f, 1.0f,
-                                -1.0f, 1.0f, 1.0f,
+                                //roar
+                                1.0f - picBufferLenth, 0.614f + picUpY, -(float) Math.sqrt(3),//left_top
+                                1.0f - picBufferLenth, -0.614f + picUpY, -(float) Math.sqrt(3),// x y z left_bottom
+                                -1.0f + picBufferLenth, 0.614f + picUpY, -(float) Math.sqrt(3),//right_top
+                                1.0f - picBufferLenth, -0.614f + picUpY, -(float) Math.sqrt(3),// x y z left_bottom
+                                -1.0f + picBufferLenth, -0.614f + picUpY, -(float) Math.sqrt(3),//right_bottom
+                                -1.0f + picBufferLenth, 0.614f + picUpY, -(float) Math.sqrt(3),//right_top
                         },
-                        // Top face
+
                         {
-                                -1.0f, 1.0f, -1.0f,
-                                -1.0f, 1.0f, 1.0f,
-                                1.0f, 1.0f, -1.0f,
-                                -1.0f, 1.0f, 1.0f,
-                                1.0f, 1.0f, 1.0f,
-                                1.0f, 1.0f, -1.0f,
+                                //left front
+                                -2 + picBufferX, 0.614f + picUpY, 0 + picBufferZ,                       //left_top
+                                -2 + picBufferX, -0.614f + picUpY, 0 + picBufferZ,                      // x y z left_bottom
+                                -1.0f - picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ, //right_top
+                                -2 + picBufferX, -0.614f + picUpY, 0 + picBufferZ,                      // x y z left_bottom
+                                -1.0f - picBufferX, -0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,//right_bottom
+                                -1.0f - picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ, //right_top
                         },
-                        // Bottom face
+
                         {
-                                1.0f, -1.0f, -1.0f,
-                                1.0f, -1.0f, 1.0f,
-                                -1.0f, -1.0f, -1.0f,
-                                1.0f, -1.0f, 1.0f,
-                                -1.0f, -1.0f, 1.0f,
-                                -1.0f, -1.0f, -1.0f,
+                                //left roar
+                                -1.0f - picBufferX, 0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,//left_top
+                                -1.0f - picBufferX, -0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,// x y z left_bottom
+                                -2 + picBufferX, 0.614f + picUpY, 0 - picBufferZ,//right_top
+                                -1.0f - picBufferX, -0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,// x y z left_bottom
+                                -2 + picBufferX, -0.614f + picUpY, 0 - picBufferZ,//right_bottom
+                                -2 + picBufferX, 0.614f + picUpY, 0 - picBufferZ,//right_top
                         }
                 };
         final float cubeColor[][] =
