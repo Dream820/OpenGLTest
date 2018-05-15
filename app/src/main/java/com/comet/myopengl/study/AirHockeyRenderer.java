@@ -4,7 +4,7 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
-import com.roger.opengl.util.LoggerConfig;
+import com.comet.myopengl.R;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -64,9 +64,6 @@ public class AirHockeyRenderer implements GLSurfaceView.Renderer {
 
     program = ShaderHelper.linkProgram(vertexShader, fragmentShader);//将着色器附加到程序对象上并执行链接操作
 
-    if (LoggerConfig.ON) {
-      ShaderHelper.validateProgram(program);
-    }
 
     GLES20.glUseProgram(program);
     uColorLocation = GLES20.glGetUniformLocation(program, U_COLOR);//获取 u_Color 在 shader 中的位置
