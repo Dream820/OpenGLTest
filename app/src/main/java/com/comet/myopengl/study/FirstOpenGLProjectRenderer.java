@@ -52,7 +52,7 @@ public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
         String fragmentShaderSource = TextResourceReader.
                 readTextFileFromResource(MyApplication.myApplication,
                         R.raw.simple_fragment_shader);//读取片段着色器
-        int vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource);//返回shader位置
+        int vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource);//返回shader位置 定点着色器写入 编译
         int fragmentShader = ShaderHelper.compileFragmentShader(fragmentShaderSource);//解析着色器
         int program = ShaderHelper.linkProgram(vertexShader, fragmentShader);//生成一个工程 将着色器传入
 
