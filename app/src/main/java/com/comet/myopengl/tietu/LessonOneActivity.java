@@ -13,7 +13,7 @@ public class LessonOneActivity extends Activity {
      * Hold a reference to our GLSurfaceView
      */
     private GLSurfaceView mGLSurfaceView;
-    LessonOneRenderer mRender;
+    LessonOneRenderer2 mRender;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class LessonOneActivity extends Activity {
             // Request an OpenGL ES 2.0 compatible context.  
             mGLSurfaceView.setEGLContextClientVersion(2);
 
-            mRender = new LessonOneRenderer(this);
+            mRender = new LessonOneRenderer2(this);
             // Set the renderer to our demo renderer, defined below.  
             mGLSurfaceView.setRenderer(mRender);
         } else {
