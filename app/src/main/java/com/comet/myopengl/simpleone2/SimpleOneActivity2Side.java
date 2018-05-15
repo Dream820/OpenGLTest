@@ -58,12 +58,12 @@ public class SimpleOneActivity2Side extends Activity {
     private static class MyRenderer implements GLSurfaceView.Renderer {
 
         private static final String VERTEX_SHADER =
-                "uniform mat4 uMVPMatrix;" +
+                        "uniform mat4 uMVPMatrix;" +
                         "attribute vec4 vPosition;" +
                         "attribute vec2 a_texCoord;" +
                         "varying vec2 v_texCoord;" +
                         "void main() {" +
-                        "  gl_Position = uMVPMatrix * vPosition;" +
+                        "  gl_Position = vPosition * uMVPMatrix;" +
                         "  v_texCoord = a_texCoord;" +
                         "}";
         private static final String FRAGMENT_SHADER =
@@ -200,8 +200,10 @@ public class SimpleOneActivity2Side extends Activity {
         public void onSurfaceChanged(GL10 unused, int width, int height) {
             GLES20.glViewport(0, 0, width, height);
 
-            Matrix.perspectiveM(mMVPMatrix, 0, 45, (float) width / height, 0.1f, 100f);
-            Matrix.translateM(mMVPMatrix, 0, 0f, 0f, -10f);
+            Matrix.perspectiveM(mMVPMatrix, 0, 20,
+                    (float) width / height,
+                    -20f, 20f);
+            Matrix.translateM(mMVPMatrix, 0, 0f, 0f, -5f);
         }
 
         @Override
