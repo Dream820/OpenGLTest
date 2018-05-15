@@ -20,7 +20,7 @@ public class StudyActivity extends Activity {
         final boolean supportEs2 = configurationInfo.reqGlEsVersion >= 0x20000;
         if (supportEs2) {
             glSurfaceView.setEGLContextClientVersion(2);
-            glSurfaceView.setRenderer(new FirstOpenGLProjectRenderer2(this));
+            glSurfaceView.setRenderer(new FirstOpenGLProjectRenderer());
             rendererSet = true;
         }
         setContentView(glSurfaceView);

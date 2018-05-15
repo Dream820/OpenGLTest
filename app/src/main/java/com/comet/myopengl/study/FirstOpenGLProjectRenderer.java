@@ -59,7 +59,7 @@ public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
         GLES20.glUseProgram(program);//使用工程
 
         uColorLocation = GLES20.glGetUniformLocation(program, U_COLOR);//返回着色器参数 在缓冲区中的位置
-        aPostionLocation = GLES20.glGetUniformLocation(program, A_POSITION);//返回着色器参数 在缓冲区中的位置
+        aPostionLocation = GLES20.glGetAttribLocation(program, A_POSITION);//返回着色器参数 在缓冲区中的位置
 
         vertexData.position(0);
 
