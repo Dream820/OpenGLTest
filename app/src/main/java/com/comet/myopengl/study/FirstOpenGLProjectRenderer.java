@@ -2,6 +2,7 @@ package com.comet.myopengl.study;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 import com.comet.myopengl.MyApplication;
 import com.comet.myopengl.R;
@@ -69,7 +70,7 @@ public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
         GLES20.glEnableVertexAttribArray(
                 aPostionLocation);// Enable or disable a generic vertex attribute array
 
-
+        Log.d("GLES20", "11111");
     }
 
     @Override
