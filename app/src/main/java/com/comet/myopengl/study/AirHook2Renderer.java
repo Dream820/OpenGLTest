@@ -69,16 +69,14 @@ public class AirHook2Renderer implements GLSurfaceView.Renderer {
 
         GLES20.glUseProgram(program);//使用工程
 
-        aColorLocation = GLES20.glGetUniformLocation(program, A_COLOR);//返回着色器参数 在缓冲区中的位置
+        aColorLocation = GLES20.glGetAttribLocation(program, A_COLOR);//返回着色器参数 在缓冲区中的位置
         aPostionLocation = GLES20.glGetAttribLocation(program, A_POSITION);//返回着色器参数 在缓冲区中的位置
 
         vertexData.position(0);
         GLES20.glVertexAttribPointer(aPostionLocation, POSITION_COMOPNENT_COUNT,
                 GLES20.GL_FLOAT, false,
-                0, vertexData);
+                STRIDE, vertexData);
         GLES20.glEnableVertexAttribArray(aPostionLocation);
-        GLES20.glEnableVertexAttribArray(
-                aPostionLocation);
 
         vertexData.position(POSITION_COMOPNENT_COUNT);
         GLES20.glVertexAttribPointer(aColorLocation,
