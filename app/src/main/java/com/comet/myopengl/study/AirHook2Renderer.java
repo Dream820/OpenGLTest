@@ -18,17 +18,12 @@ public class AirHook2Renderer implements GLSurfaceView.Renderer {
     private static final int POSITION_COMOPNENT_COUNT = 2;//数量 3 xyz 4xyzc
     private static final int BYTES_PER_FLOAT = 4;
     private float[] tableVertices = {
-            -0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f,
-
-            -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
-
-            -0.5f, 0f, 0.5f, 0f,
-
-            0f, -0.25f, 0f, 0.25f,
-
-            -0.6f, -0.6f, 0.6f, 0.6f, -0.6f, 0.6f,
-
-            -0.6f, -0.6f, 0.6f, -0.6f, 0.6f, 0.6f,
+            0,     0,
+            -0.5f, -0.5f,
+            0.5f, -0.5f,
+            0.5f,  0.5f,
+            -0.5f,  0.5f,
+            -0.5f, -0.5f,
     };
     private FloatBuffer vertexData;
     private static final String A_POSITION = "a_Position";

@@ -84,7 +84,7 @@ public class FirstOpenGLProjectRenderer implements GLSurfaceView.Renderer {
 
         GLES20.glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f,
                 1.0f);//为 u_Color 这个 Uniform 设置颜色值 RGB 为 0 1 0 1 绿色
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 10, 6);//画三角形
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 10, 6);//画三角形
 
         GLES20.glUniform4f(uColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
