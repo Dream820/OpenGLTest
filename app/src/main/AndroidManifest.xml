@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.comet.myopengl.simpleone2.SimpleOneActivity2Side">
+        <activity android:name="com.comet.myopengl.tietu.LessonOneActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

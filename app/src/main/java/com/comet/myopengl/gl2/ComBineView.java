@@ -105,8 +105,6 @@ public class ComBineView extends GLSurfaceView {
         int iProgId;
         int iPosition;
         int iVPMatrix;
-        int iTexLoc;
-        int iTexCoords;
 
         float[] m_fProjMatrix = new float[16];
         float[] m_fViewMatrix = new float[16];
@@ -237,11 +235,11 @@ public class ComBineView extends GLSurfaceView {
 
         final String strFShader =
                 "precision mediump float;" +
-                        "uniform samplerCube u_texId;" +
-                        "varying vec3 v_texCoords;" +
+                        "varying vec2 v_texCoord;" +
+                        "uniform sampler2D s_texture;" +
                         "void main()" +
                         "{" +
-                        "gl_FragColor = textureCube(u_texId, v_texCoords);" +
+                        "gl_FragColor = texture2D(s_texture, v_texCoord);" +
                         "}";
 
 
@@ -291,9 +289,6 @@ public class ComBineView extends GLSurfaceView {
             GLES20.glVertexAttribPointer(iPosition, 3, GLES20.GL_FLOAT, false,
                     12, mVertexBuffer);
 
-            GLES20.glEnableVertexAttribArray(iTexCoords);
-            GLES20.glVertexAttribPointer(iTexCoords, 2, GLES20.GL_FLOAT, false, 0,
-                    mTexVertexBuffer);
 
             Matrix.setIdentityM(m_fIdentity, 0);
 
@@ -304,6 +299,9 @@ public class ComBineView extends GLSurfaceView {
             mDeltaX = 0.0f;
             mDeltaY = 0.0f;
             mDeltaZ = 0.0f;
+
+
+
 
             Matrix.multiplyMM(mTemporaryMatrix, 0, mCurrentRotation, 0, mAccumulatedRotation, 0);
             System.arraycopy(mTemporaryMatrix, 0, mAccumulatedRotation, 0, 16);
@@ -319,11 +317,18 @@ public class ComBineView extends GLSurfaceView {
 
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[0]);
+
+            GLES20.glUniform1i(mTexSamplerHandle, 0);
+
+
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices0.length,
                     GLES20.GL_UNSIGNED_BYTE, indexBuffer0);
 
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTexName[1]);
+
+            GLES20.glUniform1i(mTexSamplerHandle, 0);
+
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, indices1.length,
                     GLES20.GL_UNSIGNED_BYTE, indexBuffer1);
 
@@ -354,7 +359,8 @@ public class ComBineView extends GLSurfaceView {
             GLES20.glViewport(0, 0, width, height);
             Matrix.frustumM(m_fProjMatrix, 0, -(float) width / height, (float) width / height, -1, 1, 1, 10);
         }
-
+        private int mMatrixHandle;
+        private int mTexSamplerHandle;
         @Override
         public void onSurfaceCreated(GL10 arg0, EGLConfig arg1) {
             GLES20.glClearColor(0, 0, 0, 0);
@@ -369,8 +375,10 @@ public class ComBineView extends GLSurfaceView {
             iProgId = loadProgram(strVShader, strFShader);
             iPosition = GLES20.glGetAttribLocation(iProgId, "a_position");
             iVPMatrix = GLES20.glGetUniformLocation(iProgId, "u_VPMatrix");
-            iTexLoc = GLES20.glGetUniformLocation(iProgId, "u_texId");
-            iTexCoords = GLES20.glGetAttribLocation(iProgId, "a_texCoords");
+
+            mMatrixHandle = GLES20.glGetUniformLocation(iProgId, "uMVPMatrix");
+            mTexSamplerHandle = GLES20.glGetUniformLocation(iProgId, "s_texture");
+
 
 
             mTexName = new int[6];
