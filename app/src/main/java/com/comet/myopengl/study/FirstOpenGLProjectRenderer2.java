@@ -1,9 +1,10 @@
 package com.comet.myopengl.study;
 
+import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
-import com.comet.myopengl.MyApplication;
 import com.comet.myopengl.R;
 
 import java.nio.ByteBuffer;
@@ -33,36 +34,39 @@ public class FirstOpenGLProjectRenderer2 implements GLSurfaceView.Renderer {
     private static final String A_POSITION = "a_Position";
     private int aPostionLocation;
     private int uColorLocation;
-
+    private Context context;
     private static final String U_COLOR = "u_Color";
-    public FirstOpenGLProjectRenderer2() {
+    public FirstOpenGLProjectRenderer2(Context context) {
+        this.context = context;
         vertexData = ByteBuffer.allocateDirect(tableVertices.length * BYTES_PER_FLOAT)
                 .order(ByteOrder.nativeOrder())
                 .asFloatBuffer();
         vertexData.put(tableVertices);
     }
 
+    int program;
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        GLES20.glClearColor(0f, 0f, 0f, 0f);
-
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         String vertexShaderSource = TextResourceReader.
-                readTextFileFromResource(MyApplication.myApplication,
+                readTextFileFromResource(context,
                         R.raw.simple_vertex_shader);//读取顶点着色器
         String fragmentShaderSource = TextResourceReader.
-                readTextFileFromResource(MyApplication.myApplication,
+                readTextFileFromResource(context,
                         R.raw.simple_fragment_shader);//读取片段着色器
         int vertexShader = ShaderHelper.compileVertexShader(vertexShaderSource);//返回shader位置 定点着色器写入 编译
         int fragmentShader = ShaderHelper.compileFragmentShader(fragmentShaderSource);//解析着色器
-        int program = ShaderHelper.linkProgram(vertexShader, fragmentShader);//生成一个工程 将着色器传入
+        program = ShaderHelper.linkProgram(vertexShader, fragmentShader);//生成一个工程 将着色器传入
 
+        Log.d("onSurfaceCreated", vertexShader + "");
+        Log.d("onSurfaceCreated", fragmentShader + "");
+        Log.d("onSurfaceCreated", program + "");
         GLES20.glUseProgram(program);//使用工程
 
         uColorLocation = GLES20.glGetUniformLocation(program, U_COLOR);//返回着色器参数 在缓冲区中的位置
         aPostionLocation = GLES20.glGetUniformLocation(program, A_POSITION);//返回着色器参数 在缓冲区中的位置
 
-        vertexData.position(0);
-
+        vertexData.position(0);//将读取指针复位
         GLES20.glVertexAttribPointer(aPostionLocation, POSITION_COMOPNENT_COUNT,
                 GLES20.GL_FLOAT, false,
                 0, vertexData);// 指定了渲染时索引值为 aPostionLocation 的顶点属性数组的数据格式和位置
