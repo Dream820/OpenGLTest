@@ -51,7 +51,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         float picBufferX = picBufferLenth / 2;
         float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
 
-        float picUpY = 1f;
+        float picUpY = 0f;
 
         final float cubePosition[][] =
                 {
@@ -266,7 +266,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
 
         Matrix.setIdentityM(mModelMatrix, 0);
         Matrix.translateM(mModelMatrix, 0, 0.0f, 0.0f, -5.0f);
-        Matrix.rotateM(mModelMatrix, 0, 10, 1.0f, 0.0f, 0.0f);
+        Matrix.rotateM(mModelMatrix, 0, 0, 1.0f, 0.0f, 0.0f);
         for (int i = 0; i < mCubePositions.length; i++) {
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle[i]);
             GLES20.glUniform1i(mTextureUniformHandle, 0);
@@ -318,7 +318,6 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         // TODO Auto-generated method stub
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        GLES20.glEnable(GLES20.GL_CULL_FACE);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         // Position the eye behind the origin.
         final float eyeX = 0.0f;
@@ -336,7 +335,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         // Set the view matrix. This matrix can be said to represent the camera position.
         // NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
         // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
-        Matrix.setLookAtM(mViewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 0f, 0, lookX, lookY, -5, upX, upY, upZ);
         final String vertexShader = getVertexShader();
         final String fragmentShader = getFragmentShader();
         final int vertexShaderHandle = compileShader(GLES20.GL_VERTEX_SHADER, vertexShader);
