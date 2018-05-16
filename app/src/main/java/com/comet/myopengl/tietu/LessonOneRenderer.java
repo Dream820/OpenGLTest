@@ -335,7 +335,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         // Set the view matrix. This matrix can be said to represent the camera position.
         // NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
         // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
-        Matrix.setLookAtM(mViewMatrix, 0, 0, 0f, 0, lookX, lookY, -5, upX, upY, upZ);
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 0f, 0, 0, 0, -5, 0, 1, 0);
         final String vertexShader = getVertexShader();
         final String fragmentShader = getFragmentShader();
         final int vertexShaderHandle = compileShader(GLES20.GL_VERTEX_SHADER, vertexShader);
