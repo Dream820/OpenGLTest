@@ -51,7 +51,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         float picBufferX = picBufferLenth / 2;
         float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
 
-        float picUpY = 0f;
+        float picUpY = 1f;
 
         final float cubePosition[][] =
                 {
