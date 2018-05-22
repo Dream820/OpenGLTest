@@ -12,14 +12,14 @@ public class LessonOneActivity extends Activity {
     /**
      * Hold a reference to our GLSurfaceView
      */
-    private GLSurfaceView mGLSurfaceView;
-    LessonOneRenderer mRender;
+    private MyGLSurfaceView mGLSurfaceView;
+//    LessonOneRenderer mRender;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mGLSurfaceView = new GLSurfaceView(this);
+        mGLSurfaceView = new MyGLSurfaceView(this);
 
         // Check if the system supports OpenGL ES 2.0.  
         final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -28,11 +28,11 @@ public class LessonOneActivity extends Activity {
 
         if (supportsEs2) {
             // Request an OpenGL ES 2.0 compatible context.  
-            mGLSurfaceView.setEGLContextClientVersion(2);
+//            mGLSurfaceView.setEGLContextClientVersion(2);
 
-            mRender = new LessonOneRenderer(this);
+//            mRender = new LessonOneRenderer(this);
             // Set the renderer to our demo renderer, defined below.  
-            mGLSurfaceView.setRenderer(mRender);
+//            mGLSurfaceView.setRenderer(mRender);
         } else {
             // This is where you could create an OpenGL ES 1.x compatible  
             // renderer if you wanted to support both ES 1 and ES 2.  
@@ -54,7 +54,7 @@ public class LessonOneActivity extends Activity {
             handler.postDelayed(this, 1000);
             //Log.v("timer",runTop(TOP));  
             //setTile();  
-            showFPS(mRender.getFPS());
+            showFPS(mGLSurfaceView.lessonOneRenderer.getFPS());
         }
     };
 

@@ -40,6 +40,16 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
     private final int POSITION_DATA_SIZE = 3;
     private final int COLOR_DATA_SIZE = 4;
     private final int TEXTURE_COORDINATE_DATA_SIZE = 2;
+    //    float xAngle=0;//绕x轴旋转的角度
+    float cube_3_4_5_yAngle = 60;//绕x轴旋转的角度
+    float cube_0_yAngle = 90;//绕x轴旋转的角度
+    float cube_1_2_yAngle = -60;//绕x轴旋转的角度
+    float yAngle = 0;//绕x轴旋转的角度
+    float xAngle = 0;//绕x轴旋转的角度
+    float xAngle_add = 0.02f;//绕x轴旋转的角度
+    static float[] mMMatrix = new float[16];//具体物体的移动旋转矩阵，旋转、平移
+    public static float[] mVMatrix = new float[16];//摄像机位置朝向9参数矩阵
+    public static float[] mProjMatrix = new float[16];//4x4矩阵 投影用
 
     int fps;
     FPSCounter fpsCounter;
@@ -51,19 +61,20 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         float picBufferX = picBufferLenth / 2;
         float picBufferZ = (float) (Math.sin(Math.toRadians(30)) * picBufferLenth);
 
-        float picUpY = 1f;
+        float picUpY = 0f;
 
         final float cubePosition[][] =
                 {
-                        {-1.0f + picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),
-                                -1.0f + picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),
-                                1.0f - picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),
-                                -1.0f + picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),
-                                1.0f - picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),
-                                1.0f - picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),
+                        {//1
+                                -1.0f + picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),//left_top
+                                -1.0f + picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),//left_center
+                                1.0f - picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),//right_top
+                                -1.0f + picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),//left_bottom
+                                1.0f - picBufferLenth, -0.614f + picUpY, (float) Math.sqrt(3),//right_bottom
+                                1.0f - picBufferLenth, 0.614f + picUpY, (float) Math.sqrt(3),//right_center
                         },
 
-                        {
+                        {//2
                                 2 - picBufferX, 0.614f + picUpY, 0 - picBufferZ,//left_top
                                 2 - picBufferX, -0.614f + picUpY, 0 - picBufferZ,// x y z left_bottom
                                 1.0f + picBufferX, 0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,//right_top
@@ -72,7 +83,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
                                 1.0f + picBufferX, 0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,//right_top
 
                         },
-                        {
+                        {//3
                                 1.0f + picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,//left_top
                                 1.0f + picBufferX, -0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ,// x y z left_bottom
                                 2.0f - picBufferX, 0.614f + picUpY, 0 + picBufferZ,//right_top
@@ -81,7 +92,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
                                 2.0f - picBufferX, 0.614f + picUpY, 0 + picBufferZ,//right_top
                         },
 
-                        {
+                        {//4
                                 //roar
                                 1.0f - picBufferLenth, 0.614f + picUpY, -(float) Math.sqrt(3),//left_top
                                 1.0f - picBufferLenth, -0.614f + picUpY, -(float) Math.sqrt(3),// x y z left_bottom
@@ -91,7 +102,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
                                 -1.0f + picBufferLenth, 0.614f + picUpY, -(float) Math.sqrt(3),//right_top
                         },
 
-                        {
+                        {//5
                                 //left front
                                 -2 + picBufferX, 0.614f + picUpY, 0 + picBufferZ,                       //left_top
                                 -2 + picBufferX, -0.614f + picUpY, 0 + picBufferZ,                      // x y z left_bottom
@@ -101,7 +112,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
                                 -1.0f - picBufferX, 0.614f + picUpY, (float) Math.sqrt(3) - picBufferZ, //right_top
                         },
 
-                        {
+                        {//6
                                 //left roar
                                 -1.0f - picBufferX, 0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,//left_top
                                 -1.0f - picBufferX, -0.614f + picUpY, -(float) Math.sqrt(3) + picBufferZ,// x y z left_bottom
@@ -270,13 +281,37 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         for (int i = 0; i < mCubePositions.length; i++) {
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle[i]);
             GLES20.glUniform1i(mTextureUniformHandle, 0);
-            drawCube(mCubePositions[i], mCubeColors[i], mCubeTextureCoordinates[i]);
+            if (cube_0_yAngle!=0||cube_1_2_yAngle!=0||cube_3_4_5_yAngle!=0) {
+                if (i==0) {
+                    drawCube_0(mCubePositions[i], mCubeColors[i], mCubeTextureCoordinates[i]);
+                }else if (i==1||i==2){
+                    drawCube_1_2(mCubePositions[i], mCubeColors[i], mCubeTextureCoordinates[i]);
+                }else if (i==3||i==4||i==5){
+                    drawCube_3_4_5(mCubePositions[i], mCubeColors[i], mCubeTextureCoordinates[i]);
+                }
+            } else {
+                drawCube(mCubePositions[i], mCubeColors[i], mCubeTextureCoordinates[i]);
+            }
         }
         //drawCube(mCubePositions[1], mCubeColors[1], mCubeTextureCoordinates[1]);
         fps = fpsCounter.getFPS();
     }
 
-    private void drawCube(final FloatBuffer cubePositionsBuffer, final FloatBuffer cubeColorsBuffer, final FloatBuffer cubeTextureCoordinatesBuffer) {
+    private void drawCube(final FloatBuffer cubePositionsBuffer, final FloatBuffer cubeColorsBuffer,
+                          final FloatBuffer cubeTextureCoordinatesBuffer) {
+        GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
+        Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
+        //初始化变换矩阵
+        Matrix.setRotateM(mMMatrix, 0, 0, 0, 1, 0);
+        //设置沿Z轴正向位移1
+//        Matrix.translateM(mMMatrix,0,0,0,-1);
+        //设置绕x轴旋转
+        Matrix.rotateM(mMMatrix, 0, xAngle, 1, 0, 0);
+        Matrix.rotateM(mMMatrix, 0, yAngle, 0, 1, 0);
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, getFianlMatrix(mMMatrix), 0);
+//        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
+
         cubePositionsBuffer.position(0);
         GLES20.glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE,
                 GLES20.GL_FLOAT, false, 0, cubePositionsBuffer);
@@ -288,12 +323,103 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         cubeTextureCoordinatesBuffer.position(0);
         GLES20.glVertexAttribPointer(mTextureCoordinateHandle, TEXTURE_COORDINATE_DATA_SIZE,
                 GLES20.GL_FLOAT, false, 0, cubeTextureCoordinatesBuffer);
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
+        if (xAngle > 3 || xAngle < -3) {
+            xAngle_add = -xAngle_add;
+        }
+        xAngle += xAngle_add;
+//        yAnœgle += 1f;
+    }
+
+    private void drawCube_0(final FloatBuffer cubePositionsBuffer, final FloatBuffer cubeColorsBuffer,
+                           final FloatBuffer cubeTextureCoordinatesBuffer) {
         GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
         Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
-        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
+        //初始化变换矩阵
+        Matrix.setRotateM(mMMatrix, 0, 0, 0, 1, 0);
+        Matrix.translateM(mMMatrix,0,0,0,(float) Math.sqrt(3));
+        Matrix.rotateM(mMMatrix, 0, cube_0_yAngle, 0, 1, 0);
+        Matrix.translateM(mMMatrix,0,0,0,-(float) Math.sqrt(3));
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, getFianlMatrix(mMMatrix), 0);
 
+        cubePositionsBuffer.position(0);
+        GLES20.glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE,
+                GLES20.GL_FLOAT, false, 0, cubePositionsBuffer);
+        GLES20.glEnableVertexAttribArray(mPositionHandle);
+        cubeColorsBuffer.position(0);
+        GLES20.glVertexAttribPointer(mColorHandle, COLOR_DATA_SIZE,
+                GLES20.GL_FLOAT, false, 0, cubeColorsBuffer);
+        GLES20.glEnableVertexAttribArray(mColorHandle);
+        cubeTextureCoordinatesBuffer.position(0);
+        GLES20.glVertexAttribPointer(mTextureCoordinateHandle, TEXTURE_COORDINATE_DATA_SIZE,
+                GLES20.GL_FLOAT, false, 0, cubeTextureCoordinatesBuffer);
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
+        if (cube_0_yAngle >0) {
+            cube_0_yAngle -= 3f;
+        }
+    }
+
+    private void drawCube_1_2(final FloatBuffer cubePositionsBuffer, final FloatBuffer cubeColorsBuffer,
+                          final FloatBuffer cubeTextureCoordinatesBuffer) {
+        GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
+        Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
+        //初始化变换矩阵
+        Matrix.setRotateM(mMMatrix, 0, 0, 0, 1, 0);
+        Matrix.rotateM(mMMatrix, 0, cube_1_2_yAngle, 0, 1, 0);
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, getFianlMatrix(mMMatrix), 0);
+//        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
+
+        cubePositionsBuffer.position(0);
+        GLES20.glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE,
+                GLES20.GL_FLOAT, false, 0, cubePositionsBuffer);
+        GLES20.glEnableVertexAttribArray(mPositionHandle);
+        cubeColorsBuffer.position(0);
+        GLES20.glVertexAttribPointer(mColorHandle, COLOR_DATA_SIZE,
+                GLES20.GL_FLOAT, false, 0, cubeColorsBuffer);
+        GLES20.glEnableVertexAttribArray(mColorHandle);
+        cubeTextureCoordinatesBuffer.position(0);
+        GLES20.glVertexAttribPointer(mTextureCoordinateHandle, TEXTURE_COORDINATE_DATA_SIZE,
+                GLES20.GL_FLOAT, false, 0, cubeTextureCoordinatesBuffer);
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
+        if (cube_1_2_yAngle <0) {
+            cube_1_2_yAngle += 1f;
+        }
+    }
+
+    private void drawCube_3_4_5(final FloatBuffer cubePositionsBuffer, final FloatBuffer cubeColorsBuffer,
+                          final FloatBuffer cubeTextureCoordinatesBuffer) {
+        GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
+        Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
+        //初始化变换矩阵
+        Matrix.setRotateM(mMMatrix, 0, 0, 0, 1, 0);
+        Matrix.rotateM(mMMatrix, 0, cube_3_4_5_yAngle, 0, 1, 0);
+        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, getFianlMatrix(mMMatrix), 0);
+
+        cubePositionsBuffer.position(0);
+        GLES20.glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE,
+                GLES20.GL_FLOAT, false, 0, cubePositionsBuffer);
+        GLES20.glEnableVertexAttribArray(mPositionHandle);
+        cubeColorsBuffer.position(0);
+        GLES20.glVertexAttribPointer(mColorHandle, COLOR_DATA_SIZE,
+                GLES20.GL_FLOAT, false, 0, cubeColorsBuffer);
+        GLES20.glEnableVertexAttribArray(mColorHandle);
+        cubeTextureCoordinatesBuffer.position(0);
+        GLES20.glVertexAttribPointer(mTextureCoordinateHandle, TEXTURE_COORDINATE_DATA_SIZE,
+                GLES20.GL_FLOAT, false, 0, cubeTextureCoordinatesBuffer);
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
+        if (cube_3_4_5_yAngle >0) {
+            cube_3_4_5_yAngle -= 1f;
+        }
+    }
+
+    public float[] getFianlMatrix(float[] spec) {
+        mMVPMatrix = new float[16];
+        Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, spec, 0);
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
+        return mMVPMatrix;
     }
 
     public int getFPS() {
@@ -317,7 +443,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         // TODO Auto-generated method stub
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         // Position the eye behind the origin.
         final float eyeX = 0.0f;
@@ -335,7 +461,8 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         // Set the view matrix. This matrix can be said to represent the camera position.
         // NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
         // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
-        Matrix.setLookAtM(mViewMatrix, 0, 0, 0f, 0, 0, 0, -5, 0, 1, 0);
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 1f, 3.8f,
+                0, 0, -4, 0, 1, 0);
         final String vertexShader = getVertexShader();
         final String fragmentShader = getFragmentShader();
         final int vertexShaderHandle = compileShader(GLES20.GL_VERTEX_SHADER, vertexShader);
