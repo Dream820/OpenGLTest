@@ -16,13 +16,13 @@ public class GLImage {
     public static Bitmap mBitmap7;
 
     public static void load(Resources resources) {
-        mBitmap1 = loadBitmapOne(resources, R.drawable.keyboard_5);
-        mBitmap2 = loadBitmapOne(resources, R.drawable.keyboard_3);
-        mBitmap3 = loadBitmapOne(resources, R.drawable.keyboard_4);
-        mBitmap4 = loadBitmapOne(resources, R.drawable.keyboard_7);
-        mBitmap5 = loadBitmapOne(resources, R.drawable.keyboard_1);
-        mBitmap6 = loadBitmapOne(resources, R.drawable.keyboard_6);
-        mBitmap7 = loadBitmapOne(resources, R.drawable.keyboard_2);
+        mBitmap1 = loadBitmapOne(resources, R.drawable.keyboard_4);
+        mBitmap2 = loadBitmapOne(resources, R.drawable.keyboard_2);
+        mBitmap3 = loadBitmapOne(resources, R.drawable.keyboard_3);
+        mBitmap4 = loadBitmapOne(resources, R.drawable.keyboard_1);
+        mBitmap5 = loadBitmapOne(resources, R.drawable.keyboard_0);
+        mBitmap6 = loadBitmapOne(resources, R.drawable.keyboard_9);
+        mBitmap7 = loadBitmapOne(resources, R.drawable.keyboard_8);
     }
 
     public static Bitmap loadBitmapOne(Resources resources, int id) {

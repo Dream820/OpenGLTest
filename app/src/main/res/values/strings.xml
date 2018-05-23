@@ -6,5 +6,7 @@
 
     <!-- Error strings -->
     <string name="error_shader_compiler">OpenGL error; GLSL shader compiler not supported.</string>
+    <string name="guide_theme_choose_tip_text_view_string">Choose your Keyboard Theme</string>
+    <string name="guide_theme_apply_button_string">APPLY</string>
 
 </resources>

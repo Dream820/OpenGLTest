@@ -23,7 +23,7 @@ import static android.opengl.GLES20.GL_COLOR_BUFFER_BIT;
 import static android.opengl.GLES20.GL_DEPTH_BUFFER_BIT;
 import static android.opengl.GLES20.glClear;
 
-public class LessonOneRenderer implements GLSurfaceView.Renderer {
+public class MyRenderer implements GLSurfaceView.Renderer {
     private static final String TAG = "Test5Renderer";
     private Context mContext;
     private static final int BYTES_PER_FLOAT = 4;
@@ -52,8 +52,6 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
     float cube_2_yAngle = 120;//绕x轴旋转的角度
     float cube_1_yAngle = 120;//绕x轴旋转的角度
     float yAngle_add = 3f;//绕x轴旋转的角度
-    float cube_1_2_yAngle = -60;//绕x轴旋转的角度
-    float cube_3_4_5_yAngle = 60;//绕x轴旋转的角度
     float yAngle = 0;//绕x轴旋转的角度
     float xAngle = 0;//绕x轴旋转的角度
     float xAngle_add = 0.008f;//绕x轴旋转的角度
@@ -64,7 +62,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
     int fps;
     FPSCounter fpsCounter;
 
-    public LessonOneRenderer(final Context context) {
+    public MyRenderer(final Context context) {
         mContext = context;
 
         float picBufferLenth = 0.05f;
@@ -137,12 +135,12 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
                 {
                         // Front face (red)
                         {
-                                1.0f, 0.0f, 0.0f, 1.0f,
-                                1.0f, 0.0f, 0.0f, 1.0f,
-                                1.0f, 0.0f, 0.0f, 1.0f,
-                                1.0f, 0.0f, 0.0f, 1.0f,
-                                1.0f, 0.0f, 0.0f, 1.0f,
-                                1.0f, 0.0f, 0.0f, 1.0f,
+                                1.0f, 0.0f, 0.0f, 0.0f,
+                                1.0f, 0.0f, 0.0f, 0.0f,
+                                1.0f, 0.0f, 0.0f, 0.0f,
+                                1.0f, 0.0f, 0.0f, 0.0f,
+                                1.0f, 0.0f, 0.0f, 0.0f,
+                                1.0f, 0.0f, 0.0f, 0.0f,
                         },
                         // Right face (green)
                         {
@@ -311,7 +309,9 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
                 drawCube(mCubePositions[i], mCubeColors[i], mCubeTextureCoordinates[i]);
             }
         }
-        //drawCube(mCubePositions[1], mCubeColors[1], mCubeTextureCoordinates[1]);
+//        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureDataHandle[0]);
+//        GLES20.glUniform1i(mTextureUniformHandle, 0);
+//        drawCube(mCubePositions[0], mCubeColors[0], mCubeTextureCoordinates[0]);
         fps = fpsCounter.getFPS();
     }
 
@@ -378,34 +378,6 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         }
     }
 
-    private void drawCube_1_2(final FloatBuffer cubePositionsBuffer, final FloatBuffer cubeColorsBuffer,
-                          final FloatBuffer cubeTextureCoordinatesBuffer) {
-        GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
-        Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
-        //初始化变换矩阵
-        Matrix.setRotateM(mMMatrix, 0, 0, 0, 1, 0);
-        Matrix.rotateM(mMMatrix, 0, cube_1_2_yAngle, 0, 1, 0);
-        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, getFianlMatrix(mMMatrix), 0);
-//        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mMVPMatrix, 0);
-
-        cubePositionsBuffer.position(0);
-        GLES20.glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE,
-                GLES20.GL_FLOAT, false, 0, cubePositionsBuffer);
-        GLES20.glEnableVertexAttribArray(mPositionHandle);
-        cubeColorsBuffer.position(0);
-        GLES20.glVertexAttribPointer(mColorHandle, COLOR_DATA_SIZE,
-                GLES20.GL_FLOAT, false, 0, cubeColorsBuffer);
-        GLES20.glEnableVertexAttribArray(mColorHandle);
-        cubeTextureCoordinatesBuffer.position(0);
-        GLES20.glVertexAttribPointer(mTextureCoordinateHandle, TEXTURE_COORDINATE_DATA_SIZE,
-                GLES20.GL_FLOAT, false, 0, cubeTextureCoordinatesBuffer);
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
-        if (cube_1_2_yAngle <0) {
-            cube_1_2_yAngle += 1f;
-        }
-    }
-
     private void drawCube_1(final FloatBuffer cubePositionsBuffer, final FloatBuffer cubeColorsBuffer,
                             final FloatBuffer cubeTextureCoordinatesBuffer) {
         GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
@@ -461,33 +433,6 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
         if (cube_2_yAngle >0) {
             cube_2_yAngle -= yAngle_add;
-        }
-    }
-
-    private void drawCube_3_4_5(final FloatBuffer cubePositionsBuffer, final FloatBuffer cubeColorsBuffer,
-                          final FloatBuffer cubeTextureCoordinatesBuffer) {
-        GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
-        Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
-        //初始化变换矩阵
-        Matrix.setRotateM(mMMatrix, 0, 0, 0, 1, 0);
-        Matrix.rotateM(mMMatrix, 0, cube_3_4_5_yAngle, 0, 1, 0);
-        GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, getFianlMatrix(mMMatrix), 0);
-
-        cubePositionsBuffer.position(0);
-        GLES20.glVertexAttribPointer(mPositionHandle, POSITION_DATA_SIZE,
-                GLES20.GL_FLOAT, false, 0, cubePositionsBuffer);
-        GLES20.glEnableVertexAttribArray(mPositionHandle);
-        cubeColorsBuffer.position(0);
-        GLES20.glVertexAttribPointer(mColorHandle, COLOR_DATA_SIZE,
-                GLES20.GL_FLOAT, false, 0, cubeColorsBuffer);
-        GLES20.glEnableVertexAttribArray(mColorHandle);
-        cubeTextureCoordinatesBuffer.position(0);
-        GLES20.glVertexAttribPointer(mTextureCoordinateHandle, TEXTURE_COORDINATE_DATA_SIZE,
-                GLES20.GL_FLOAT, false, 0, cubeTextureCoordinatesBuffer);
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
-        if (cube_3_4_5_yAngle >0) {
-            cube_3_4_5_yAngle -= 1f;
         }
     }
 
@@ -594,11 +539,12 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         // TODO Auto-generated method stub
         GLES20.glViewport(0, 0, width, height);
         final float ratio = (float) width / height;
-        final float left = -ratio;
-        final float right = ratio;
+        float fangda=1f;
+        final float left = -ratio*fangda;
+        final float right = ratio*fangda;
         final float bottom = -1.5f;
         final float top = 0.5f;
-        final float near = 0.9f;
+        final float near = 2f;
         final float far = 10.0f;
         Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, near, far);
     }
@@ -608,36 +554,23 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
         // TODO Auto-generated method stub
 //        GLES20.glClearColor(0.5f, 0.5f, 0.5f, 0f);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
-        // Position the eye behind the origin.
-        final float eyeX = 0.0f;
-        final float eyeY = 0.0f;
-        final float eyeZ = -0.5f;
-
-        // We are looking toward the distance
-        final float lookX = 0.0f;
-        final float lookY = 0.0f;
-        final float lookZ = -5.0f;
-        // Set our up vector. This is where our head would be pointing were we holding the camera.
-        final float upX = 0.0f;
-        final float upY = 1.0f;
-        final float upZ = 0.0f;
-        // Set the view matrix. This matrix can be said to represent the camera position.
-        // NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
-        // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
-        Matrix.setLookAtM(mViewMatrix, 0, 0, 0f, 3.8f,
+//        GLES20.glEnable(GLES20.GL_BLEND);
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 1f, 8f,
                 0, 0, -3f, 0, 1, 0);
         final String vertexShader = getVertexShader();
         final String fragmentShader = getFragmentShader();
         final int vertexShaderHandle = compileShader(GLES20.GL_VERTEX_SHADER, vertexShader);
         final int fragmentShaderHandle = compileShader(GLES20.GL_FRAGMENT_SHADER, fragmentShader);
+//        gl.glAlphaFunc(gl.GL_GREATER, 0);
+//        gl.glBlendFunc(GL10.GL_SRC_ALPHA,GL10.GL_ONE);
         mProgramHandle = createAndLinkProgram(vertexShaderHandle, fragmentShaderHandle,
                 new String[]{"a_Position", "a_Color", "a_TexCoordinate"});
         mTextureDataHandle[0] = ToolsUtil.loadTexture(mContext, R.drawable.keyboard_0);
-        mTextureDataHandle[1] = ToolsUtil.loadTexture(mContext, R.drawable.keyboard_8);
+        mTextureDataHandle[1] = ToolsUtil.loadTexture(mContext, R.drawable.keyboard_1);
         mTextureDataHandle[2] = ToolsUtil.loadTexture(mContext, R.drawable.keyboard_2);
         mTextureDataHandle[3] = ToolsUtil.loadTexture(mContext, R.drawable.keyboard_3);
         mTextureDataHandle[4] = ToolsUtil.loadTexture(mContext, R.drawable.keyboard_4);
-        mTextureDataHandle[5] = ToolsUtil.loadTexture(mContext, R.drawable.keyboard_9);
+        mTextureDataHandle[5] = ToolsUtil.loadTexture(mContext, R.drawable.keyboard_5);
     }
 
     private String getVertexShader() {
@@ -669,7 +602,7 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
                 + "varying vec2 v_TexCoordinate; \n" // Interpolated texture coordinate per fragment.
                 + "void main() \n" // The entry point for our fragment shader.
                 + "{ \n"
-                //+ " gl_FragColor = v_Color * texture2D(u_Texture, v_TexCoordinate); \n" // Pass the color directly through the pipeline.
+//                + " gl_FragColor = v_Color * texture2D(u_Texture, v_TexCoordinate); \n" // Pass the color directly through the pipeline.
                 + " gl_FragColor = texture2D(u_Texture, v_TexCoordinate); \n" // Pass the color directly through the pipeline.
                 + "} \n";
         return fragmentShader;
@@ -732,7 +665,6 @@ public class LessonOneRenderer implements GLSurfaceView.Renderer {
                 final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
                 GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureHandle[0]);
                 GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
-                GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
                 GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
                 bitmap.recycle();
             }

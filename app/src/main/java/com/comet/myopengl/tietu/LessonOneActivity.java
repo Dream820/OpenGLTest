@@ -3,10 +3,15 @@ package com.comet.myopengl.tietu;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ConfigurationInfo;
-import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
+
+import com.comet.myopengl.R;
 
 public class LessonOneActivity extends Activity {
     /**
@@ -18,8 +23,17 @@ public class LessonOneActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        setContentView(R.layout.my_main_layout);
+//        mGLSurfaceView=findViewById(R.id.mzOpenGLView);
 
         mGLSurfaceView = new MyGLSurfaceView(this);
+
+        LinearLayout mzLayout=findViewById(R.id.guide_theme_gl_surface_view_layout);
+        mzLayout.addView(mGLSurfaceView);
 
         // Check if the system supports OpenGL ES 2.0.  
         final ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -38,8 +52,6 @@ public class LessonOneActivity extends Activity {
             // renderer if you wanted to support both ES 1 and ES 2.  
             return;
         }
-
-        setContentView(mGLSurfaceView);
 
         handler.postDelayed(runnable, 1000);
 
@@ -66,13 +78,21 @@ public class LessonOneActivity extends Activity {
     protected void onResume() {
         // The activity must call the GL surface view's onResume() on activity onResume().  
         super.onResume();
-        mGLSurfaceView.onResume();
+        try {
+            mGLSurfaceView.onResume();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onPause() {
         // The activity must call the GL surface view's onPause() on activity onPause().  
         super.onPause();
-        mGLSurfaceView.onPause();
+        try {
+            mGLSurfaceView.onPause();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }  

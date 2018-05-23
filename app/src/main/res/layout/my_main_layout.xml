@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradiant_guide_theme_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/guide_theme_gl_surface_view_layout">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/guide_theme_choose_tip_text_view_string"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="158dp"
+        android:layout_alignParentBottom="true"
+        android:textSize="@dimen/guide_theme_choose_tip_text_size"
+        android:textColor="@color/guide_theme_choose_tip_text_color"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="@dimen/guide_theme_apply_button_width"
+        android:layout_height="@dimen/guide_theme_apply_button_height"
+        android:text="@string/guide_theme_apply_button_string"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="71dp"
+        android:textSize="@dimen/guide_theme_apply_button_text_size"
+        android:textColor="@color/guide_theme_apply_button_text_color"
+        android:background="@drawable/shape_guide_theme_apply_button"/>
+</RelativeLayout>
