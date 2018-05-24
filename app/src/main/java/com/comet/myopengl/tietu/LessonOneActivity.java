@@ -1,19 +1,18 @@
 package com.comet.myopengl.tietu;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ConfigurationInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Window;
+import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.comet.myopengl.R;
 
-public class LessonOneActivity extends Activity {
+public class LessonOneActivity extends AppCompatActivity {
     /**
      * Hold a reference to our GLSurfaceView
      */
@@ -23,11 +22,12 @@ public class LessonOneActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getSupportActionBar().hide();
 
-        setContentView(R.layout.my_main_layout);
+        setContentView(R.layout.activity_guide_theme);
 //        mGLSurfaceView=findViewById(R.id.mzOpenGLView);
 
         mGLSurfaceView = new MyGLSurfaceView(this);

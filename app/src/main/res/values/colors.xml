@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="guide_gradiant_down">#8601D1</color>
-    <color name="guide_gradiant_up">#4000BB</color>
+    <color name="guide_gradiant_background_down">#8601D1</color>
+    <color name="guide_gradiant_background_up">#4000BB</color>
     <color name="guide_theme_choose_tip_text_color">#ffffff</color>
     <color name="guide_theme_apply_button_text_color">#ffffff</color>
     <color name="guide_theme_apply_button_shape_solid_color">#6CCF54</color>
